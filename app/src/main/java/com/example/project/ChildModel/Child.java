@@ -49,9 +49,8 @@ public class Child {
 
     @Override
     public String toString() {
-        return "Child{" +
-                "name='" + name + '\'' +
-                ", age=" + age;
+        return "Name: " + name +
+                " , age:" + age;
     }
 }
 
