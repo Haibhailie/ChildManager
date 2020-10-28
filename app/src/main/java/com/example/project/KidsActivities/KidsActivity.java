@@ -4,6 +4,7 @@
  */
 package com.example.project.KidsActivities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -48,8 +49,6 @@ public class KidsActivity extends AppCompatActivity {
 
         populateListView();
         registerClickCallback();
-
-
     }
 
     @Override
@@ -57,8 +56,6 @@ public class KidsActivity extends AppCompatActivity {
         super.onStart();
         populateListView();
     }
-
-
 
     private void populateListView() {
         ArrayAdapter<Child> adapter = new MyListAdapter();
@@ -116,6 +113,5 @@ public class KidsActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 }
