@@ -7,4 +7,5 @@
     <string name="save_btn">save</string>
     <string name="mainTitle">Welcome to Practical Parent</string>
     <string name="configureMyChildren">Configure My Children</string>
+    <string name="countdownTimer">Countdown Timer</string>
 </resources>
