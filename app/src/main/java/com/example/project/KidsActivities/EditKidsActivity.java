@@ -116,7 +116,7 @@ public class EditKidsActivity extends AppCompatActivity {
                     childManager.setChildGender(childPos, gender);
                     Toast.makeText(EditKidsActivity.this, "Kid Info Updated!", Toast.LENGTH_SHORT).show();
                 }
-                saveKidsRecord(EditKidsActivity.this);
+                saveKidsRecord(EditKidsActivity.this, childManager.getChildList());
                 finish();
                 return true;
 
@@ -165,11 +165,11 @@ public class EditKidsActivity extends AppCompatActivity {
 
 
     // Reference: https://www.youtube.com/watch?v=jcliHGR3CHo&ab_channel=CodinginFlow
-    private void saveKidsRecord(Context context) {
+    public static void saveKidsRecord(Context context, List<Child> childList) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(childManager.getChildList());
+        String json = gson.toJson(childList);
         editor.putString(CHILD_PREFS_NAME, json);
         editor.apply();
     }

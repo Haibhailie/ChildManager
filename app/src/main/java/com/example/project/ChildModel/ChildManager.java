@@ -68,4 +68,12 @@ public class ChildManager {
         childList.get(index).setAvatarId(id);
     }
 
+    public void deleteChild(int index) {
+        childList.remove(index);
+    }
+
+    public int getLength() {
+        return childList.size();
+    }
+
 }
