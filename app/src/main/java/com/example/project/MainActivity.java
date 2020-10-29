@@ -1,7 +1,9 @@
 package com.example.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.project.KidsActivities.KidsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -12,6 +14,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,15 +22,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.edit_toolbar);
-        setSupportActionBar(toolbar);
+        setupConfigureButton();
+        setupCountdownButton();
+    }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    private void setupCountdownButton() {
+        Button countDown = (Button) findViewById(R.id.configureButton);
+        countDown.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, CountdownActivity.class);
+//                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupConfigureButton() {
+        Button configure = (Button) findViewById(R.id.configureButton);
+        configure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, KidsActivity.class);
+                startActivity(intent);
             }
         });
     }
