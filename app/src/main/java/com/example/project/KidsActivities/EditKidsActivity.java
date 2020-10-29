@@ -13,12 +13,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.project.R;
@@ -38,6 +41,7 @@ public class EditKidsActivity extends AppCompatActivity {
     private static final String CHILD_PREFS_NAME = "ChildList";
     private static final int PICK_IMAGE = 100;
     private int avatarId;
+    private int gender;
 
 
     @Override
@@ -98,9 +102,10 @@ public class EditKidsActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return true;
                 }
+                getGender();
                 if (childPos == -1) {
                     // Add new lens
-                    Child child = new Child(name, age, avatarId);
+                    Child child = new Child(name, age, avatarId, gender);
                     childManager.add(child);
                     Toast.makeText(EditKidsActivity.this, "New Kid Added!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -108,6 +113,7 @@ public class EditKidsActivity extends AppCompatActivity {
                     childManager.setChildName(childPos, name);
                     childManager.setChildAge(childPos, age);
                     childManager.setChildAvatarId(childPos, avatarId);
+                    childManager.setChildGender(childPos, gender);
                     Toast.makeText(EditKidsActivity.this, "Kid Info Updated!", Toast.LENGTH_SHORT).show();
                 }
                 saveKidsRecord(EditKidsActivity.this);
@@ -120,7 +126,15 @@ public class EditKidsActivity extends AppCompatActivity {
     }
 
 
-
+    private void getGender() {
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group_gender);
+        int radioId = radioGroup.getCheckedRadioButtonId();
+        if (radioId == R.id.radio_btn_boy) {
+            gender = 0;
+        } else {
+            gender = 1;
+        }
+    }
 
     private int extraKidPosFromIntent() {
         Intent intent = getIntent();
@@ -130,6 +144,16 @@ public class EditKidsActivity extends AppCompatActivity {
     private void setupEditModel() {
         nameText.setText(childManager.getChildName(childPos));
         ageText.setText(childManager.getChildAge(childPos) + "");
+        int gender = childManager.getChildGender(childPos);
+        RadioButton boyBtn = (RadioButton) findViewById(R.id.radio_btn_boy);
+        RadioButton girlBtn = (RadioButton) findViewById(R.id.radio_btn_girl);
+        if (gender == 0) {
+            boyBtn.setChecked(true);
+            girlBtn.setChecked(false);
+        } else {
+            boyBtn.setChecked(false);
+            girlBtn.setChecked(true);
+        }
     }
 
     public static Intent makeLaunchIntent (Context context, int kidPos) {

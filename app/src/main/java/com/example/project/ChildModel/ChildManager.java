@@ -52,6 +52,14 @@ public class ChildManager {
         childList.get(index).setAge(age);
     }
 
+    public void setChildGender(int index, int gender) {
+        childList.get(index).setGender(gender);
+    }
+
+    public int getChildGender(int index) {
+        return childList.get(index).getGender();
+    }
+
     public void setChildList(List<Child> childList) {
         this.childList = childList;
     }

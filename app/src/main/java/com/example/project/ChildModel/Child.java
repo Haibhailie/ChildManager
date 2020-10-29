@@ -9,10 +9,19 @@ public class Child {
     private int age;
     private int avatarID; // can only in String type, otherwise crash in shared preference
 
-    public Child(String name, int age, int avatarID) {
+
+
+    private int gender; // 0 for boy, 1 for girl
+
+    public Child(String name, int age, int avatarID, int gender) {
         this.name = name;
         this.age = age;
         this.avatarID = avatarID;
+        this.gender = gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getName() {
@@ -39,6 +48,9 @@ public class Child {
         this.avatarID = id;
     }
 
+    public int getGender() {
+        return gender;
+    }
 
     @Override
     public String toString() {
