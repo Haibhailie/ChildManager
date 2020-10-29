@@ -3,6 +3,7 @@ package com.example.project;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.project.KidsActivities.EditKidsActivity;
 import com.example.project.KidsActivities.KidsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,12 +29,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupCountdownButton() {
-        Button countDown = (Button) findViewById(R.id.configureButton);
+        Button countDown = (Button) findViewById(R.id.countdownButton);
         countDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, CountdownActivity.class);
-//                startActivity(intent);
+                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         configure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, KidsActivity.class);
+                Intent intent = KidsActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });

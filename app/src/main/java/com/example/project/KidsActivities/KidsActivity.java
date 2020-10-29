@@ -4,6 +4,7 @@
  */
 package com.example.project.KidsActivities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -68,8 +69,6 @@ public class KidsActivity extends AppCompatActivity {
         // click to show statistics
         registerClickCallback();
         showInstruction();
-
-
     }
 
     @Override
@@ -203,5 +202,10 @@ public class KidsActivity extends AppCompatActivity {
             editInstruction.setVisibility(View.VISIBLE);
             fab.clearAnimation();
         }
+    }
+
+    public static Intent makeLaunchIntent(Context context) {
+        Intent intent = new Intent(context, KidsActivity.class);
+        return intent;
     }
 }
