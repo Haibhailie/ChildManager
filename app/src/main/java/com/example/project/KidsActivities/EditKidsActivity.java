@@ -2,6 +2,7 @@ package com.example.project.KidsActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.Child;
@@ -12,18 +13,33 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditKidsActivity extends AppCompatActivity {
     private static final String EXTRA_IDX = "kidPos";
     private ChildManager childManager;
     int childPos;
     EditText nameText, ageText;
+    private static final String APP_PREFS_NAME = "AppPrefs";
+    private static final String CHILD_PREFS_NAME = "ChildList";
+    private static final int PICK_IMAGE = 100;
+    private int avatarId;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +47,7 @@ public class EditKidsActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         nameText = (EditText) findViewById(R.id.et_kids_name);
         ageText = (EditText) findViewById(R.id.et_kids_age);
+        avatarId = R.drawable.default_avator;
 
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
@@ -45,6 +62,8 @@ public class EditKidsActivity extends AppCompatActivity {
         if (childPos != -1) {
             setupEditModel();
         }
+
+        setupAvatarOption();
     }
 
     @Override
@@ -81,14 +100,17 @@ public class EditKidsActivity extends AppCompatActivity {
                 }
                 if (childPos == -1) {
                     // Add new lens
-                    Child child = new Child(name, age);
+                    Child child = new Child(name, age, avatarId);
                     childManager.add(child);
+                    Toast.makeText(EditKidsActivity.this, "New Kid Added!", Toast.LENGTH_SHORT).show();
                 } else {
                     // edit existed lens
                     childManager.setChildName(childPos, name);
                     childManager.setChildAge(childPos, age);
+                    childManager.setChildAvatarId(childPos, avatarId);
+                    Toast.makeText(EditKidsActivity.this, "Kid Info Updated!", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(EditKidsActivity.this, "Kid Information Saved!", Toast.LENGTH_SHORT).show();
+                saveKidsRecord(EditKidsActivity.this);
                 finish();
                 return true;
 
@@ -115,4 +137,112 @@ public class EditKidsActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_IDX, kidPos);
         return intent;
     }
+
+
+
+    // Reference: https://www.youtube.com/watch?v=jcliHGR3CHo&ab_channel=CodinginFlow
+    private void saveKidsRecord(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(childManager.getChildList());
+        editor.putString(CHILD_PREFS_NAME, json);
+        editor.apply();
+    }
+
+    public static List<Child> getKidsRecord(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString(CHILD_PREFS_NAME, null);
+        Type type = new TypeToken<ArrayList<Child>>() {}.getType();
+        List<Child> childList = gson.fromJson(json, type);
+        return childList;
+    }
+
+    private void setupAvatarOption() {
+
+        ImageView boy1 = (ImageView) findViewById(R.id.iv_boy1);
+        boy1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.b_avatar1;
+            }
+        });
+        ImageView boy2 = (ImageView) findViewById(R.id.iv_boy2);
+        boy2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.b_avatar2;
+            }
+        });
+        ImageView boy3 = (ImageView) findViewById(R.id.iv_boy3);
+        boy3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.b_avatar3;
+            }
+        });
+        ImageView boy4 = (ImageView) findViewById(R.id.iv_boy4);
+        boy4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.b_avatar4;
+            }
+        });
+        ImageView boy5 = (ImageView) findViewById(R.id.iv_boy5);
+        boy5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.b_avatar5;
+            }
+        });
+        ImageView girl1 = (ImageView) findViewById(R.id.iv_girl1);
+        girl1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.g_avatar1;
+            }
+        });
+        ImageView girl2 = (ImageView) findViewById(R.id.iv_girl2);
+        girl2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.g_avatar2;
+            }
+        });
+        ImageView girl3 = (ImageView) findViewById(R.id.iv_girl3);
+        girl3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.g_avatar3;
+            }
+        });
+        ImageView girl4 = (ImageView) findViewById(R.id.iv_girl4);
+        girl4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.g_avatar4;
+            }
+        });
+        ImageView girl5 = (ImageView) findViewById(R.id.iv_girl5);
+        girl5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
+                avatarId = R.drawable.g_avatar5;
+            }
+        });
+
+    }
+
+
 }

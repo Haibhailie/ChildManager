@@ -5,6 +5,7 @@
 package com.example.project.KidsActivities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.Child;
@@ -15,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,8 @@ import android.widget.TextView;
 
 import com.example.project.R;
 
+import java.util.List;
+
 public class KidsActivity extends AppCompatActivity {
     ChildManager childManager;
     @Override
@@ -33,6 +37,11 @@ public class KidsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kids);
         childManager = ChildManager.getInstance();
+        // load saved data
+        List<Child> savedChildList = EditKidsActivity.getKidsRecord(KidsActivity.this);
+        if (savedChildList != null) {
+            childManager.setChildList(savedChildList);
+        }
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
 
@@ -88,7 +97,8 @@ public class KidsActivity extends AppCompatActivity {
             Child child = childManager.getChild(position);
             // Fill the view.
             ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
-            imageView.setImageResource(childManager.getChildAvatarID(position));
+            int avatarId = childManager.getChildAvatarId(position);
+            imageView.setImageResource(avatarId);
             // Fill the Info Text
             TextView infoText = (TextView) itemView.findViewById(R.id.text_lensinfo);
             infoText.setText(childManager.getChild(position).toString());
