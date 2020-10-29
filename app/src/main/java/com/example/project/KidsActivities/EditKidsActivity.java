@@ -3,6 +3,9 @@ package com.example.project.KidsActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.Child;
@@ -28,8 +31,10 @@ import com.example.project.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EditKidsActivity extends AppCompatActivity {
@@ -42,6 +47,8 @@ public class EditKidsActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 100;
     private int avatarId;
     private int gender;
+    private List<Integer> avatarImageViewArray;
+    private List<Integer> avatarResIDArray;
 
 
     @Override
@@ -52,6 +59,13 @@ public class EditKidsActivity extends AppCompatActivity {
         nameText = (EditText) findViewById(R.id.et_kids_name);
         ageText = (EditText) findViewById(R.id.et_kids_age);
         avatarId = R.drawable.default_avator;
+
+        // These two arrays would be used to set click event on imageView (avatar)
+        avatarImageViewArray = Arrays.asList(R.id.iv_boy1, R.id.iv_boy2,R.id.iv_boy3,R.id.iv_boy4,R.id.iv_boy5,
+                R.id.iv_girl1,R.id.iv_girl2,R.id.iv_girl3,R.id.iv_girl4,R.id.iv_girl5);
+
+        avatarResIDArray = Arrays.asList(R.drawable.b_avatar1, R.drawable.b_avatar2,R.drawable.b_avatar3,R.drawable.b_avatar4
+        ,R.drawable.b_avatar5,R.drawable.g_avatar1, R.drawable.g_avatar2, R.drawable.g_avatar3, R.drawable.g_avatar4,R.drawable.g_avatar5);
 
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
@@ -184,89 +198,25 @@ public class EditKidsActivity extends AppCompatActivity {
     }
 
     private void setupAvatarOption() {
-
-        ImageView boy1 = (ImageView) findViewById(R.id.iv_boy1);
-        boy1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.b_avatar1;
-            }
-        });
-        ImageView boy2 = (ImageView) findViewById(R.id.iv_boy2);
-        boy2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.b_avatar2;
-            }
-        });
-        ImageView boy3 = (ImageView) findViewById(R.id.iv_boy3);
-        boy3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.b_avatar3;
-            }
-        });
-        ImageView boy4 = (ImageView) findViewById(R.id.iv_boy4);
-        boy4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.b_avatar4;
-            }
-        });
-        ImageView boy5 = (ImageView) findViewById(R.id.iv_boy5);
-        boy5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.b_avatar5;
-            }
-        });
-        ImageView girl1 = (ImageView) findViewById(R.id.iv_girl1);
-        girl1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.g_avatar1;
-            }
-        });
-        ImageView girl2 = (ImageView) findViewById(R.id.iv_girl2);
-        girl2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.g_avatar2;
-            }
-        });
-        ImageView girl3 = (ImageView) findViewById(R.id.iv_girl3);
-        girl3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.g_avatar3;
-            }
-        });
-        ImageView girl4 = (ImageView) findViewById(R.id.iv_girl4);
-        girl4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.g_avatar4;
-            }
-        });
-        ImageView girl5 = (ImageView) findViewById(R.id.iv_girl5);
-        girl5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(EditKidsActivity.this, "Selected", Toast.LENGTH_SHORT).show();
-                avatarId = R.drawable.g_avatar5;
-            }
-        });
-
+        for (int i = 0; i < avatarImageViewArray.size(); i++) {
+            final ImageView img = (ImageView) findViewById(avatarImageViewArray.get(i));
+            final int finalI = i;
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    avatarId = avatarResIDArray.get(finalI);
+                    setImageViewBackground(img);
+                }
+            });
+        }
     }
 
-
+    private void setImageViewBackground(ImageView targetImg) {
+        for (int i = 0; i < avatarImageViewArray.size(); i++) {
+             ImageView imageView = (ImageView) findViewById(avatarImageViewArray.get(i));
+             imageView.setBackgroundResource(android.R.color.transparent);
+        }
+        targetImg.setBackgroundResource(android.R.color.holo_blue_bright);
+        targetImg.setPadding(1,1,1,1);
+    }
 }
