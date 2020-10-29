@@ -1,22 +1,27 @@
 package com.example.project.ChildModel;
 
+import android.net.Uri;
+
 import com.example.project.R;
 
 public class Child {
     private String name;
     private int age;
-    private int avatarID;
+    private int avatarID; // can only in String type, otherwise crash in shared preference
 
-    public Child(String name, int age, int avatarID) {
+
+
+    private int gender; // 0 for boy, 1 for girl
+
+    public Child(String name, int age, int avatarID, int gender) {
         this.name = name;
         this.age = age;
         this.avatarID = avatarID;
+        this.gender = gender;
     }
 
-    public Child(String name, int age) {
-        this.name = name;
-        this.age = age;
-        this.avatarID = R.drawable.default_avator;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getName() {
@@ -27,7 +32,7 @@ public class Child {
         return age;
     }
 
-    public int getImage() {
+    public int getAvatarId() {
         return avatarID;
     }
 
@@ -39,12 +44,12 @@ public class Child {
         this.age = age;
     }
 
-    public void setImage(int image) {
-        this.avatarID = image;
+    public void setAvatarId(int id) {
+        this.avatarID = id;
     }
 
-    public int getAvatarID() {
-        return avatarID;
+    public int getGender() {
+        return gender;
     }
 
     @Override

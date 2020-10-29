@@ -1,5 +1,9 @@
 package com.example.project.ChildModel;
 
+import android.net.Uri;
+
+import com.example.project.KidsActivities.EditKidsActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +28,8 @@ public class ChildManager {
         return childList.get(index);
     }
 
-    public int getChildAvatarID(int index) {
-        return childList.get(index).getAvatarID();
+    public int getChildAvatarId(int index) {
+        return childList.get(index).getAvatarId();
     }
 
     public String getChildName(int index) {
@@ -47,4 +51,29 @@ public class ChildManager {
     public void setChildAge(int index, int age) {
         childList.get(index).setAge(age);
     }
+
+    public void setChildGender(int index, int gender) {
+        childList.get(index).setGender(gender);
+    }
+
+    public int getChildGender(int index) {
+        return childList.get(index).getGender();
+    }
+
+    public void setChildList(List<Child> childList) {
+        this.childList = childList;
+    }
+
+    public void setChildAvatarId(int index, int id) {
+        childList.get(index).setAvatarId(id);
+    }
+
+    public void deleteChild(int index) {
+        childList.remove(index);
+    }
+
+    public int getLength() {
+        return childList.size();
+    }
+
 }
