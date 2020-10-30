@@ -26,6 +26,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupConfigureButton();
         setupCountdownButton();
+        setupFlipCoinButton();
+    }
+
+    private void setupConfigureButton() {
+        Button configure = (Button) findViewById(R.id.configureButton);
+        configure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = KidsActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupCountdownButton() {
@@ -38,13 +50,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupConfigureButton() {
-        Button configure = (Button) findViewById(R.id.configureButton);
-        configure.setOnClickListener(new View.OnClickListener() {
+    private void setupFlipCoinButton() {
+        Button flip = (Button) findViewById(R.id.flipButton);
+        flip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = KidsActivity.makeLaunchIntent(MainActivity.this);
-                startActivity(intent);
+                Toast.makeText(MainActivity.this, "flipped", Toast.LENGTH_SHORT).show();
             }
         });
     }
