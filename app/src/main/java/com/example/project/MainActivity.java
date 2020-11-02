@@ -3,6 +3,7 @@ package com.example.project;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.project.CoinFlipActivities.CoinFlipActivity;
 import com.example.project.KidsActivities.EditKidsActivity;
 import com.example.project.KidsActivities.KidsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
         flip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "flipped", Toast.LENGTH_SHORT).show();
+                Intent intent = CoinFlipActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
     }
