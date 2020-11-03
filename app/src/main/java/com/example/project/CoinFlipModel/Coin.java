@@ -1,5 +1,7 @@
 package com.example.project.CoinFlipModel;
 
+import java.util.Random;
+
 /**
  * Coin:
  *  Coin() Returns Coin Objects with headRate = 0.5.
@@ -12,6 +14,7 @@ package com.example.project.CoinFlipModel;
 public class Coin {
 
     private double headRate;
+    private Random randomGenerator = new Random(System.currentTimeMillis());
 
     public Coin(){
         headRate = 0.5;
@@ -22,7 +25,7 @@ public class Coin {
     }
 
     public int flipCoin(){
-        double randomNumber = Math.random();
+        double randomNumber = randomGenerator.nextDouble();
         boolean result = randomNumber >= headRate;
 
         return result ? 1 : 0;
