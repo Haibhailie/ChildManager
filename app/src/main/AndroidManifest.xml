@@ -12,10 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CoinFlipActivities.CoinFlipHistory"
+            android:label="@string/title_activity_coin_flip_history"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".CoinFlipActivities.ChooseChildCoinFlipActivity"
             android:label="@string/title_activity_choose_child_coin_flip"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CoinFlipActivities.CoinFlipActivity"
             android:label="@string/title_activity_coin_flip"

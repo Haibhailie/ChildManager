@@ -20,7 +20,6 @@ public class ChildManager {
         return instance;
     }
 
-
     public List<Child> getChildList() {
         return childList;
     }
@@ -59,6 +58,10 @@ public class ChildManager {
 
     public int getChildGender(int index) {
         return childList.get(index).getGender();
+    }
+
+    public int getChildID(int index) {
+        return childList.get(index).getID();
     }
 
     public void setChildList(List<Child> childList) {

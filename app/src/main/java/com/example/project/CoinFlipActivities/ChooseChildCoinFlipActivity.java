@@ -32,9 +32,10 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
 
     private final String CHILDMANAGER_TAG = "ChildManager";
-    private ChildManager childManager;
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String INDEX_PREFS_NAME = "IndexPref" ;
+
+    private ChildManager childManager;
     private int flipIndex;
 
     public static Intent makeLaunchIntent(Context context){
@@ -90,7 +91,6 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.kid_list, parent, false);
             }
 
-
             // Fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.child_avatar);
             imageView.setImageResource(childManager.getChildAvatarId(position));
@@ -112,6 +112,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, position);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -129,7 +130,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     /*
         Following code figure out who's in the head of queue
-     */
+    */
 
     private void updateFlipIndex() {
         flipIndex = (flipIndex+1) % childManager.getLength();

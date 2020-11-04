@@ -13,11 +13,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.project.R;
 
@@ -102,10 +105,12 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         if(coin.flipCoin()){
             coinImage = (ImageView) findViewById(R.id.coin_flip_tails);
+            setWinningText(R.string.coin_flip_heads);
             logInfoText = "Heads";
         }
         else {
             coinImage = (ImageView) findViewById(R.id.coin_flip_heads);
+            setWinningText(R.string.coin_flip_tails);
             logInfoText = "Tails";
         }
 
@@ -116,16 +121,25 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void coinFlipTimerSetWinner(){
-        Timer timer = new Timer();
 
         int delay = (int)(getResources().getInteger(R.integer.coin_flip_quarter_time)*3.5);
-
-        timer.schedule(new TimerTask() {
+        CountDownTimer timer = new CountDownTimer(delay, 1) {
             @Override
-            public void run() {
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
                 setCoinToWinningCoin();
             }
-        }, delay);
+        };
+
+        timer.start();
+    }
+
+    private void setWinningText(int textId){
+        TextView winningText = (TextView) findViewById(R.id.coin_flip_win_text);
+        winningText.setText(textId);
     }
 
 
