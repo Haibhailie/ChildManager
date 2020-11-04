@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="coin_flip_total_time">4000</integer>
+    <integer name="coin_flip_half_time">2000</integer>
+    <integer name="coin_flip_quarter_time">1000</integer>
+</resources>

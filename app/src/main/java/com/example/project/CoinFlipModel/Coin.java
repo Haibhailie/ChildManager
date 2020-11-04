@@ -8,7 +8,7 @@ import java.util.Random;
  *  Coin(double) Returns Coin Object with headRate = newRate.
  *
  *  headRate = chance of heads, 0.5 = 50%.
- *  flipCoin() returns 1 if heads, 0 if tails.
+ *  flipCoin() returns true if heads, false if tails.
  *  setHeadRate(double) sets a new headRate.
  */
 public class Coin {
@@ -24,11 +24,11 @@ public class Coin {
         headRate = newRate;
     }
 
-    public int flipCoin(){
+    public boolean flipCoin(){
         double randomNumber = randomGenerator.nextDouble();
         boolean result = randomNumber >= headRate;
 
-        return result ? 1 : 0;
+        return result;
     }
 
     public void setHeadRate(double newRate){

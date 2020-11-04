@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -26,7 +27,6 @@ import android.widget.TextView;
 
 import com.example.project.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseChildCoinFlipActivity extends AppCompatActivity {
@@ -52,18 +52,9 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
         Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
         populateListView();
+        registerClickCallback();
     }
 
     // Populates the List View with lenses.
@@ -104,6 +95,18 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
             return itemView;
         }
+    }
+
+    // Adds an on click event for each listView item.
+    private void registerClickCallback(){
+        ListView list = (ListView) findViewById(R.id.coin_flip_child_list_view);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, position);
+                startActivity(intent);
+            }
+        });
     }
 
     // Possible TODO: Change the childManager to laod on MainActivity instead of EditKidsActivity
