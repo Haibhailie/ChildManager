@@ -12,12 +12,14 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private CountDownTimer timer;
     private EditText customTimerText;
     private GifImageView calmingBGVideo;
+    private ProgressBar progress;
     private long timeLeft = 600000; //default value is 10 mins
     private long timeLeftbackup = 600000;
     private boolean isRunning;
@@ -58,8 +61,10 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initializeTimerScreen();
+
         CDText = findViewById(R.id.countdownText);
         CDButton = findViewById(R.id.startCountdown);
+
 
         CDButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +72,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 toggleTimeout();
             }
         });
+
     }
 
     public void toggleTimeout() {
@@ -76,6 +82,14 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
             startTimerCountdown();
     }
 
+    public void updateProgressBar(){
+
+        double progressComplete = 100*((float)timeLeftbackup-(float)timeLeft)/(float)timeLeftbackup;
+        progress.setProgress((int)progressComplete);
+        Log.d(TAG, "The progressbar percentage is: " +progressComplete+ "%");
+
+    }
+
     public void startTimerCountdown() {
         hideAllButtons();
         timer = new CountDownTimer(timeLeft, 1000) {
@@ -83,6 +97,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
             public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
                 setTimerText();
+                updateProgressBar();
             }
 
             @Override
@@ -114,6 +129,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void resetTimer() {
+        progress.setProgress(100);
         showAllButtons();
         timer.cancel();
         CDButton.setText("Start");
@@ -130,6 +146,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
     private void initializeTimerScreen(){
 
+        progress = (ProgressBar) findViewById(R.id.timerProgress);
         calmingBGVideo = (GifImageView) findViewById(R.id.calmBackground);
         CDTimerA = findViewById(R.id.min1Button);
         CDTimerB = findViewById(R.id.min2Button);
