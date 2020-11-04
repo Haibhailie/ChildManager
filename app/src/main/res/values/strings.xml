@@ -11,5 +11,5 @@
     <string name="flip_the_coin">Flip the Coin</string>
     <string name="title_activity_coin_flip">Flip A Coin</string>
     <string name="title_activity_choose_child_coin_flip">Who gets to flip the coin?</string>
-    <string name="coin_flip_select_kid">Select Kid:</string>
+    <string name="coin_flip_select_kid">Next kid in Queue:</string>
 </resources>

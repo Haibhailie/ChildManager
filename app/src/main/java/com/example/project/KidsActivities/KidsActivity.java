@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -23,7 +22,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +32,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.project.R;
 
@@ -167,11 +164,11 @@ public class KidsActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.kid_list, parent, false);
             }
             // Fill the view.
-            ImageView imageView = (ImageView) itemView.findViewById(R.id.item_icon);
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.child_avatar);
             int avatarId = childManager.getChildAvatarId(position);
             imageView.setImageResource(avatarId);
             // Fill the Info Text
-            TextView infoText = (TextView) itemView.findViewById(R.id.text_lensinfo);
+            TextView infoText = (TextView) itemView.findViewById(R.id.text_childinfo);
             infoText.setText(childManager.getChild(position).toString());
             return itemView;
         }
