@@ -1,5 +1,7 @@
 package com.example.project.Timeout;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
@@ -48,6 +50,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private EditText customTimerText;
     private GifImageView calmingBGVideo;
     private ProgressBar progress;
+    private NotificationManager manager;
+    private NotificationCompat.Builder builder;
     private long timeLeft = 600000; //default value is 10 mins
     private long timeLeftbackup = 600000;
     private boolean isRunning;
@@ -87,17 +91,45 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         double progressComplete = 100*((float)timeLeftbackup-(float)timeLeft)/(float)timeLeftbackup;
         progress.setProgress((int)progressComplete);
         Log.d(TAG, "The progressbar percentage is: " +progressComplete+ "%");
+    }
 
+    public void sendNotification(){
+
+        String textTitle = "Timeout Timer Running";
+        String textContent = "Time left: " + (int)timeLeft/60000 +"minutes and " + (int)(timeLeft % 60000) / 1000 + "seconds." ;
+        builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.timer_notification)
+                .setContentTitle(textTitle)
+                .setContentText(textContent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setOngoing(true);
+
+        Intent notificationIntent = new Intent(this, Timeout.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+        builder.setContentIntent(contentIntent);
+
+        manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
+
+    }
+
+    public void updateNotification(){
+
+        String textContent = "Time left: " + (int)timeLeft/60000 +" minutes and " + (int)(timeLeft % 60000) / 1000 + " seconds." ;
+        builder.setContentText(textContent);
+        manager.notify(0, builder.build());
     }
 
     public void startTimerCountdown() {
         hideAllButtons();
+        sendNotification();
         timer = new CountDownTimer(timeLeft, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
                 setTimerText();
                 updateProgressBar();
+                updateNotification();
             }
 
             @Override
@@ -111,6 +143,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
     public void pauseTimerCountdown() {
         showAllButtons();
+        manager.cancel(0);
         timer.cancel();
         CDButton.setText("Resume");
         isRunning = false;
