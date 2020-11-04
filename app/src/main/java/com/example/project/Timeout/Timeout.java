@@ -2,15 +2,13 @@ package com.example.project.Timeout;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-
-import com.example.project.KidsActivities.KidsActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,39 +17,30 @@ import androidx.core.app.NotificationCompat;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.project.R;
 
-import java.io.IOException;
 import java.util.Random;
-import java.util.StringTokenizer;
 
-import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
-import pl.droidsonroids.gif.GifTextView;
 
 public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
     private TextView CDText;
-    private Button CDButton;
-    private Button CDTimerA;
-    private Button CDTimerB;
-    private Button CDTimerC;
-    private Button CDTimerD;
-    private Button CDTimerE;
-    private Button CDTimerCustom;
-    private Button CDTimerReset;
+    private Button CDButton, CDTimerA, CDTimerB, CDTimerC, CDTimerD, CDTimerE, CDTimerCustom, CDTimerReset;
     private CountDownTimer timer;
     private EditText customTimerText;
     private GifImageView calmingBGVideo;
     private ProgressBar progress;
     private NotificationManager manager;
     private NotificationCompat.Builder builder;
+    private MediaPlayer alarmSound;
     private long timeLeft = 600000; //default value is 10 mins
     private long timeLeftbackup = 600000;
     private boolean isRunning;
@@ -60,23 +49,34 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        initializeTimerScreen();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Timeout Screen");
+        manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.cancelAll();
+                toggleTimeout();
+                finish();
+            }
+        });
+
+        initializeTimerScreen();
         CDText = findViewById(R.id.countdownText);
         CDButton = findViewById(R.id.startCountdown);
-
-
         CDButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleTimeout();
             }
         });
-
     }
 
     public void toggleTimeout() {
@@ -97,6 +97,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
         String textTitle = "Timeout Timer Running";
         String textContent = "Time left: " + (int)timeLeft/60000 +"minutes and " + (int)(timeLeft % 60000) / 1000 + "seconds." ;
+        Intent pauseTimer = new Intent(this, Timeout.class);
+
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.timer_notification)
                 .setContentTitle(textTitle)
@@ -105,19 +107,52 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 .setOngoing(true);
 
         Intent notificationIntent = new Intent(this, Timeout.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         builder.setContentIntent(contentIntent);
 
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
-
     }
 
     public void updateNotification(){
-
         String textContent = "Time left: " + (int)timeLeft/60000 +" minutes and " + (int)(timeLeft % 60000) / 1000 + " seconds." ;
         builder.setContentText(textContent);
         manager.notify(0, builder.build());
+    }
+
+    public void updateNotificationFinish(){
+        IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
+        registerReceiver(finishActivityReceiver, filter);
+        Intent intent = new Intent("android.intent.CLOSE_ACTIVITY");
+        PendingIntent pIntent = PendingIntent.getBroadcast(this, 0 , intent, 0);
+        manager.cancelAll();
+        builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.timer_notification)
+                .setContentTitle("Timeout Complete!")
+                .setContentText("Feel better!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setOngoing(true)
+                .addAction(R.drawable.timer_pause, "STOP", pIntent);
+        manager.notify(0, builder.build());
+    }
+
+    public void playAlarmSound(){
+        updateNotificationFinish();
+        alarmSound = MediaPlayer.create(this, R.raw.timer_alarm);
+        alarmSound.start();
+        final Animation blinkText = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_blink);
+        CDText.startAnimation(blinkText);
+        CDTimerReset.setVisibility(View.GONE);
+        CDButton.setVisibility(View.GONE);
+        Button stopButton = findViewById(R.id.stopButton);
+        stopButton.setVisibility(View.VISIBLE);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alarmSound.stop();
+                finish();
+            }
+        });
     }
 
     public void startTimerCountdown() {
@@ -131,9 +166,13 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 updateProgressBar();
                 updateNotification();
             }
-
             @Override
             public void onFinish() {
+                timeLeft=0;
+                playAlarmSound();
+                CDText.setText("0:00");
+                progress.setProgress(100);
+                updateNotification();
             }
         }.start();
 
@@ -162,6 +201,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void resetTimer() {
+        manager.cancel(0);
         progress.setProgress(100);
         showAllButtons();
         timer.cancel();
@@ -239,6 +279,15 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         Intent intent = new Intent(context, Timeout.class);
         return intent;
     }
+
+    BroadcastReceiver finishActivityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            manager.cancelAll();
+            alarmSound.stop();
+            finish();
+        }
+    };
 
     @Override
     public void onClick(View v) {

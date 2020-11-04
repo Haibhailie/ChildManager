@@ -15,42 +15,37 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="17dp" />
 
-
     <ProgressBar
         android:id="@+id/timerProgressBG"
+        style="?android:progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="143dp"
-        style="?android:progressBarStyleHorizontal"
-        android:progress="100"
         android:layout_marginTop="127dp"
         android:layout_marginEnd="144dp"
         android:layout_marginBottom="523dp"
+        android:progress="100"
+        android:progressDrawable="@drawable/circle_progress_bar_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:progressDrawable="@drawable/circle_progress_bar_bg"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/timerProgress"
+        style="?android:progressBarStyleHorizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginStart="143dp"
-        style="?android:progressBarStyleHorizontal"
-        android:progress="100"
         android:layout_marginTop="127dp"
         android:layout_marginEnd="144dp"
         android:layout_marginBottom="523dp"
+        android:progress="100"
+        android:progressDrawable="@drawable/circle_progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:progressDrawable="@drawable/circle_progress_bar"
-        />
-
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/countdownText"
@@ -171,6 +166,22 @@
         android:text="Set"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:visibility="gone"
+        android:layout_width="310dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="380dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginBottom="147dp"
+        android:text="STOP"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
