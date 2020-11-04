@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project.R;
 
@@ -41,8 +43,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private NotificationManager manager;
     private NotificationCompat.Builder builder;
     private MediaPlayer alarmSound;
-    private long timeLeft = 600000; //default value is 10 mins
-    private long timeLeftbackup = 600000;
+    private long timeLeft = 6000; //default value is 10 mins
+    private long timeLeftbackup = 6000;
     private boolean isRunning;
     private int[] gifSelector = {R.drawable.relaxing1, R.drawable.relaxing2, R.drawable.relaxing3, R.drawable.relaxing4, R.drawable.relaxing5};
     private final String TAG = "Timout Activity";
@@ -131,6 +133,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 .setContentTitle("Timeout Complete!")
                 .setContentText("Feel better!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.alarm_ringing))
                 .setOngoing(true)
                 .addAction(R.drawable.timer_pause, "STOP", pIntent);
         manager.notify(0, builder.build());
@@ -212,9 +215,14 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void setCustomButtonTimer() {
-        String customTimerString = String.valueOf(customTimerText.getText());
-        Log.d(TAG, "The timer now has " + customTimerString + " mins left. ");
-        timeLeft = Integer.parseInt(customTimerString) * 60000;
+        try {
+            String customTimerString = String.valueOf(customTimerText.getText());
+            Log.d(TAG, "The timer now has " + customTimerString + " mins left. ");
+            timeLeft = Integer.parseInt(customTimerString) * 60000;
+        }
+        catch (NumberFormatException e){
+            Toast.makeText(this, "It's empty!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initializeTimerScreen(){
