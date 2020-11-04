@@ -10,18 +10,20 @@
         android:id="@+id/calmBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-55dp" />
+        tools:layout_editor_absoluteY="17dp"
+        />
 
     <TextView
         android:id="@+id/countdownText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="146dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginBottom="390dp"
+        android:layout_marginStart="143dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="595dp"
         android:text="10:00"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"

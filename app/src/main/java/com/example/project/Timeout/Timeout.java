@@ -2,6 +2,8 @@ package com.example.project.Timeout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.project.KidsActivities.KidsActivity;
@@ -21,9 +23,13 @@ import android.widget.Toast;
 
 import com.example.project.R;
 
+import java.io.IOException;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
+import pl.droidsonroids.gif.GifTextView;
 
 public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,10 +44,11 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private Button CDTimerReset;
     private CountDownTimer timer;
     private EditText customTimerText;
-    private GifDrawable calmingBGVideo;
+    private GifImageView calmingBGVideo;
     private long timeLeft = 600000; //default value is 10 mins
     private long timeLeftbackup = 600000;
     private boolean isRunning;
+    private int[] gifSelector = {R.drawable.relaxing1, R.drawable.relaxing2, R.drawable.relaxing3, R.drawable.relaxing4, R.drawable.relaxing5};
     private final String TAG = "Timout Activity";
 
     @Override
@@ -51,7 +58,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initializeTimerButtons();
+        initializeTimerScreen();
 
         CDText = findViewById(R.id.countdownText);
         CDButton = findViewById(R.id.startCountdown);
@@ -123,8 +130,9 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         timeLeft = Integer.parseInt(customTimerString) * 60000;
     }
 
-    private void initializeTimerButtons() {
+    private void initializeTimerScreen(){
 
+        calmingBGVideo = (GifImageView) findViewById(R.id.calmBackground);
         CDTimerA = findViewById(R.id.min1Button);
         CDTimerB = findViewById(R.id.min2Button);
         CDTimerC = findViewById(R.id.min3Button);
@@ -144,9 +152,18 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void startCalmingVideo(){
-
+        Random random = new Random();
+        int gifNumber = random.nextInt(4)+0;
+        if(gifNumber==0||gifNumber==1||gifNumber==4)
+            CDText.setTextColor(Color.WHITE);
+        calmingBGVideo.setBackgroundResource(gifSelector[gifNumber]);
+        calmingBGVideo.setVisibility(View.VISIBLE);
     }
 
+    private void stopCalmingVideo(){
+        calmingBGVideo.setVisibility(View.GONE);
+        CDText.setTextColor(Color.BLACK);
+    }
 
     private void hideAllButtons(){
         CDTimerA.setVisibility(View.GONE);
@@ -156,6 +173,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         CDTimerE.setVisibility(View.GONE);
         CDTimerCustom.setVisibility(View.GONE);
         customTimerText.setVisibility(View.GONE);
+        startCalmingVideo();
     }
 
     private void showAllButtons(){
@@ -166,6 +184,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         CDTimerE.setVisibility(View.VISIBLE);
         CDTimerCustom.setVisibility(View.VISIBLE);
         customTimerText.setVisibility(View.VISIBLE);
+        stopCalmingVideo();
     }
 
     public static Intent makeLaunchIntent(Context context) {
