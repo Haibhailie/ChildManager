@@ -57,9 +57,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_timeout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         initializeTimerScreen();
-
         CDText = findViewById(R.id.countdownText);
         CDButton = findViewById(R.id.startCountdown);
 

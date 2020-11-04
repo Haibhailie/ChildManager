@@ -13,17 +13,16 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="17dp"
-        />
+        tools:layout_editor_absoluteY="17dp" />
 
     <TextView
         android:id="@+id/countdownText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="143dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="127dp"
         android:layout_marginEnd="144dp"
-        android:layout_marginBottom="595dp"
+        android:layout_marginBottom="523dp"
         android:text="10:00"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
