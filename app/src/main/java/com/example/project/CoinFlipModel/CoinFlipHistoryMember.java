@@ -1,19 +1,28 @@
 package com.example.project.CoinFlipModel;
 
+
+/**
+ * CoinFlipMember:
+ *  Holds the history of a single coinflip
+ *
+ *  childId: (int) Unique id of the child
+ *  winLoseIcon: (int) Drawable Resource
+ *  HeadsTailsIcon: (int) Drawable Resource
+ */
 public class CoinFlipHistoryMember {
 
-    private int childID;
+    private int childId;
     private int winLoseIcon;
     private int headsTailsIcon;
 
     public CoinFlipHistoryMember(int childID, int winLoseIcon, int headTailsIcon){
-        this.childID = childID;
+        this.childId = childID;
         this.winLoseIcon = winLoseIcon;
         this.headsTailsIcon = headTailsIcon;
     }
 
-    public int getChildID() {
-        return childID;
+    public int getChildId() {
+        return childId;
     }
 
     public int getWinLoseIcon(){

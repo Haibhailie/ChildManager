@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.CoinFlipModel.CoinFlipHistoryManager;
 import com.example.project.CoinFlipModel.CoinFlipHistoryMember;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,21 +25,28 @@ import android.widget.ToggleButton;
 
 import com.example.project.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Allows the user to see the history of coin flips.
+ * Can sort coin flips by child.
+ *
+ * Possible bug: User deletes child. - Handled but can be done better
+ */
+
 public class CoinFlipHistoryActivity extends AppCompatActivity {
 
-    private final String CHILDMANAGER_TAG = "ChildManager";
-    private static final String COIN = "Coin";
     private static final String EXTRA_INDEX = "CoinFlipHistory - ChildIndex";
+
+    private static final String CHILDMANAGER_TAG = "ChildManager";
+    private static final String COIN = "Coin";
+    private static final String UP = "UP";
 
     private int childIndex;
     private ChildManager childManager;
     private CoinFlipHistoryManager flipManager;
-
-    private List<CoinFlipHistoryMember> chosenChildHistory = new ArrayList<>();
+    private List<CoinFlipHistoryMember> chosenChildHistory;
 
     public static Intent makeLaunchIntent(Context context, int index) {
         Intent intent = new Intent(context, CoinFlipHistoryActivity.class);
@@ -62,19 +66,27 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Enable "up" on toolbar
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e){
+            Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
+        }
+
+        // Setup
         extractDataFromIntent();
+
         childManager = ChildManager.getInstance();
         flipManager = CoinFlipHistoryManager.getInstance();
-        chosenChildHistory = getHistoryOfOneChildFromIndex(childIndex);
-        addOnClickToggle();
-        setButtonToChildName();
+        chosenChildHistory = new ArrayList<>();
 
-        // Enable "up" on toolbar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        chosenChildHistory = getHistoryOfOneChildFromIndex(childIndex);
+        populateListView(flipManager.getFlipList());
+        setButtonToChildName();
+        addOnClickToggle();
 
         Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
-        populateListView(flipManager.getFlipList());
     }
 
     private void addOnClickToggle(){
@@ -107,25 +119,20 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
         for(CoinFlipHistoryMember flip : flipManager.getFlipList()){
 
-            if(flip.getChildID() == childID){
+            if(flip.getChildId() == childID){
                 childList.add(flip);
             }
         }
-
         return childList;
     }
 
 
     private void populateListView(List<CoinFlipHistoryMember> coinFlipList){
-
         ListAdapter adapter = new CoinFlipHistoryActivity.MyListAdapter(coinFlipList);
-
         ListView list = (ListView) findViewById(R.id.coin_flip_history_list);
         list.setAdapter(adapter);
-
     }
 
-    // Adds an adapter to the list view. Allows for on images to be added.
     private class MyListAdapter extends ArrayAdapter<CoinFlipHistoryMember> {
 
         List<CoinFlipHistoryMember> flipList;
@@ -138,11 +145,12 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            int childIndex = -1;
+            int childIndex;
 
             try {
-                childIndex = childManager.findChildIndexById(flipList.get(position).getChildID());
+                childIndex = childManager.findChildIndexById(flipList.get(position).getChildId());
             } catch (Exception e){
+                childIndex = -1;
                 Log.println(Log.ERROR, CHILDMANAGER_TAG, "Failed to load: " + e.getMessage());
             }
 

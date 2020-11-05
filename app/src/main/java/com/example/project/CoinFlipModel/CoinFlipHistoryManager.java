@@ -1,10 +1,23 @@
 package com.example.project.CoinFlipModel;
 
-import com.example.project.ChildModel.Child;
-
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * CoinFlipManager: (Singleton)
+ *  Manages CoinFlipMemebers in a List
+ *  Contains the history of a coinflips
+ *
+ *  getFlipWinLoseIcon(index) Returns an int to R.drawable.
+ *  getFlipHeadsTailsIcon(index) Returns an int to R.drawable.
+ *  getFlipChildId(index) Returns Id of a child
+ *  getFlipList() Returns the CoinFlipHistoryMember list
+ *
+ *  setFlipList(List<CoinFlipHistoryMember>) Sets the CoinFlipHistory list
+ *
+ *  add(CoinFlipHistoryMember) adds an item to the beginning of the list
+ */
 public class CoinFlipHistoryManager {
 
     private static CoinFlipHistoryManager instance;
@@ -35,8 +48,8 @@ public class CoinFlipHistoryManager {
         return flipList.get(index).getHeadsTailsIcon();
     }
 
-    public int getFlipChildID(int index){
-        return flipList.get(index).getChildID();
+    public int getFlipChildId(int index){
+        return flipList.get(index).getChildId();
     }
 
     public int getLength(){

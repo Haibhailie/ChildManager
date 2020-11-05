@@ -14,13 +14,21 @@
     <string name="coin_flip_select_kid">Next kid in Queue:</string>
     <string name="coin_flip_heads">Heads</string>
     <string name="coin_flip_tails">Tails</string>
-    <string name="title_activity_coin_flip_history">CoinFlipHistory</string>
+    <string name="title_activity_coin_flip_history">Coin Flip History</string>
     <string name="coin_flip_history_button_text">View History</string>
     <string name="message_layout_heads_button_text">Heads</string>
     <string name="message_layout_tails_button_text">Tails</string>
     <string name="message_layout_text">Select</string>
     <string name="coin_flip_history_single">Only %s</string>
     <string name="coin_flip_history_all">All Children</string>
+    <string name="coin_flip_history_oracle">"View History By: "</string>
+    <string name="coin_flip_heads_tails_or">" OR "</string>
+    <string name="coin_flip_select_select">Select Kid:</string>
+    <string name="win_lose_content">Win Lose Icon</string>
+    <string name="avatar_content">Avatar</string>
+    <string name="coin_content">Coin</string>
+    <string name="tails_coin_desc">Tails</string>
+    <string name="heads_coin_desc">Heads</string>
 
     <string name="countdownTimer">Countdown Timer</string>
     <string name="title_activity_timeout">Timeout</string>
@@ -35,5 +43,4 @@
     <string name="reset">Reset</string>
     <string name="start">Start</string>
     <string name="_10_00">10:00</string>
-    <string name="coin_flip_history_oracle">"View History By: "</string>
 </resources>

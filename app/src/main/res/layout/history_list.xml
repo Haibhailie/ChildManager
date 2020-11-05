@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -11,6 +10,7 @@
         android:id="@+id/coin_flip_history_win_lose_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:contentDescription="@string/win_lose_content"
         app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_coin_chosen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/coin_flip_history_coin_chosen"
@@ -20,6 +20,7 @@
         android:id="@+id/coin_flip_history_child_avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:contentDescription="@string/avatar_content"
         app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_coin_chosen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -32,6 +33,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
+        android:contentDescription="@string/coin_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/coin_flip_history_win_lose_image"

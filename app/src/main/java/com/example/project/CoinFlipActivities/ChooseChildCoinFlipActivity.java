@@ -13,7 +13,6 @@ import com.example.project.KidsActivities.EditKidsActivity;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,10 +31,17 @@ import com.example.project.R;
 
 import java.util.List;
 
+/**
+ * Allows the user to choose which child that will get the coinflip.
+ * Prompts child with choice.
+ *
+ * Passes the index of the child and the choice of heads or tails.
+ */
 public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
-
+    private final String UP = "UP";
     private final String CHILDMANAGER_TAG = "ChildManager";
+
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String INDEX_PREFS_NAME = "IndexPref" ;
 
@@ -46,6 +52,12 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         return new Intent(context, ChooseChildCoinFlipActivity.class);
     }
 
+    public void launchCoinFlip(int position, boolean choice){
+        Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, position, choice);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,35 +65,45 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Loads Children History
         childManager = ChildManager.getInstance();
-        flipIndex = loadFlipIndex(ChooseChildCoinFlipActivity.this);
         loadChildData();
+        checkIfAnyChildrenInManager();
+
+        flipIndex = loadFlipIndex(ChooseChildCoinFlipActivity.this);
         loadFlipIndex(ChooseChildCoinFlipActivity.this);
 
         // Enable "up" on toolbar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e){
+            Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
+        }
+
 
         Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
         populateListView();
-        registerClickCallback();
+        registerListItemClickCallback();
         if (childManager.getLength()>0) {
             setupQueueKid();
         }
 
     }
 
-    // Populates the List View with lenses.
+    private void checkIfAnyChildrenInManager() {
+        if(childManager.getLength() == 0){
+            Log.println(Log.INFO, CHILDMANAGER_TAG, "No Children, moving onto coin flip");
+            launchCoinFlip(-1, false);
+        }
+    }
+
     private void populateListView(){
-
         ListAdapter adapter = new MyListAdapter();
-
-        // Configure
         ListView list = (ListView) findViewById(R.id.coin_flip_child_list_view);
         list.setAdapter(adapter);
     }
 
-    // Adds an adapter to the list view. Allows for on images to be added.
     private class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter(){
             super(ChooseChildCoinFlipActivity.this, R.layout.kid_list, childManager.getChildList());
@@ -108,13 +130,12 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         }
     }
 
-    // Adds an on click event for each listView item.
-    private void registerClickCallback(){
+    private void registerListItemClickCallback(){
         ListView list = (ListView) findViewById(R.id.coin_flip_child_list_view);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                createHeadsTailsChoice(position);
+                createHeadsTailsChoiceDialog(position);
             }
         });
     }
@@ -129,13 +150,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         }
     }
 
-    public void launchCoinFlip(int position, boolean choice){
-        Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, position, choice);
-        startActivity(intent);
-        finish();
-    }
-
-    private void createHeadsTailsChoice(final int position){
+    private void createHeadsTailsChoiceDialog(final int position){
 
         View v = LayoutInflater.from(ChooseChildCoinFlipActivity.this).inflate(R.layout.heads_tails_message, null);
         final Dialog dialog = new Dialog(ChooseChildCoinFlipActivity.this);
@@ -183,8 +198,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private int loadFlipIndex(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
-        int index = prefs.getInt(INDEX_PREFS_NAME, 0);
-        return index;
+        return prefs.getInt(INDEX_PREFS_NAME, 0);
     }
 
     private void setupQueueKid() {
@@ -201,7 +215,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // update flip index
                 int currentFlipIndex = flipIndex;
-                createHeadsTailsChoice(flipIndex);
+                createHeadsTailsChoiceDialog(flipIndex);
                 updateFlipIndex();
                 saveFlipIndex(ChooseChildCoinFlipActivity.this, currentFlipIndex);
 

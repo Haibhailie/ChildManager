@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.CoinFlipModel.Coin;
 import com.example.project.CoinFlipModel.CoinFlipHistoryManager;
 import com.example.project.CoinFlipModel.CoinFlipHistoryMember;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,23 +31,31 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Flips a two headed coin with equal weight.
+ * Returns to MainActivity
+ *
+ * Passes index of the child
+ */
+
 public class CoinFlipActivity extends AppCompatActivity {
 
     private static final String COIN = "Coin";
+    private static final String UP = "UP";
+    private static final String CHILDMANAGER_TAG = "ChildManager";
+
     private static final String EXTRA_INDEX = "CoinFlip - ChildIndex";
     private static final String EXTRA_CHOICE = "CoinFlip - ChildChoice";
-
 
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String FLIP_PREFS_NAME = "FlipPrefs";
 
-    private int childIndex;
+    private int indexOfChild;
     private boolean childChoiceIsHeads;
 
     private ChildManager childManager;
     private CoinFlipHistoryManager flipManager;
-
-    private Coin coin = new Coin();
+    private Coin coin;
 
     public static Intent makeLaunchIntent(Context context, int index, boolean isHeads) {
         Intent intent = new Intent(context, CoinFlipActivity.class);
@@ -61,7 +66,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private void extractDataFromIntent(){
         Intent intent = getIntent();
-        childIndex = intent.getIntExtra(EXTRA_INDEX, -1);
+        indexOfChild = intent.getIntExtra(EXTRA_INDEX, -1);
         childChoiceIsHeads = intent.getBooleanExtra(EXTRA_CHOICE, false);
     }
 
@@ -73,25 +78,25 @@ public class CoinFlipActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Enable "up" on toolbar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        coinAnimation();
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e){
+            Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
+        }
 
         // Setup
         extractDataFromIntent();
+        setHistoryButtonVisibility(View.GONE);
+
         childManager = ChildManager.getInstance();
         flipManager = CoinFlipHistoryManager.getInstance();
-        loadSavedHistory();
-        historyButtonListener();
+        coin = new Coin();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        historyButtonListener();
+        loadSavedHistory();
+        coinAnimation();
+
     }
 
     private void loadSavedHistory(){
@@ -106,11 +111,16 @@ public class CoinFlipActivity extends AppCompatActivity {
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = CoinFlipHistoryActivity.makeLaunchIntent(CoinFlipActivity.this, childIndex);
-                startActivity(intent);
+                launchCoinFlipHistory();
             }
         });
     }
+
+    private void launchCoinFlipHistory(){
+        Intent intent = CoinFlipHistoryActivity.makeLaunchIntent(CoinFlipActivity.this, indexOfChild);
+        startActivity(intent);
+    }
+
 
     private void coinAnimation(){
         View coinTails = findViewById(R.id.coin_flip_tails);
@@ -165,13 +175,25 @@ public class CoinFlipActivity extends AppCompatActivity {
         }
 
         coinImage.setAlpha(0f);
-        CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildID(childIndex),
-                winLostIcon, headsTailsIcon);
-        flipManager.add(newFlip);
-        saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
+
+        // Save History if a child chose
+        if(indexOfChild != -1) {
+            CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildID(indexOfChild),
+                    winLostIcon, headsTailsIcon);
+            flipManager.add(newFlip);
+            saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
+        }
+        setHistoryButtonVisibility(View.VISIBLE);
 
         Log.println(Log.INFO, COIN, "Landed: "  + logInfoText);
 
+    }
+
+    private void setHistoryButtonVisibility(int visibility) {
+        if(indexOfChild != -1) {
+            Button historyButton = (Button) findViewById(R.id.coin_flip_history_button);
+            historyButton.setVisibility(visibility);
+        }
     }
 
     private void coinFlipTimerSetWinner(){
