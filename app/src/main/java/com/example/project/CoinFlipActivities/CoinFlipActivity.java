@@ -38,25 +38,31 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private static final String COIN = "Coin";
     private static final String EXTRA_INDEX = "CoinFlip - ChildIndex";
+    private static final String EXTRA_CHOICE = "CoinFlip - ChildChoice";
+
 
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String FLIP_PREFS_NAME = "FlipPrefs";
 
     private int childIndex;
+    private boolean childChoiceIsHeads;
+
     private ChildManager childManager;
     private CoinFlipHistoryManager flipManager;
 
     private Coin coin = new Coin();
 
-    public static Intent makeLaunchIntent(Context context, int index) {
+    public static Intent makeLaunchIntent(Context context, int index, boolean isHeads) {
         Intent intent = new Intent(context, CoinFlipActivity.class);
         intent.putExtra(EXTRA_INDEX, index);
+        intent.putExtra(EXTRA_CHOICE, isHeads);
         return intent;
     }
 
     private void extractDataFromIntent(){
         Intent intent = getIntent();
         childIndex = intent.getIntExtra(EXTRA_INDEX, -1);
+        childChoiceIsHeads = intent.getBooleanExtra(EXTRA_CHOICE, false);
     }
 
     @Override
@@ -110,10 +116,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         View coinTails = findViewById(R.id.coin_flip_tails);
         View coinHeads = findViewById(R.id.coin_flip_heads);
 
-        Animation tailAnimaition = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_tails);
-        Animation headanimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_heads);
+        Animation tailAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_tails);
+        Animation headAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_heads);
 
-        tailAnimaition.setAnimationListener(new Animation.AnimationListener(){
+        tailAnimation.setAnimationListener(new Animation.AnimationListener(){
             @Override
             public void onAnimationStart(Animation arg0) {
                 coinFlipTimerSetWinner();
@@ -126,8 +132,8 @@ public class CoinFlipActivity extends AppCompatActivity {
             }
         });
 
-        coinHeads.startAnimation(headanimation);
-        coinTails.startAnimation(tailAnimaition);
+        coinHeads.startAnimation(headAnimation);
+        coinTails.startAnimation(tailAnimation);
         Log.println(Log.INFO, COIN, "Starting animation: Coin");
     }
 
@@ -136,24 +142,31 @@ public class CoinFlipActivity extends AppCompatActivity {
         String logInfoText;
 
         boolean heads = coin.flipCoin();
-        int headsTailsIcon = -1;
+        int headsTailsIcon;
+        int winLostIcon;
 
         if(heads){
-            headsTailsIcon = R.drawable.c_coin_heads;
             coinImage = (ImageView) findViewById(R.id.coin_flip_tails);
             setWinningText(R.string.coin_flip_heads);
+            headsTailsIcon = R.drawable.c_coin_heads;
             logInfoText = "Heads";
         }
         else {
-            headsTailsIcon = R.drawable.c_coin_tails;
             coinImage = (ImageView) findViewById(R.id.coin_flip_heads);
             setWinningText(R.string.coin_flip_tails);
+            headsTailsIcon = R.drawable.c_coin_tails;
             logInfoText = "Tails";
+        }
+
+        if(heads == childChoiceIsHeads) {
+            winLostIcon = R.drawable.y_mark;
+        } else{
+            winLostIcon = R.drawable.x_mark;
         }
 
         coinImage.setAlpha(0f);
         CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildID(childIndex),
-                R.drawable.x_mark, headsTailsIcon);
+                winLostIcon, headsTailsIcon);
         flipManager.add(newFlip);
         saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
 
@@ -192,7 +205,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         editor.putString(FLIP_PREFS_NAME, json);
         editor.apply();
 
-        Log.println(Log.INFO, FLIP_PREFS_NAME, "Saved History. Total Saved: " + flipList.size());
+        Log.println(Log.INFO, FLIP_PREFS_NAME, "Saved History. Total Saved: " + ((flipList != null) ? flipList.size() : ""));
     }
 
     public static List<CoinFlipHistoryMember> getHistory(Context context) {

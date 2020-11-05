@@ -1,5 +1,6 @@
 package com.example.project.CoinFlipActivities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,12 +13,15 @@ import com.example.project.KidsActivities.EditKidsActivity;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -110,9 +114,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, position);
-                startActivity(intent);
-                finish();
+                createHeadsTailsChoice(position);
             }
         });
     }
@@ -127,6 +129,42 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         }
     }
 
+    public void launchCoinFlip(int position, boolean choice){
+        Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, position, choice);
+        startActivity(intent);
+        finish();
+    }
+
+    private void createHeadsTailsChoice(final int position){
+
+        View v = LayoutInflater.from(ChooseChildCoinFlipActivity.this).inflate(R.layout.heads_tails_message, null);
+        final Dialog dialog = new Dialog(ChooseChildCoinFlipActivity.this);
+
+        dialog.setContentView(v);
+        dialog.setTitle("Choice:");
+
+        Button headButton = (Button) dialog.findViewById(R.id.message_layout_heads_button);
+        Button tailsButton = (Button) dialog.findViewById(R.id.message_layout_tails_button);
+
+        headButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                launchCoinFlip(position, true);
+            }
+        });
+
+        tailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                launchCoinFlip(position, false);
+            }
+        });
+
+        dialog.show();
+    }
+
     /*
         Following code figure out who's in the head of queue
     */
@@ -134,8 +172,8 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     private void updateFlipIndex() {
         flipIndex = (flipIndex+1) % childManager.getLength();
     }
-
     // Save and Load FlipIndex
+
     private void saveFlipIndex(Context context, int flipIndex) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -162,10 +200,11 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // update flip index
-                Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, flipIndex);
+                int currentFlipIndex = flipIndex;
+                createHeadsTailsChoice(flipIndex);
                 updateFlipIndex();
-                saveFlipIndex(ChooseChildCoinFlipActivity.this, flipIndex);
-                startActivity(intent);
+                saveFlipIndex(ChooseChildCoinFlipActivity.this, currentFlipIndex);
+
             }
         });
     }
