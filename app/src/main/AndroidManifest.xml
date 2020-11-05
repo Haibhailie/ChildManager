@@ -16,6 +16,11 @@
             android:label="@string/title_activity_coin_flip_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".Timeout.Timeout"
+            android:launchMode="singleTop"
+            android:label="@string/title_activity_timeout"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".CoinFlipActivities.ChooseChildCoinFlipActivity"
             android:label="@string/title_activity_choose_child_coin_flip"
             android:parentActivityName=".MainActivity"
@@ -31,19 +36,21 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".KidsActivities.EditKidsActivity"
             android:label="@string/title_activity_edit_kids"
             android:parentActivityName=".KidsActivities.KidsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".KidsActivities.KidsActivity"
             android:label="@string/title_activity_kids"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
 </manifest>

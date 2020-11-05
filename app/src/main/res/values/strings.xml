@@ -19,4 +19,24 @@
     <string name="message_layout_heads_button_text">Heads</string>
     <string name="message_layout_tails_button_text">Tails</string>
     <string name="message_layout_text">Select</string>
+    <string name="title_activity_timeout">Timeout</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="stop">STOP</string>
+    <string name="custom_timer">Custom Timer</string>
+    <string name="set">Set</string>
+    <string name="_10">10</string>
+    <string name="_5">5</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="reset">Reset</string>
+    <string name="start">Start</string>
+    <string name="_10_00">10:00</string>
 </resources>
