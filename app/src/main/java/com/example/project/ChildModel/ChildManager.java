@@ -1,6 +1,7 @@
 package com.example.project.ChildModel;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.example.project.KidsActivities.EditKidsActivity;
 
@@ -78,6 +79,18 @@ public class ChildManager {
 
     public int getLength() {
         return childList.size();
+    }
+
+    public int findChildIndexById(int id){
+
+        for(int i = 0; i < this.getLength(); i++){
+            if(this.getChildID(i) == id){
+                return i;
+            }
+        }
+
+        Log.println(Log.ERROR, "CHILD", "Missing Child " + id);
+        return -1;
     }
 
 }

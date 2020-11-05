@@ -2,10 +2,16 @@ package com.example.project.CoinFlipActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.CoinFlipModel.Coin;
+import com.example.project.CoinFlipModel.CoinFlipHistoryManager;
+import com.example.project.CoinFlipModel.CoinFlipHistoryMember;
+import com.example.project.KidsActivities.EditKidsActivity;
+import com.example.project.KidsActivities.KidsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,22 +24,29 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.project.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CoinFlipActivity extends AppCompatActivity {
 
     private static final String COIN = "Coin";
     private static final String EXTRA_INDEX = "CoinFlip - ChildIndex";
 
+    private static final String APP_PREFS_NAME = "AppPrefs";
+    private static final String FLIP_PREFS_NAME = "FlipPrefs";
+
     private int childIndex;
     private ChildManager childManager;
+    private CoinFlipHistoryManager flipManager;
 
     private Coin coin = new Coin();
 
@@ -63,6 +76,9 @@ public class CoinFlipActivity extends AppCompatActivity {
         // Setup
         extractDataFromIntent();
         childManager = ChildManager.getInstance();
+        flipManager = CoinFlipHistoryManager.getInstance();
+        loadSavedHistory();
+        historyButtonListener();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +86,24 @@ public class CoinFlipActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void loadSavedHistory(){
+        List<CoinFlipHistoryMember> savedHistory = getHistory(CoinFlipActivity.this);
+        if (savedHistory != null) {
+            flipManager.setFlipList(savedHistory);
+        }
+    }
+
+    private void historyButtonListener(){
+        Button history = (Button) findViewById(R.id.coin_flip_history_button);
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = CoinFlipHistoryActivity.makeLaunchIntent(CoinFlipActivity.this, childIndex);
+                startActivity(intent);
             }
         });
     }
@@ -103,7 +137,9 @@ public class CoinFlipActivity extends AppCompatActivity {
         ImageView coinImage;
         String logInfoText;
 
-        if(coin.flipCoin()){
+        boolean heads = coin.flipCoin();
+
+        if(heads){
             coinImage = (ImageView) findViewById(R.id.coin_flip_tails);
             setWinningText(R.string.coin_flip_heads);
             logInfoText = "Heads";
@@ -115,6 +151,10 @@ public class CoinFlipActivity extends AppCompatActivity {
         }
 
         coinImage.setAlpha(0f);
+        CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildID(childIndex),
+                heads);
+        flipManager.add(newFlip);
+        saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
 
         Log.println(Log.INFO, COIN, "Landed: "  + logInfoText);
 
@@ -140,6 +180,29 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void setWinningText(int textId){
         TextView winningText = (TextView) findViewById(R.id.coin_flip_win_text);
         winningText.setText(textId);
+    }
+
+    // Reference: https://www.youtube.com/watch?v=jcliHGR3CHo&ab_channel=CodinginFlow
+    public static void saveHistory(Context context, List<CoinFlipHistoryMember> flipList) {
+        SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(flipList);
+        editor.putString(FLIP_PREFS_NAME, json);
+        editor.apply();
+
+        Log.println(Log.INFO, FLIP_PREFS_NAME, "Saved History. Total Saved: " + flipList.size());
+    }
+
+    public static List<CoinFlipHistoryMember> getHistory(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString(FLIP_PREFS_NAME, null);
+        Type type = new TypeToken<ArrayList<CoinFlipHistoryMember>>() {}.getType();
+        List<CoinFlipHistoryMember> flipList = gson.fromJson(json, type);
+
+        Log.println(Log.INFO, FLIP_PREFS_NAME, "Loaded History. Total Loaded: " + ((flipList != null) ? flipList.size() : ""));
+        return flipList;
     }
 
 
