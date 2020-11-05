@@ -10,8 +10,6 @@ import com.example.project.ChildModel.ChildManager;
 import com.example.project.CoinFlipModel.Coin;
 import com.example.project.CoinFlipModel.CoinFlipHistoryManager;
 import com.example.project.CoinFlipModel.CoinFlipHistoryMember;
-import com.example.project.KidsActivities.EditKidsActivity;
-import com.example.project.KidsActivities.KidsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -138,13 +136,16 @@ public class CoinFlipActivity extends AppCompatActivity {
         String logInfoText;
 
         boolean heads = coin.flipCoin();
+        int headsTailsIcon = -1;
 
         if(heads){
+            headsTailsIcon = R.drawable.c_coin_heads;
             coinImage = (ImageView) findViewById(R.id.coin_flip_tails);
             setWinningText(R.string.coin_flip_heads);
             logInfoText = "Heads";
         }
         else {
+            headsTailsIcon = R.drawable.c_coin_tails;
             coinImage = (ImageView) findViewById(R.id.coin_flip_heads);
             setWinningText(R.string.coin_flip_tails);
             logInfoText = "Tails";
@@ -152,7 +153,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         coinImage.setAlpha(0f);
         CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildID(childIndex),
-                heads);
+                R.drawable.x_mark, headsTailsIcon);
         flipManager.add(newFlip);
         saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
 

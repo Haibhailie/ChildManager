@@ -24,11 +24,15 @@ public class CoinFlipHistoryManager {
     }
 
     public void add(CoinFlipHistoryMember newFlip){
-        flipList.add(newFlip);
+        flipList.add(0, newFlip);
     }
 
-    public boolean getFlipWinLose(int index){
-        return flipList.get(index).getWinLose();
+    public int getFlipWinLoseIcon(int index){
+        return flipList.get(index).getWinLoseIcon();
+    }
+
+    public int getFlipHeadsTailsIcon(int index){
+        return flipList.get(index).getHeadsTailsIcon();
     }
 
     public int getFlipChildID(int index){

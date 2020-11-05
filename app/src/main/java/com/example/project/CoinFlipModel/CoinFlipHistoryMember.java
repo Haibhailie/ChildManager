@@ -3,18 +3,24 @@ package com.example.project.CoinFlipModel;
 public class CoinFlipHistoryMember {
 
     private int childID;
-    private boolean winLose;
+    private int winLoseIcon;
+    private int headsTailsIcon;
 
-    public CoinFlipHistoryMember(int childID, boolean winLose){
+    public CoinFlipHistoryMember(int childID, int winLoseIcon, int headTailsIcon){
         this.childID = childID;
-        this.winLose = winLose;
+        this.winLoseIcon = winLoseIcon;
+        this.headsTailsIcon = headTailsIcon;
     }
 
     public int getChildID() {
         return childID;
     }
 
-    public boolean getWinLose(){
-        return winLose;
+    public int getWinLoseIcon(){
+        return winLoseIcon;
+    }
+
+    public int getHeadsTailsIcon(){
+        return headsTailsIcon;
     }
 }

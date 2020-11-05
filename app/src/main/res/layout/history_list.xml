@@ -9,17 +9,29 @@
 
     <ImageView
         android:id="@+id/coin_flip_history_win_lose_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_child_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_coin_chosen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_delete" />
+        app:layout_constraintTop_toTopOf="@+id/coin_flip_history_coin_chosen"
+        app:srcCompat="@drawable/x_mark" />
 
     <ImageView
         android:id="@+id/coin_flip_history_child_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_coin_chosen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/coin_flip_history_coin_chosen"
+        app:layout_constraintTop_toTopOf="@+id/coin_flip_history_coin_chosen"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <ImageView
+        android:id="@+id/coin_flip_history_coin_chosen"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/coin_flip_history_win_lose_image"

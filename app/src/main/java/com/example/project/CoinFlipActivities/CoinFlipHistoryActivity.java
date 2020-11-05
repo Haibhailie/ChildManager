@@ -97,18 +97,14 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             // Fill the view
             ImageView childAvatar = (ImageView) itemView.findViewById(R.id.coin_flip_history_child_avatar);
             ImageView winLoseIcon = (ImageView) itemView.findViewById(R.id.coin_flip_history_win_lose_image);
+            ImageView headsTailsIcon = (ImageView) itemView.findViewById(R.id.coin_flip_history_coin_chosen);
 
-            if(flipManager.getFlipWinLose(position)){
-                winLoseIcon.setImageResource(R.drawable.ic_delete);
-            } else {
-                winLoseIcon.setImageResource(R.drawable.c_coin_heads);
-            }
-
+            winLoseIcon.setImageResource(flipManager.getFlipWinLoseIcon(position));
+            headsTailsIcon.setImageResource(flipManager.getFlipHeadsTailsIcon(position));
 
             if(childIndex == -1) {
                 childAvatar.setImageResource(R.drawable.default_avator);
-            }
-            else{
+            }else{
                 childAvatar.setImageResource(childManager.getChildAvatarId(childIndex));
             }
 

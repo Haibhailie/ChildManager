@@ -117,7 +117,6 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         });
     }
 
-    // Possible TODO: Change the childManager to laod on MainActivity instead of EditKidsActivity
     private void loadChildData(){
         if(childManager.getLength() == 0){
             List<Child> savedChildList = EditKidsActivity.getKidsRecord(ChooseChildCoinFlipActivity.this);
