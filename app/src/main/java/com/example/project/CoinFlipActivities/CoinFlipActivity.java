@@ -3,6 +3,7 @@ package com.example.project.CoinFlipActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.ChildManager;
@@ -129,6 +130,8 @@ public class CoinFlipActivity extends AppCompatActivity {
         Animation tailAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_tails);
         Animation headAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_heads);
 
+        playSound(R.raw.coinflip);
+
         tailAnimation.setAnimationListener(new Animation.AnimationListener(){
             @Override
             public void onAnimationStart(Animation arg0) {
@@ -145,6 +148,11 @@ public class CoinFlipActivity extends AppCompatActivity {
         coinHeads.startAnimation(headAnimation);
         coinTails.startAnimation(tailAnimation);
         Log.println(Log.INFO, COIN, "Starting animation: Coin");
+    }
+
+    private void playSound(int soundResource){
+        final MediaPlayer mp = MediaPlayer.create(this, soundResource);
+        mp.start();
     }
 
     private void setCoinToWinningCoin(){
@@ -207,6 +215,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 setCoinToWinningCoin();
+                playSound(R.raw.coinland);
             }
         };
 
