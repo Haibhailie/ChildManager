@@ -19,6 +19,7 @@ import com.example.project.ChildModel.ChildManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -51,6 +52,9 @@ public class KidsActivity extends AppCompatActivity {
         }
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
+        // Enable "up" on toolbar
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
