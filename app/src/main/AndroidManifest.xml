@@ -50,7 +50,7 @@
             android:name=".KidsActivities.KidsActivity"
             android:label="@string/title_activity_kids"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
