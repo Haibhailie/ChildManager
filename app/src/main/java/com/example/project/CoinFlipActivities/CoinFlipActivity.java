@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.ChildManager;
@@ -38,7 +39,6 @@ import java.util.List;
  *
  * Passes index of the child
  */
-
 public class CoinFlipActivity extends AppCompatActivity {
 
     private static final String COIN = "Coin";
@@ -103,7 +103,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     private void loadSavedHistory(){
         List<CoinFlipHistoryMember> savedHistory = getHistory(CoinFlipActivity.this);
         if (savedHistory != null) {
-            flipManager.setFlipList(savedHistory);
+            flipManager.setFlipList(removeMissingChildren(savedHistory));
         }
     }
 
@@ -130,6 +130,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         Animation tailAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_tails);
         Animation headAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_coin_heads);
 
+        // https://freesound.org/people/SpaceJoe/sounds/485724/
         playSound(R.raw.coinflip);
 
         tailAnimation.setAnimationListener(new Animation.AnimationListener(){
@@ -198,7 +199,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void setHistoryButtonVisibility(int visibility) {
-        if(indexOfChild != -1) {
+        if(indexOfChild != -1 || visibility == View.GONE) {
             Button historyButton = (Button) findViewById(R.id.coin_flip_history_button);
             historyButton.setVisibility(visibility);
         }
@@ -247,7 +248,22 @@ public class CoinFlipActivity extends AppCompatActivity {
         List<CoinFlipHistoryMember> flipList = gson.fromJson(json, type);
 
         Log.println(Log.INFO, FLIP_PREFS_NAME, "Loaded History. Total Loaded: " + ((flipList != null) ? flipList.size() : ""));
+
         return flipList;
+    }
+
+    private List<CoinFlipHistoryMember> removeMissingChildren(List<CoinFlipHistoryMember> flipList){
+        List<CoinFlipHistoryMember> cleansedFlipList = new ArrayList<>();
+
+        for(CoinFlipHistoryMember flip : flipList) {
+
+            if (childManager.findChildIndexById(flip.getChildId()) != -1) {
+                cleansedFlipList.add(flip);
+            }
+        }
+
+
+        return cleansedFlipList;
     }
 
 
