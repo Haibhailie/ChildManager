@@ -6,7 +6,7 @@
     android:textAppearance="?android:attr/textAppearanceLarge">
 
     <ImageView
-        android:id="@+id/item_icon"
+        android:id="@+id/child_avatar"
         android:layout_width="65dp"
         android:layout_height="58dp"
         android:maxWidth="80dp"
@@ -14,12 +14,12 @@
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/text_lensinfo"
+        android:id="@+id/text_childinfo"
         android:layout_width="262dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="43dp"
         android:layout_marginTop="16dp"
-        android:layout_toRightOf="@id/item_icon"
+        android:layout_toRightOf="@id/child_avatar"
         android:text="Info show here" />
 </RelativeLayout>

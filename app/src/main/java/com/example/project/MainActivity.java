@@ -3,14 +3,13 @@ package com.example.project;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.project.KidsActivities.EditKidsActivity;
+import com.example.project.CoinFlipActivities.ChooseChildCoinFlipActivity;
 import com.example.project.KidsActivities.KidsActivity;
 import com.example.project.Timeout.Timeout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
@@ -19,6 +18,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+//TODO Change text to string.xml
+//TODO Add a comment for each class/activity
 import java.sql.Time;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         flip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "flipped", Toast.LENGTH_SHORT).show();
+                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
     }

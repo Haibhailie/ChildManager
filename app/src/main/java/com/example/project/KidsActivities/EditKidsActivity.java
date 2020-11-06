@@ -27,6 +27,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.project.MainActivity;
 import com.example.project.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +45,7 @@ public class EditKidsActivity extends AppCompatActivity {
     EditText nameText, ageText;
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String CHILD_PREFS_NAME = "ChildList";
+    private static final String CHILD_CURRENT_ID = "ChildID";
     private static final int PICK_IMAGE = 100;
     private int avatarId;
     private int gender;
@@ -119,7 +121,7 @@ public class EditKidsActivity extends AppCompatActivity {
                 getGender();
                 if (childPos == -1) {
                     // Add new lens
-                    Child child = new Child(name, age, avatarId, gender);
+                    Child child = new Child(name, age, avatarId, gender, getChildID());
                     childManager.add(child);
                     Toast.makeText(EditKidsActivity.this, "New Kid Added!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -148,6 +150,22 @@ public class EditKidsActivity extends AppCompatActivity {
         } else {
             gender = 1;
         }
+    }
+
+    private int getChildID() {
+        int returnValue = 0;
+
+        SharedPreferences prefs = getSharedPreferences(CHILD_CURRENT_ID, MODE_PRIVATE);
+        String idString = prefs.getString(CHILD_PREFS_NAME, "0");
+        returnValue = Integer.parseInt(idString) + 1;
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(CHILD_PREFS_NAME, Integer.toString(returnValue));
+        editor.apply();
+
+        Log.println(Log.INFO, "CHILD", "Child's ID: " + returnValue);
+
+        return returnValue;
     }
 
     private int extraKidPosFromIntent() {
