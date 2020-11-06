@@ -34,6 +34,7 @@
         <activity
             android:name=".KidsActivities.KidsActivity"
             android:label="@string/title_activity_kids"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
