@@ -89,7 +89,7 @@
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/iv_boy2"
         app:layout_constraintTop_toTopOf="@+id/iv_boy1"
-        app:srcCompat="@drawable/b_avatar6" />
+        app:srcCompat="@drawable/b_avatar5" />
 
     <ImageView
         android:id="@+id/iv_girl1"
