@@ -11,7 +11,6 @@
     <string name="flip_the_coin">Flip the Coin</string>
     <string name="title_activity_coin_flip">Flip A Coin</string>
     <string name="title_activity_choose_child_coin_flip">Who gets to flip the coin?</string>
-    <string name="coin_flip_select_kid">Next kid in Queue:</string>
     <string name="coin_flip_heads">Heads</string>
     <string name="coin_flip_tails">Tails</string>
     <string name="title_activity_coin_flip_history">Coin Flip History</string>
@@ -23,7 +22,7 @@
     <string name="coin_flip_history_all">All Children</string>
     <string name="coin_flip_history_oracle">"View History By: "</string>
     <string name="coin_flip_heads_tails_or">" OR "</string>
-    <string name="coin_flip_select_select">Select Kid:</string>
+    <string name="coin_flip_select_select">Who gets to flip the coin next:</string>
     <string name="win_lose_content">Win Lose Icon</string>
     <string name="avatar_content">Avatar</string>
     <string name="coin_content">Coin</string>

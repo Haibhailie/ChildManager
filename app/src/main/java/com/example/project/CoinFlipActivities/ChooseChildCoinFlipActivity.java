@@ -24,11 +24,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.project.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,6 +41,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private final String UP = "UP";
     private final String CHILDMANAGER_TAG = "ChildManager";
+    private final String FLIP_INDEX_TAG ="Flip Index";
 
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String INDEX_PREFS_NAME = "IndexPref" ;
@@ -69,9 +70,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         loadChildData();
         checkIfAnyChildrenInManager();
-
         flipIndex = loadFlipIndex(ChooseChildCoinFlipActivity.this);
-        loadFlipIndex(ChooseChildCoinFlipActivity.this);
 
         // Enable "up" on toolbar
         try {
@@ -81,13 +80,9 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
             Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
         }
 
-
         Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
         populateListView();
         registerListItemClickCallback();
-        if (childManager.getLength()>0) {
-            setupQueueKid();
-        }
 
     }
 
@@ -99,14 +94,26 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     }
 
     private void populateListView(){
-        ListAdapter adapter = new MyListAdapter();
+
+        List<Child> listOfChildren;
+
+        if(flipIndex == -1){
+            listOfChildren = childManager.getChildList();
+        }else{
+            listOfChildren = getChildAtFlipIndex();
+        }
+
+        ListAdapter adapter = new MyListAdapter(listOfChildren);
         ListView list = (ListView) findViewById(R.id.coin_flip_child_list_view);
         list.setAdapter(adapter);
     }
 
     private class MyListAdapter extends ArrayAdapter<Child> {
-        public MyListAdapter(){
-            super(ChooseChildCoinFlipActivity.this, R.layout.kid_list, childManager.getChildList());
+        List<Child> childList = new ArrayList<>();
+
+        public MyListAdapter(List<Child> childList){
+            super(ChooseChildCoinFlipActivity.this, R.layout.kid_list, childList);
+            this.childList = childList;
         }
 
         @Override
@@ -119,11 +126,11 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
             // Fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.child_avatar);
-            imageView.setImageResource(childManager.getChildAvatarId(position));
+            imageView.setImageResource(childList.get(position).getAvatarId());
 
             // Text:
             TextView itemText = (TextView) itemView.findViewById(R.id.text_childinfo);
-            String item = String.format("%s", childManager.getChildName(position));
+            String item = String.format("%s", childList.get(position).getName());
             itemText.setText(item);
 
             return itemView;
@@ -150,7 +157,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         }
     }
 
-    private void createHeadsTailsChoiceDialog(final int position){
+    private void createHeadsTailsChoiceDialog(final int position) {
 
         View v = LayoutInflater.from(ChooseChildCoinFlipActivity.this).inflate(R.layout.heads_tails_message, null);
         final Dialog dialog = new Dialog(ChooseChildCoinFlipActivity.this);
@@ -164,6 +171,8 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         headButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateFlipIndex(position);
+                saveFlipIndex(ChooseChildCoinFlipActivity.this, flipIndex);
                 dialog.dismiss();
                 launchCoinFlip(position, true);
             }
@@ -172,6 +181,8 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         tailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateFlipIndex(position);
+                saveFlipIndex(ChooseChildCoinFlipActivity.this, flipIndex);
                 dialog.dismiss();
                 launchCoinFlip(position, false);
             }
@@ -180,14 +191,21 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    /*
-        Following code figure out who's in the head of queue
-    */
-
-    private void updateFlipIndex() {
-        flipIndex = (flipIndex+1) % childManager.getLength();
+    private List<Child> getChildAtFlipIndex(){
+        List<Child> indexChild = new ArrayList<>();
+        indexChild.add(childManager.getChild(flipIndex));
+        Log.println(Log.INFO, FLIP_INDEX_TAG, "Loaded: " + indexChild.get(0).getName() + " Id: " + indexChild.get(0).getID());
+        return indexChild;
     }
-    // Save and Load FlipIndex
+
+    private void updateFlipIndex(int position) {
+        if(flipIndex == -1){
+            flipIndex = (position+1) % childManager.getLength();
+        }else {
+            flipIndex = (flipIndex+1) % childManager.getLength();
+        }
+        Log.println(Log.INFO, FLIP_INDEX_TAG, "Flip Index updated to: " + flipIndex);
+    }
 
     private void saveFlipIndex(Context context, int flipIndex) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
@@ -198,29 +216,16 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private int loadFlipIndex(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
-        return prefs.getInt(INDEX_PREFS_NAME, 0);
+        flipIndex = prefs.getInt(INDEX_PREFS_NAME, -1);
+        if(flipIndex >= childManager.getLength()){
+            flipIndex = -1;
+            saveFlipIndex(context, flipIndex);
+        }
+
+        Log.println(Log.INFO, FLIP_INDEX_TAG, "Flip index loaded: " + flipIndex);
+
+        return flipIndex;
     }
 
-    private void setupQueueKid() {
-        ImageView imageView = (ImageView) findViewById(R.id.IV_queue_kid_avator);
-        imageView.setImageResource(childManager.getChildAvatarId(flipIndex));
-
-        TextView textView =  (TextView) findViewById(R.id.text_queue_kid_name);
-        String name = String.format("%s", childManager.getChildName(flipIndex));
-        textView.setText(name);
-
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.kidInQueue);
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // update flip index
-                int currentFlipIndex = flipIndex;
-                createHeadsTailsChoiceDialog(flipIndex);
-                updateFlipIndex();
-                saveFlipIndex(ChooseChildCoinFlipActivity.this, currentFlipIndex);
-
-            }
-        });
-    }
 }
 
