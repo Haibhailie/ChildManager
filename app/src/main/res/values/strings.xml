@@ -43,4 +43,11 @@
     <string name="reset">Reset</string>
     <string name="start">Start</string>
     <string name="_10_00">10:00</string>
+    <string name="str_name">Name</string>
+    <string name="str_age">Age</string>
+    <string name="str_boy">Boy</string>
+    <string name="str_girl">Girl</string>
+    <string name="str_select_child">Select Child</string>
+    <string name="str_swap_hint">Swap to edit child.</string>
+    <string name="msg_edit_hint">Click to show kid statistics\nSwap to edit kid</string>
 </resources>

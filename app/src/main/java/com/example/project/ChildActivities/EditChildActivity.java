@@ -1,11 +1,12 @@
-package com.example.project.KidsActivities;
+/*
+    * This activity allow a user to edit a child.
+ */
+
+package com.example.project.ChildActivities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.Child;
@@ -16,7 +17,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,18 +27,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.project.MainActivity;
 import com.example.project.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditKidsActivity extends AppCompatActivity {
+public class EditChildActivity extends AppCompatActivity {
     private static final String EXTRA_IDX = "kidPos";
     private ChildManager childManager;
     int childPos;
@@ -55,7 +53,7 @@ public class EditKidsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_kids);
+        setContentView(R.layout.activity_edit_child);
         childManager = ChildManager.getInstance();
         nameText = (EditText) findViewById(R.id.et_kids_name);
         ageText = (EditText) findViewById(R.id.et_kids_age);
@@ -100,17 +98,17 @@ public class EditKidsActivity extends AppCompatActivity {
                 String ageStr = ageText.getText().toString();
                 // First check if all fields are filled
                 if (name.equals("")) {
-                    Toast.makeText(EditKidsActivity.this,
+                    Toast.makeText(EditChildActivity.this,
                             "Please enter name of kid",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 } else if (ageStr.equals("")){
-                    Toast.makeText(EditKidsActivity.this,
+                    Toast.makeText(EditChildActivity.this,
                             "Please enter kid age",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 } else if (avatarId == -1) {
-                    Toast.makeText(EditKidsActivity.this,
+                    Toast.makeText(EditChildActivity.this,
                             "Please select an avatar for kid",
                             Toast.LENGTH_SHORT).show();
                     return true;
@@ -118,7 +116,7 @@ public class EditKidsActivity extends AppCompatActivity {
                 // Then check if all fields are valid
                 int age = Integer.parseInt(ageStr);
                 if (age < 0) {
-                    Toast.makeText(EditKidsActivity.this,
+                    Toast.makeText(EditChildActivity.this,
                             "age of kid > 0",
                             Toast.LENGTH_SHORT).show();
                     return true;
@@ -128,16 +126,16 @@ public class EditKidsActivity extends AppCompatActivity {
                     // Add new lens
                     Child child = new Child(name, age, avatarId, gender, getChildID());
                     childManager.add(child);
-                    Toast.makeText(EditKidsActivity.this, "New Kid Added!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditChildActivity.this, "New Kid Added!", Toast.LENGTH_SHORT).show();
                 } else {
                     // edit existed lens
                     childManager.setChildName(childPos, name);
                     childManager.setChildAge(childPos, age);
                     childManager.setChildAvatarId(childPos, avatarId);
                     childManager.setChildGender(childPos, gender);
-                    Toast.makeText(EditKidsActivity.this, "Kid Info Updated!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditChildActivity.this, "Kid Info Updated!", Toast.LENGTH_SHORT).show();
                 }
-                saveKidsRecord(EditKidsActivity.this, childManager.getChildList());
+                saveKidsRecord(EditChildActivity.this, childManager.getChildList());
                 finish();
                 return true;
 
@@ -202,7 +200,7 @@ public class EditKidsActivity extends AppCompatActivity {
     }
 
     public static Intent makeLaunchIntent (Context context, int kidPos) {
-        Intent intent = new Intent(context, EditKidsActivity.class);
+        Intent intent = new Intent(context, EditChildActivity.class);
         intent.putExtra(EXTRA_IDX, kidPos);
         return intent;
     }

@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
-import com.example.project.KidsActivities.EditKidsActivity;
+import com.example.project.ChildActivities.EditChildActivity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,7 +112,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         List<Child> childList = new ArrayList<>();
 
         public MyListAdapter(List<Child> childList){
-            super(ChooseChildCoinFlipActivity.this, R.layout.kid_list, childList);
+            super(ChooseChildCoinFlipActivity.this, R.layout.child_list, childList);
             this.childList = childList;
         }
 
@@ -121,7 +121,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
             // make sure we have a view to work with
             View itemView = convertView;
             if(itemView == null){
-                itemView = getLayoutInflater().inflate(R.layout.kid_list, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.child_list, parent, false);
             }
 
             // Fill the view
@@ -149,7 +149,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private void loadChildData(){
         if(childManager.getLength() == 0){
-            List<Child> savedChildList = EditKidsActivity.getKidsRecord(ChooseChildCoinFlipActivity.this);
+            List<Child> savedChildList = EditChildActivity.getKidsRecord(ChooseChildCoinFlipActivity.this);
             if (savedChildList != null) {
                 childManager.setChildList(savedChildList);
                 Log.println(Log.INFO, CHILDMANAGER_TAG, "Loaded Child List from EditKidsActivity");

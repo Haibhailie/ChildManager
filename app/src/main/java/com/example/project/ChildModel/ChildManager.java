@@ -1,9 +1,12 @@
+/*
+    * Class with singleton support
+    * return an instance which have a list (childList) of all added children in the program
+    * can manipulate added child from the instance
+ */
+
 package com.example.project.ChildModel;
 
-import android.net.Uri;
 import android.util.Log;
-
-import com.example.project.KidsActivities.EditKidsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

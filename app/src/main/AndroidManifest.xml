@@ -42,12 +42,12 @@
         </activity>
 
         <activity
-            android:name=".KidsActivities.EditKidsActivity"
+            android:name=".ChildActivities.EditChildActivity"
             android:label="@string/title_activity_edit_kids"
-            android:parentActivityName=".KidsActivities.KidsActivity"
+            android:parentActivityName=".ChildActivities.ViewChildActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".KidsActivities.KidsActivity"
+            android:name=".ChildActivities.ViewChildActivity"
             android:label="@string/title_activity_kids"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
