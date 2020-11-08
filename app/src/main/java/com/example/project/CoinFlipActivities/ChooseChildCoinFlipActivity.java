@@ -110,7 +110,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     }
 
     private class MyListAdapter extends ArrayAdapter<Child> {
-        List<Child> childList = new ArrayList<>();
+        List<Child> childList;
 
         public MyListAdapter(List<Child> childList){
             super(ChooseChildCoinFlipActivity.this, R.layout.kid_list, childList);
