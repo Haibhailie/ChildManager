@@ -46,7 +46,6 @@ public class EditKidsActivity extends AppCompatActivity {
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String CHILD_PREFS_NAME = "ChildList";
     private static final String CHILD_CURRENT_ID = "ChildID";
-    private static final int PICK_IMAGE = 100;
     private int avatarId;
     private int gender;
     private List<Integer> avatarImageViewArray;
@@ -60,7 +59,7 @@ public class EditKidsActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         nameText = (EditText) findViewById(R.id.et_kids_name);
         ageText = (EditText) findViewById(R.id.et_kids_age);
-        avatarId = R.drawable.default_avator;
+        avatarId = -1;
 
         // These two arrays would be used to set click event on imageView (avatar)
         avatarImageViewArray = Arrays.asList(R.id.iv_boy1, R.id.iv_boy2,R.id.iv_boy3,R.id.iv_boy4,R.id.iv_boy5,
@@ -77,13 +76,14 @@ public class EditKidsActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         childPos = extraKidPosFromIntent();
+        setupAvatarOption();
         // If we are going to edit an existing kid
         // show original value in each fields
         if (childPos != -1) {
             setupEditModel();
         }
 
-        setupAvatarOption();
+
     }
 
     @Override
@@ -101,12 +101,17 @@ public class EditKidsActivity extends AppCompatActivity {
                 // First check if all fields are filled
                 if (name.equals("")) {
                     Toast.makeText(EditKidsActivity.this,
-                            "Please enter name of child",
+                            "Please enter name of kid",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 } else if (ageStr.equals("")){
                     Toast.makeText(EditKidsActivity.this,
                             "Please enter kid age",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (avatarId == -1) {
+                    Toast.makeText(EditKidsActivity.this,
+                            "Please select an avatar for kid",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -185,6 +190,14 @@ public class EditKidsActivity extends AppCompatActivity {
         } else {
             boyBtn.setChecked(false);
             girlBtn.setChecked(true);
+        }
+        // set up avatar
+        avatarId = childManager.getChildAvatarId(childPos);
+        for (int i = 0; i < avatarResIDArray.size(); i++) {
+            if (avatarId == avatarResIDArray.get(i)) {
+                ImageView img = (ImageView) findViewById(avatarImageViewArray.get(i));
+                img.performClick();
+            }
         }
     }
 
