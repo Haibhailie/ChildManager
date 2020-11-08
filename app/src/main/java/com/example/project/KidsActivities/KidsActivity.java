@@ -79,8 +79,6 @@ public class KidsActivity extends AppCompatActivity {
         showInstruction();
     }
 
-
-
     // Reference : https://github.com/baoyongzhang/SwipeMenuListView
     private void populateListView() {
         ArrayAdapter<Child> adapter = new MyListAdapter();
