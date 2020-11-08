@@ -95,21 +95,35 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     populateListView(chosenChildHistory);
+                    setTextOfOracleTextSingle();
                 } else {
                     populateListView(flipManager.getFlipList());
+                    setTextOfOracleTextAll();
                 }
             }
         });
+        toggle.setChecked(true);
     }
 
     private void setButtonToChildName(){
-        String text = getString(R.string.coin_flip_history_single);
+        String text = getString(R.string.coin_flip_history_all);
         String childName = ((childIndex != -1) ?  childManager.getChildName(childIndex) : "Child Not Found.");
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.coin_flip_history_toggle);
 
         toggleButton.setTextOff(String.format(text, childName));
-        toggleButton.setText(String.format(text, childName));
+    }
 
+    private void setTextOfOracleTextSingle(){
+        String text = getString(R.string.coin_flip_history_oracle_single);
+        String childName = ((childIndex != -1) ?  childManager.getChildName(childIndex) : "Child Not Found.");
+        TextView textView = (TextView) findViewById(R.id.coin_flip_history_oracle_text);
+        textView.setText(String.format(text, childName));
+    }
+
+    private void setTextOfOracleTextAll(){
+        String text = getString(R.string.coin_flip_history_oracle_all);
+        TextView textView = (TextView) findViewById(R.id.coin_flip_history_oracle_text);
+        textView.setText(text);
     }
 
     private List<CoinFlipHistoryMember> getHistoryOfOneChildFromIndex(int index){
