@@ -48,6 +48,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private ChildManager childManager;
     private int flipIndex;
+    private int childIndex;
 
     public static Intent makeLaunchIntent(Context context){
         return new Intent(context, ChooseChildCoinFlipActivity.class);
@@ -174,7 +175,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
                 updateFlipIndex(position);
                 saveFlipIndex(ChooseChildCoinFlipActivity.this, flipIndex);
                 dialog.dismiss();
-                launchCoinFlip(position, true);
+                launchCoinFlip(childIndex, true);
             }
         });
 
@@ -184,7 +185,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
                 updateFlipIndex(position);
                 saveFlipIndex(ChooseChildCoinFlipActivity.this, flipIndex);
                 dialog.dismiss();
-                launchCoinFlip(position, false);
+                launchCoinFlip(childIndex, false);
             }
         });
 
@@ -195,6 +196,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         List<Child> indexChild = new ArrayList<>();
         indexChild.add(childManager.getChild(flipIndex));
         Log.println(Log.INFO, FLIP_INDEX_TAG, "Loaded: " + indexChild.get(0).getName() + " Id: " + indexChild.get(0).getID());
+        childIndex = flipIndex;
         return indexChild;
     }
 
