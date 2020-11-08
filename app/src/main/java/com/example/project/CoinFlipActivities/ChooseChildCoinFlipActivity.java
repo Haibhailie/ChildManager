@@ -149,7 +149,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private void loadChildData(){
         if(childManager.getLength() == 0){
-            List<Child> savedChildList = EditChildActivity.getKidsRecord(ChooseChildCoinFlipActivity.this);
+            List<Child> savedChildList = EditChildActivity.getSavedChildList(ChooseChildCoinFlipActivity.this);
             if (savedChildList != null) {
                 childManager.setChildList(savedChildList);
                 Log.println(Log.INFO, CHILDMANAGER_TAG, "Loaded Child List from EditKidsActivity");

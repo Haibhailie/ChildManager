@@ -46,7 +46,7 @@ public class ViewChildActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_child);
         childManager = ChildManager.getInstance();
         // load saved data
-        List<Child> savedChildList = EditChildActivity.getKidsRecord(ViewChildActivity.this);
+        List<Child> savedChildList = EditChildActivity.getSavedChildList(ViewChildActivity.this);
         if (savedChildList != null) {
             childManager.setChildList(savedChildList);
         }
@@ -82,7 +82,7 @@ public class ViewChildActivity extends AppCompatActivity {
     // Reference : https://github.com/baoyongzhang/SwipeMenuListView
     private void populateListView() {
         ArrayAdapter<Child> adapter = new MyListAdapter();
-        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listview_kids);
+        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listview_child);
         listView.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -133,7 +133,7 @@ public class ViewChildActivity extends AppCompatActivity {
                     case 1:
                         // delete
                         childManager.deleteChild(position);
-                        EditChildActivity.saveKidsRecord(ViewChildActivity.this, childManager.getChildList());
+                        EditChildActivity.saveChildList(ViewChildActivity.this, childManager.getChildList());
                         break;
                 }
                 // update listview
@@ -178,7 +178,7 @@ public class ViewChildActivity extends AppCompatActivity {
 
     // Click kids to get Statistics
     private void registerClickCallback() {
-        ListView list = (ListView) findViewById(R.id.listview_kids);
+        ListView list = (ListView) findViewById(R.id.listview_child);
         // long click to edit an existing kid
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

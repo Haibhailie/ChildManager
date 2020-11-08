@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EditChildActivity extends AppCompatActivity {
-    private static final String EXTRA_IDX = "kidPos";
+    private static final String EXTRA_CHILD_POS = "childPos";
     private ChildManager childManager;
     int childPos;
     EditText nameText, ageText;
@@ -55,8 +55,8 @@ public class EditChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_child);
         childManager = ChildManager.getInstance();
-        nameText = (EditText) findViewById(R.id.et_kids_name);
-        ageText = (EditText) findViewById(R.id.et_kids_age);
+        nameText = (EditText) findViewById(R.id.et_child_name);
+        ageText = (EditText) findViewById(R.id.et_child_age);
         avatarId = -1;
 
         // These two arrays would be used to set click event on imageView (avatar)
@@ -73,9 +73,9 @@ public class EditChildActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        childPos = extraKidPosFromIntent();
+        childPos = extraChildPosFromIntent();
         setupAvatarOption();
-        // If we are going to edit an existing kid
+        // If we are going to edit an existing child
         // show original value in each fields
         if (childPos != -1) {
             setupEditModel();
@@ -99,17 +99,17 @@ public class EditChildActivity extends AppCompatActivity {
                 // First check if all fields are filled
                 if (name.equals("")) {
                     Toast.makeText(EditChildActivity.this,
-                            "Please enter name of kid",
+                            "Please enter name of child",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 } else if (ageStr.equals("")){
                     Toast.makeText(EditChildActivity.this,
-                            "Please enter kid age",
+                            "Please enter child age",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 } else if (avatarId == -1) {
                     Toast.makeText(EditChildActivity.this,
-                            "Please select an avatar for kid",
+                            "Please select an avatar for child",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -117,7 +117,7 @@ public class EditChildActivity extends AppCompatActivity {
                 int age = Integer.parseInt(ageStr);
                 if (age < 0) {
                     Toast.makeText(EditChildActivity.this,
-                            "age of kid > 0",
+                            "age of child 0",
                             Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -126,16 +126,16 @@ public class EditChildActivity extends AppCompatActivity {
                     // Add new lens
                     Child child = new Child(name, age, avatarId, gender, getChildID());
                     childManager.add(child);
-                    Toast.makeText(EditChildActivity.this, "New Kid Added!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditChildActivity.this, "New child Added!", Toast.LENGTH_SHORT).show();
                 } else {
                     // edit existed lens
                     childManager.setChildName(childPos, name);
                     childManager.setChildAge(childPos, age);
                     childManager.setChildAvatarId(childPos, avatarId);
                     childManager.setChildGender(childPos, gender);
-                    Toast.makeText(EditChildActivity.this, "Kid Info Updated!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditChildActivity.this, "child Info Updated!", Toast.LENGTH_SHORT).show();
                 }
-                saveKidsRecord(EditChildActivity.this, childManager.getChildList());
+                saveChildList(EditChildActivity.this, childManager.getChildList());
                 finish();
                 return true;
 
@@ -171,9 +171,9 @@ public class EditChildActivity extends AppCompatActivity {
         return returnValue;
     }
 
-    private int extraKidPosFromIntent() {
+    private int extraChildPosFromIntent() {
         Intent intent = getIntent();
-        return intent.getIntExtra(EXTRA_IDX, -1);
+        return intent.getIntExtra(EXTRA_CHILD_POS, -1);
     }
 
     private void setupEditModel() {
@@ -199,16 +199,16 @@ public class EditChildActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent makeLaunchIntent (Context context, int kidPos) {
+    public static Intent makeLaunchIntent (Context context, int childPos) {
         Intent intent = new Intent(context, EditChildActivity.class);
-        intent.putExtra(EXTRA_IDX, kidPos);
+        intent.putExtra(EXTRA_CHILD_POS, childPos);
         return intent;
     }
 
 
 
     // Reference: https://www.youtube.com/watch?v=jcliHGR3CHo&ab_channel=CodinginFlow
-    public static void saveKidsRecord(Context context, List<Child> childList) {
+    public static void saveChildList(Context context, List<Child> childList) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
@@ -217,7 +217,7 @@ public class EditChildActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public static List<Child> getKidsRecord(Context context) {
+    public static List<Child> getSavedChildList(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString(CHILD_PREFS_NAME, null);

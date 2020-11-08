@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/et_kids_name"
+        android:id="@+id/et_child_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -32,11 +32,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/str_age"
-        app:layout_constraintStart_toStartOf="@+id/et_kids_name"
-        app:layout_constraintTop_toBottomOf="@+id/et_kids_name" />
+        app:layout_constraintStart_toStartOf="@+id/et_child_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_child_name" />
 
     <EditText
-        android:id="@+id/et_kids_age"
+        android:id="@+id/et_child_age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -52,8 +52,8 @@
         android:layout_width="231dp"
         android:layout_height="71dp"
         android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="@+id/et_kids_age"
-        app:layout_constraintTop_toBottomOf="@+id/et_kids_age">
+        app:layout_constraintStart_toStartOf="@+id/et_child_age"
+        app:layout_constraintTop_toBottomOf="@+id/et_child_age">
 
         <RadioButton
             android:id="@+id/radio_btn_boy"
@@ -61,7 +61,6 @@
             android:layout_height="wrap_content"
             android:text="@string/str_boy"
             android:textSize="14sp"
-
             android:checked="true"></RadioButton>
 
         <RadioButton
