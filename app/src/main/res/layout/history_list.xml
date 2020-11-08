@@ -34,7 +34,9 @@
         android:layout_marginStart="10dp"
         android:contentDescription="@string/win_lose_content"
         app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_child_avatar"
-        app:layout_constraintStart_toEndOf="@+id/coin_flip_history_history_text"
+        app:layout_constraintEnd_toStartOf="@+id/coin_flip_history_coin_chosen"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/coin_flip_history_child_avatar"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/x_mark" />
@@ -43,10 +45,11 @@
         android:id="@+id/coin_flip_history_coin_chosen"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
         android:contentDescription="@string/coin_content"
         app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_child_avatar"
-        app:layout_constraintStart_toEndOf="@+id/coin_flip_history_win_lose_image"
+        app:layout_constraintEnd_toStartOf="@+id/coin_flip_history_date_time"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/coin_flip_history_child_avatar"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
@@ -54,9 +57,9 @@
         android:id="@+id/coin_flip_history_date_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_child_avatar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/coin_flip_history_coin_chosen"
         app:layout_constraintTop_toTopOf="@+id/coin_flip_history_child_avatar" />
 
 
