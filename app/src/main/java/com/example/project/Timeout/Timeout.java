@@ -43,8 +43,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private NotificationManager manager;
     private NotificationCompat.Builder builder;
     private MediaPlayer alarmSound;
-    private long timeLeft = 6000; //default value is 10 mins
-    private long timeLeftbackup = 6000;
+    private long timeLeft = 600000; //default value is 10 mins
+    private long timeLeftbackup = 600000;
     private boolean isRunning;
     private int[] gifSelector = {R.drawable.relaxing1, R.drawable.relaxing2, R.drawable.relaxing3, R.drawable.relaxing4, R.drawable.relaxing5};
     private final String TAG = "Timout Activity";
@@ -258,8 +258,6 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private void startCalmingVideo(){
         Random random = new Random();
         int gifNumber = random.nextInt(4)+0;
-        if(gifNumber==0||gifNumber==1||gifNumber==4)
-            CDText.setTextColor(Color.WHITE);
         calmingBGVideo.setBackgroundResource(gifSelector[gifNumber]);
         calmingBGVideo.setVisibility(View.VISIBLE);
     }
