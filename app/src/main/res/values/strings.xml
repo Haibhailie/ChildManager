@@ -2,8 +2,8 @@
     <string name="app_name">Practical Parent</string>
     <string name="action_settings">Settings</string>
 
-    <string name="title_activity_kids">KidsActivity</string>
-    <string name="title_activity_edit_kids">EditKidsActivity</string>
+    <string name="title_activity_view_child">ViewChildActivity</string>
+    <string name="title_activity_edit_child">EditChildActivity</string>
     <string name="save_btn">save</string>
     <string name="mainTitle">Welcome to Practical Parent</string>
     <string name="configureMyChildren">Configure My Children</string>
