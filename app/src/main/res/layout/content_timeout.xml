@@ -8,12 +8,12 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/calmBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="412dp"
+        android:layout_height="717dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="17dp" />
+        tools:layout_editor_absoluteY="-3dp" />
 
     <ProgressBar
         android:id="@+id/timerProgressBG"
@@ -28,8 +28,11 @@
         android:progressDrawable="@drawable/circle_progress_bar_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.379" />
+
 
     <ProgressBar
         android:id="@+id/timerProgress"
@@ -44,95 +47,53 @@
         android:progressDrawable="@drawable/circle_progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.381" />
 
     <TextView
         android:id="@+id/countdownText"
         android:layout_width="142dp"
         android:layout_height="68dp"
-        android:layout_marginStart="143dp"
-        android:layout_marginTop="127dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="523dp"
         android:background="@drawable/main_button_bg"
         android:text="@string/_10_00"
         android:textAlignment="center"
         android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/timerProgressBG"
+        app:layout_constraintEnd_toEndOf="@+id/timerProgressBG"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="@+id/timerProgressBG"
+        app:layout_constraintTop_toTopOf="@+id/timerProgressBG" />
 
     <Button
         android:id="@+id/resetCountdown"
-        android:layout_width="164dp"
+        android:layout_width="124dp"
         android:layout_height="45dp"
-        android:layout_marginTop="512dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginStart="223dp"
+        android:layout_marginTop="492dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="120dp"
         android:background="@drawable/main_button"
         android:text="@string/reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/startCountdown"
-        android:layout_width="164dp"
+        android:layout_width="124dp"
         android:layout_height="45dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="512dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="492dp"
+        android:layout_marginEnd="224dp"
+        android:layout_marginBottom="120dp"
         android:background="@drawable/main_button"
         android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/resetCountdown"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/min1Button"
-        android:layout_width="54dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="255dp"
-        android:layout_marginBottom="297dp"
-        android:background="@drawable/main_button"
-        android:text="@string/_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/min2Button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/min2Button"
-        android:layout_width="54dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="255dp"
-        android:layout_marginBottom="297dp"
-        android:background="@drawable/main_button"
-        android:text="@string/_2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/min3Button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/min1Button"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/min3Button"
-        android:layout_width="54dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="255dp"
-        android:layout_marginBottom="297dp"
-        android:background="@drawable/main_button"
-        android:text="@string/_3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/min5Button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/min2Button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -147,7 +108,53 @@
         app:layout_constraintEnd_toStartOf="@+id/min10Button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/min3Button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
+
+    <Button
+        android:id="@+id/min1Button"
+        android:layout_width="54dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="255dp"
+        android:layout_marginBottom="297dp"
+        android:background="@drawable/main_button"
+        android:text="@string/_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/min2Button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
+
+    <Button
+        android:id="@+id/min2Button"
+        android:layout_width="54dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="255dp"
+        android:layout_marginBottom="297dp"
+        android:background="@drawable/main_button"
+        android:text="@string/_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/min3Button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/min1Button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
+
+    <Button
+        android:id="@+id/min3Button"
+        android:layout_width="54dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="255dp"
+        android:layout_marginBottom="297dp"
+        android:background="@drawable/main_button"
+        android:text="@string/_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/min5Button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/min2Button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
 
     <Button
         android:id="@+id/min10Button"
@@ -161,7 +168,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/min5Button"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
 
     <Button
         android:id="@+id/customButton"

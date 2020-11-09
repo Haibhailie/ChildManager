@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setupConfigureButton();
         setupCountdownButton();
         setupFlipCoinButton();
+        //setupAboutUsButton();
     }
 
     private void setupConfigureButton() {
@@ -62,6 +63,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*private void setupAboutUsButton() {
+        Button flip = (Button) findViewById(R.id.aboutButton);
+        flip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
