@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutUs">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/memeGif"
+        android:layout_width="411dp"
+        android:layout_height="168dp"
+        android:layout_marginTop="416dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="299dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="527dp"
+        android:gravity="center"
+        android:text="@string/who_are_we"
+        android:textColor="#3E689F"
+        android:textSize="46sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textAboutUs"
+        android:layout_width="354dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="29dp"
+        android:text="@string/about_us_intro_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textAboutKelly"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textAboutZirui"
+        android:layout_width="354dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="28dp"
+        android:text="@string/zirui_about"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAboutKelly" />
+
+    <TextView
+        android:id="@+id/textAboutKelly"
+        android:layout_width="354dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="218dp"
+        android:layout_marginEnd="28dp"
+        android:text="@string/kelly_about"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textAboutShanks"
+        android:layout_width="354dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="176dp"
+        android:text="@string/shanks_about"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textAboutKent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textAboutKent"
+        android:layout_width="354dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="248dp"
+        android:text="@string/knex_about"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.956" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,4 +53,19 @@
     <string name="str_swap_hint">Swap to edit or delete a child</string>
     <string name="msg_edit_hint">Click here to add a child</string>
     <string name="aboutText">About Us</string>
+    <string name="about_us_intro_text">We are team &lt;b>Jade&lt;/b>. A very young, and very very awesome group of Android developers. This iteration of our project has given us an opportunity to try out a new role in a development pipeline. The team is as follows:</string>
+    <string name="kelly_about">&lt;b>Kelly Zheng&lt;/b>, one blessed with creativity, a writer renowned to become one with her books.</string>
+    <string name="zirui_about">&lt;b>Zirui Huang&lt;/b>, a developer truly known for his punctuality and how he gets things done before you assign it to him.</string>
+    <string name="knex_about">&lt;b>Kent Nex&lt;/b>, a cool last name and cooler personality. A mathemagician who can find the double derivative before you can count to 5.</string>
+    <string name="shanks_about">&lt;b>Shashank Thanalapati&lt;/b>, a name longer than sanity\'s comprehension and with code retention capabilities greater than your SSD.</string>
+    <string name="title_activity_about_us">AboutUs</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="who_are_we">Who are we?</string>
 </resources>

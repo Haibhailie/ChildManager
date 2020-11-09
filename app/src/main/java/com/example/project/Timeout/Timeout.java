@@ -1,5 +1,6 @@
 package com.example.project.Timeout;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -296,11 +297,6 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         stopCalmingVideo();
     }
 
-    public static Intent makeLaunchIntent(Context context) {
-        Intent intent = new Intent(context, Timeout.class);
-        return intent;
-    }
-
     BroadcastReceiver finishActivityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -337,5 +333,10 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         }
         timeLeftbackup = timeLeft;
         setTimerText();
+    }
+
+    public static Intent makeLaunchIntent(Context context) {
+        Intent intent = new Intent(context, Timeout.class);
+        return intent;
     }
 }

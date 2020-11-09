@@ -12,15 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AboutUs"
+            android:label="@string/title_activity_about_us"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".CoinFlipActivities.CoinFlipHistoryActivity"
             android:label="@string/title_activity_coin_flip_history"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Timeout.Timeout"
             android:launchMode="singleTop"
-            android:label="@string/title_activity_timeout"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CoinFlipActivities.ChooseChildCoinFlipActivity"
             android:label="@string/title_activity_choose_child_coin_flip"
@@ -45,16 +48,12 @@
             android:name=".ChildActivities.EditChildActivity"
             android:label="Edit Child"
             android:parentActivityName=".ChildActivities.ViewChildActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ChildActivities.ViewChildActivity"
             android:label="Children List"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
