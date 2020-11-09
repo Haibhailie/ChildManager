@@ -1,8 +1,8 @@
 /*
-    From this activity,
-    Parents can get a list of kids name
+    * This activity give user a list view of children
+    * User may choose to add or edit child from this activity
  */
-package com.example.project.KidsActivities;
+package com.example.project.ChildActivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,15 +38,15 @@ import com.example.project.R;
 
 import java.util.List;
 
-public class KidsActivity extends AppCompatActivity {
+public class ViewChildActivity extends AppCompatActivity {
     ChildManager childManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_kids);
+        setContentView(R.layout.activity_view_child);
         childManager = ChildManager.getInstance();
         // load saved data
-        List<Child> savedChildList = EditKidsActivity.getKidsRecord(KidsActivity.this);
+        List<Child> savedChildList = EditChildActivity.getSavedChildList(ViewChildActivity.this);
         if (savedChildList != null) {
             childManager.setChildList(savedChildList);
         }
@@ -61,7 +61,7 @@ public class KidsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // kidPos -1 means add new kids
-                Intent intent = EditKidsActivity.makeLaunchIntent(KidsActivity.this, -1);
+                Intent intent = EditChildActivity.makeLaunchIntent(ViewChildActivity.this, -1);
                 startActivity(intent);
             }
         });
@@ -82,7 +82,7 @@ public class KidsActivity extends AppCompatActivity {
     // Reference : https://github.com/baoyongzhang/SwipeMenuListView
     private void populateListView() {
         ArrayAdapter<Child> adapter = new MyListAdapter();
-        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listview_kids);
+        SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listview_child);
         listView.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -127,13 +127,13 @@ public class KidsActivity extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         // open
-                        Intent intent = EditKidsActivity.makeLaunchIntent(KidsActivity.this, position);
+                        Intent intent = EditChildActivity.makeLaunchIntent(ViewChildActivity.this, position);
                         startActivity(intent);
                         break;
                     case 1:
                         // delete
                         childManager.deleteChild(position);
-                        EditKidsActivity.saveKidsRecord(KidsActivity.this, childManager.getChildList());
+                        EditChildActivity.saveChildList(ViewChildActivity.this, childManager.getChildList());
                         break;
                 }
                 // update listview
@@ -157,13 +157,13 @@ public class KidsActivity extends AppCompatActivity {
 
     private class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter() {
-            super(KidsActivity.this, R.layout.kid_list, childManager.getChildList());
+            super(ViewChildActivity.this, R.layout.child_list, childManager.getChildList());
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
-                itemView = getLayoutInflater().inflate(R.layout.kid_list, parent, false);
+                itemView = getLayoutInflater().inflate(R.layout.child_list, parent, false);
             }
             // Fill the view.
             ImageView imageView = (ImageView) itemView.findViewById(R.id.child_avatar);
@@ -178,12 +178,12 @@ public class KidsActivity extends AppCompatActivity {
 
     // Click kids to get Statistics
     private void registerClickCallback() {
-        ListView list = (ListView) findViewById(R.id.listview_kids);
+        ListView list = (ListView) findViewById(R.id.listview_child);
         // long click to edit an existing kid
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = EditKidsActivity.makeLaunchIntent(KidsActivity.this, position);
+                Intent intent = EditChildActivity.makeLaunchIntent(ViewChildActivity.this, position);
                 startActivity(intent);
                 return false;
             }
@@ -204,7 +204,7 @@ public class KidsActivity extends AppCompatActivity {
     }
 
     public static Intent makeLaunchIntent(Context context) {
-        Intent intent = new Intent(context, KidsActivity.class);
+        Intent intent = new Intent(context, ViewChildActivity.class);
         return intent;
     }
 }
