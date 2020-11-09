@@ -70,13 +70,12 @@
                 android:contentDescription="@string/heads_coin_desc"
                 app:srcCompat="@drawable/c_coin_heads" />
 
-            <TextView
-                android:id="@+id/coin_flip_choose_heads_text"
+            <Button
+                android:id="@+id/coin_flip_choose_heads_text_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_bg"
-                android:gravity="center"
-                android:text="@string/coin_flip_heads" />
+                android:text="@string/coin_flip_heads"  />
 
         </LinearLayout>
 
@@ -109,13 +108,13 @@
                 android:contentDescription="@string/tails_coin_desc"
                 app:srcCompat="@drawable/c_coin_tails" />
 
-            <TextView
-                android:id="@+id/coin_flip_choose_tails_text"
+            <Button
+                android:id="@+id/coin_flip_choose_tails_text_button"
                 android:layout_width="match_parent"
-                android:background="@drawable/text_bg"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/coin_flip_tails" />
+                android:background="@drawable/text_bg"
+                android:text="@string/coin_flip_tails"  />
+
         </LinearLayout>
     </LinearLayout>
 
