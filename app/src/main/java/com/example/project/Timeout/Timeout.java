@@ -65,7 +65,10 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 manager.cancelAll();
-                toggleTimeout();
+                try {
+                    pauseTimerCountdown();
+                }
+                catch (Exception e){}
                 finish();
             }
         });
@@ -207,7 +210,12 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         manager.cancel(0);
         progress.setProgress(100);
         showAllButtons();
-        timer.cancel();
+        try {
+            timer.cancel();
+        }
+        catch (Exception e){
+            Toast.makeText(this, "Timer's not running!", Toast.LENGTH_SHORT).show();
+        }
         CDButton.setText("Start");
         timeLeft = timeLeftbackup;
         setTimerText();

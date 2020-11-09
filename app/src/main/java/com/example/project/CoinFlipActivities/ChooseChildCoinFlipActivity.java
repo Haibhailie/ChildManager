@@ -68,8 +68,9 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         } catch (NullPointerException e){
             Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
         }
-
-        populateFields();
+        if(childManager.getLength() > 0) {
+            populateFields();
+        }
         Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
     }
 
@@ -119,15 +120,22 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     private void onHeadsTailsClick(Boolean choice){
         updateFlipIndex();
         saveFlipIndex(ChooseChildCoinFlipActivity.this, flipIndex);
-        Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, childIndex, choice);
+        launchCoinFlipActivity(choice, childIndex);
+    }
+
+    private void launchCoinFlipActivity(boolean choice, int index){
+        Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, index, choice);
         startActivity(intent);
         finish();
     }
 
     private void checkIfAnyChildrenInManager() {
+        Log.println(Log.INFO, CHILDMANAGER_TAG, "Number of Children: " + childManager.getLength());
         if(childManager.getLength() == 0){
             Log.println(Log.INFO, CHILDMANAGER_TAG, "No Children, moving onto coin flip");
-            onHeadsTailsClick(false);
+            launchCoinFlipActivity(false, -1);
+        } else{
+            populateFields();
         }
     }
 
