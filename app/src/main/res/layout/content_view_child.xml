@@ -39,38 +39,48 @@
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"></com.baoyz.swipemenulistview.SwipeMenuListView>
-
-        <TextView
-            android:id="@+id/tv_instruction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/str_swap_hint" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_edit_instruction"
+        android:id="@+id/tv_add_instruction"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:text="@string/msg_edit_hint"
-        android:textSize="18sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/hint_arrow"
         android:layout_width="28dp"
         android:layout_height="20dp"
-        android:layout_marginStart="299dp"
         android:layout_marginTop="549dp"
         android:layout_marginEnd="84dp"
         android:layout_marginBottom="34dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_add_instruction"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+    <ImageButton
+        android:id="@+id/btn_hide_hint"
+        android:layout_width="23dp"
+        android:layout_height="27dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_add_instruction"
+        app:layout_constraintEnd_toStartOf="@+id/tv_add_instruction"
+        app:srcCompat="@drawable/ic_baseline_check_24" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="299dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
