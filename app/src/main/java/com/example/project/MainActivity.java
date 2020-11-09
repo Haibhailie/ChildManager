@@ -15,8 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
-//TODO Change text to string.xml
-//TODO Add a comment for each class/activity
+/*
+* Main menu:
+* setup Configure Button
+* setup Countdown Button
+* setup Flip Coin Button
+* setup About Us Button
+* setup tool bar and action bar
+* */
 
 
 public class MainActivity extends AppCompatActivity {
