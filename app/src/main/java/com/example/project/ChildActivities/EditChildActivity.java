@@ -59,6 +59,7 @@ public class EditChildActivity extends AppCompatActivity {
         ageText = (EditText) findViewById(R.id.et_child_age);
         avatarId = -1;
 
+
         // These two arrays would be used to set click event on imageView (avatar)
         avatarImageViewArray = Arrays.asList(R.id.iv_boy1, R.id.iv_boy2,R.id.iv_boy3,R.id.iv_boy4,R.id.iv_boy5,
                 R.id.iv_girl1,R.id.iv_girl2,R.id.iv_girl3,R.id.iv_girl4,R.id.iv_girl5);
