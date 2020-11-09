@@ -1,3 +1,9 @@
+/*
+    * Each user added child is an object of Child class
+    * Child object stores general information of a child
+ */
+
+
 package com.example.project.ChildModel;
 
 import android.net.Uri;

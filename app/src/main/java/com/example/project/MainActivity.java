@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.project.CoinFlipActivities.ChooseChildCoinFlipActivity;
-import com.example.project.KidsActivities.KidsActivity;
+import com.example.project.ChildActivities.ViewChildActivity;
 import com.example.project.Timeout.Timeout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,11 +14,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.Toast;
 
 //TODO Change text to string.xml
 //TODO Add a comment for each class/activity
-import java.sql.Time;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         configure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = KidsActivity.makeLaunchIntent(MainActivity.this);
+                Intent intent = ViewChildActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
