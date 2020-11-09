@@ -18,6 +18,13 @@ import java.util.Random;
 
 import pl.droidsonroids.gif.GifImageView;
 
+/*
+* About Us:
+* Introducing each person in the group
+* Putting random gif at the end
+* Activate the button press from the main menu
+* */
+
 public class AboutUs extends AppCompatActivity {
 
     private GifImageView calmingBGVideo;
