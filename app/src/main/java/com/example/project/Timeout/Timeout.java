@@ -33,6 +33,16 @@ import java.util.Random;
 
 import pl.droidsonroids.gif.GifImageView;
 
+/*
+* Time out:
+* For count down timer
+* Have the choice for user
+* Allow start, stop, and reset
+* Gif relaxing background shown as the timer starts
+* Alarm when the time is up
+* Continuous count down when using other app and put the phone into sleep
+* */
+
 public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
     private TextView CDText;
