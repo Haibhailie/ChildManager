@@ -9,7 +9,6 @@
     <solid
         android:color="#A1C5F4" />
 
-
     <corners
         android:bottomLeftRadius="12dp"
         android:bottomRightRadius="12dp"

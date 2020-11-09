@@ -5,7 +5,7 @@
     <string name="title_activity_view_child">ViewChildActivity</string>
     <string name="title_activity_edit_child">EditChildActivity</string>
     <string name="save_btn">save</string>
-    <string name="mainTitle">Welcome to Practical Parent</string>
+    <string name="mainTitle">How are\nMy Kids!</string>
     <string name="configureMyChildren">Configure My Children</string>
 
     <string name="flip_the_coin">Flip the Coin</string>
@@ -45,11 +45,12 @@
     <string name="_10_00">10:00</string>
     <string name="coin_flip_choose_pick">Pick</string>
     <string name="coin_flip_choose_oracle">%s gets to choose!</string>
-    <string name="str_name">name</string>
-    <string name="str_age">age</string>
+    <string name="str_name">Name</string>
+    <string name="str_age">Age</string>
     <string name="str_boy">Boy</string>
     <string name="str_girl">Girl</string>
     <string name="str_select_child">Select Child</string>
     <string name="str_swap_hint">Swap to edit or delete a child</string>
     <string name="msg_edit_hint">Click here to add a child</string>
+    <string name="aboutText">About Us</string>
 </resources>

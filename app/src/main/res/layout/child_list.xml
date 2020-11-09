@@ -18,8 +18,10 @@
         android:layout_width="262dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="43dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/child_avatar"
-        android:text="Info show here" />
+        android:text="Info show here"
+        android:textAlignment="viewStart"
+        android:textSize="20sp" />
 </RelativeLayout>

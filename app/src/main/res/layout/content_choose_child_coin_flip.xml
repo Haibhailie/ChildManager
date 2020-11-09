@@ -5,19 +5,19 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
     <TextView
         android:id="@+id/coin_flip_choose_oracle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:text="@string/coin_flip_choose_oracle"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <LinearLayout
         android:id="@+id/coin_flip_choose_child_linear"
@@ -74,6 +74,7 @@
                 android:id="@+id/coin_flip_choose_heads_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/text_bg"
                 android:gravity="center"
                 android:text="@string/coin_flip_heads" />
 
@@ -111,6 +112,7 @@
             <TextView
                 android:id="@+id/coin_flip_choose_tails_text"
                 android:layout_width="match_parent"
+                android:background="@drawable/text_bg"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/coin_flip_tails" />
