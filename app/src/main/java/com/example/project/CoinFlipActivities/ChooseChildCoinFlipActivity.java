@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.project.ChildActivities.EditChildActivity;
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
-import com.example.project.KidsActivities.EditKidsActivity;
+import com.example.project.ChildActivities.EditChildActivity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -140,7 +141,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private void loadChildData(){
         if(childManager.getLength() == 0){
-            List<Child> savedChildList = EditKidsActivity.getKidsRecord(ChooseChildCoinFlipActivity.this);
+            List<Child> savedChildList = EditChildActivity.getSavedChildList(ChooseChildCoinFlipActivity.this);
             if (savedChildList != null) {
                 childManager.setChildList(savedChildList);
                 Log.println(Log.INFO, CHILDMANAGER_TAG, "Loaded Child List from EditKidsActivity");
