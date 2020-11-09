@@ -43,6 +43,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private NotificationManager manager;
     private NotificationCompat.Builder builder;
     private MediaPlayer alarmSound;
+    private Animation fadeIn;
+    private Animation fadeOut;
     private long timeLeft = 600000; //default value is 10 mins
     private long timeLeftbackup = 600000;
     private boolean isRunning;
@@ -60,6 +62,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Timeout Screen");
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        fadeIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+        fadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,11 +264,14 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         int gifNumber = random.nextInt(4)+0;
         calmingBGVideo.setBackgroundResource(gifSelector[gifNumber]);
         calmingBGVideo.setVisibility(View.VISIBLE);
+        calmingBGVideo.startAnimation(fadeIn);
     }
 
     private void stopCalmingVideo(){
         calmingBGVideo.setVisibility(View.GONE);
         CDText.setTextColor(Color.BLACK);
+        if(isRunning)
+            calmingBGVideo.startAnimation(fadeOut);
     }
 
     private void hideAllButtons(){
