@@ -56,6 +56,10 @@ public class CoinFlipHistoryManager {
         return flipList.size();
     }
 
+    public String getDateTime(int index){
+        return flipList.get(index).getDateTimeFlip();
+    }
+
     public void setFlipList(List<CoinFlipHistoryMember> flipList) {
         this.flipList = flipList;
     }

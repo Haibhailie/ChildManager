@@ -25,6 +25,8 @@ import android.widget.ToggleButton;
 
 import com.example.project.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -190,10 +192,12 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
             // Text:
             TextView itemText = (TextView) itemView.findViewById(R.id.coin_flip_history_history_text);
+            TextView dateView = (TextView) itemView.findViewById(R.id.coin_flip_history_date_time);
 
             String item = "ERROR - Maybe they were removed.";
             if(childIndex != -1) {
                 item = String.format("%s", childManager.getChildName(childIndex));
+                dateView.setText(flipList.get(position).getDateTimeFlip());
             }
             itemText.setText(item);
 

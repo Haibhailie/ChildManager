@@ -113,6 +113,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchCoinFlipHistory();
+                finish();
             }
         });
     }
