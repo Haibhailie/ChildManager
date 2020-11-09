@@ -57,7 +57,7 @@
         android:id="@+id/flipButton"
         android:layout_width="246dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/main_button_bg"
         android:text="@string/flip_the_coin"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -73,7 +73,7 @@
         android:id="@+id/aboutButton"
         android:layout_width="246dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/main_button_bg"
         android:text="@string/aboutText"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -83,7 +83,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flipButton"
-        app:layout_constraintVertical_bias="0.485" />
+        app:layout_constraintVertical_bias="0.78" />
 
     <Button
         android:id="@+id/countdownButton"
