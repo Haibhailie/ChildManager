@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -101,6 +102,8 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     private void setOnClickHeadsTails(){
         ImageButton heads = (ImageButton) findViewById(R.id.coin_flip_choose_heads_image);
         ImageButton tails = (ImageButton) findViewById(R.id.coin_flip_choose_tails_image);
+        Button heads_text = (Button) findViewById(R.id.coin_flip_choose_heads_text_button);
+        Button tails_text = (Button) findViewById(R.id.coin_flip_choose_tails_text_button);
 
         heads.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +113,20 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         });
 
         tails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHeadsTailsClick(false);
+            }
+        });
+
+        heads_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHeadsTailsClick(true);
+            }
+        });
+
+        tails_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onHeadsTailsClick(false);
