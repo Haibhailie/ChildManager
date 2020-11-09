@@ -8,13 +8,30 @@
 
     <TextView
         android:id="@+id/coin_flip_history_oracle_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="312dp"
+        android:layout_height="27dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="0"
         android:text="@string/coin_flip_history_oracle_single"
+        android:textAlignment="center"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/table_index"
+        android:layout_width="394dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="44dp"
+        android:layout_weight="0"
+        android:text="Name                          W/L      H/T                  Date"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,24 +39,29 @@
 
     <ListView
         android:id="@+id/coin_flip_history_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="452dp"
         android:descendantFocusability="afterDescendants"
         app:layout_constraintBottom_toTopOf="@+id/coin_flip_history_toggle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_flip_history_oracle_text">
+        app:layout_constraintTop_toBottomOf="@+id/coin_flip_history_oracle_text"
+        app:layout_constraintVertical_bias="0.692">
 
     </ListView>
 
     <ToggleButton
         android:id="@+id/coin_flip_history_toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="352dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/main_button"
         android:textOff="@string/coin_flip_history_all"
         android:textOn="@string/coin_flip_history_single"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
