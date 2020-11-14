@@ -74,7 +74,7 @@ public class EditChildActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        childPos = extraChildPosFromIntent();
+        childPos = extratChildPosFromIntent();
         setupAvatarOption();
         // If we are going to edit an existing child
         // show original value in each fields
@@ -172,7 +172,7 @@ public class EditChildActivity extends AppCompatActivity {
         return returnValue;
     }
 
-    private int extraChildPosFromIntent() {
+    private int extratChildPosFromIntent() {
         Intent intent = getIntent();
         return intent.getIntExtra(EXTRA_CHILD_POS, -1);
     }
