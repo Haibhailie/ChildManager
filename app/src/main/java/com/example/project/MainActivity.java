@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.project.CoinFlipActivities.ChooseChildCoinFlipActivity;
 import com.example.project.ChildActivities.ViewChildActivity;
+import com.example.project.TaskActivities.TaskActivity;
 import com.example.project.Timeout.Timeout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setupCountdownButton();
         setupFlipCoinButton();
         setupAboutUsButton();
+        setupTaskButton();
     }
 
     private void setupConfigureButton() {
@@ -76,6 +78,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = AboutUs.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupTaskButton() {
+        Button task = (Button) findViewById(R.id.taskButton);
+        task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = TaskActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });
