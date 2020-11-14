@@ -18,16 +18,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -76,14 +80,38 @@ public class EditChildActivity extends AppCompatActivity {
 
         childPos = extratChildPosFromIntent();
         setupAvatarOption();
+        setupAvatarButton();
         // If we are going to edit an existing child
         // show original value in each fields
         if (childPos != -1) {
             setupEditModel();
         }
-
-
     }
+
+    private void setupAvatarButton() {
+        Button btn = (Button) findViewById(R.id.btn_select_photo);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(EditChildActivity.this,
+                        R.style.BottomSheetDialogTheme);
+                View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
+                        R.layout.select_avatar_dialog,
+                        (LinearLayout) findViewById(R.id.dialog_avatar));
+               bottomSheetView.findViewById(R.id.btn_gallery).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(EditChildActivity.this, "take photo", Toast.LENGTH_LONG).show();
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+            }
+
+            });
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
