@@ -55,8 +55,8 @@ public class EditChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_child);
         childManager = ChildManager.getInstance();
-        nameText = (EditText) findViewById(R.id.et_child_name);
-        ageText = (EditText) findViewById(R.id.et_child_age);
+        nameText = (EditText) findViewById(R.id.theTaskName);
+        ageText = (EditText) findViewById(R.id.theTaskDescription);
         avatarId = -1;
 
 

@@ -63,4 +63,6 @@
     <string name="title_activity_task">Tasks</string>
     <string name="taskText">Task</string>
     <string name="title_activity_edit_task">EditTaskActivity</string>
+    <string name="taskName">Task Name:</string>
+    <string name="taskBriefDescription">Brief Description:</string>
 </resources>
