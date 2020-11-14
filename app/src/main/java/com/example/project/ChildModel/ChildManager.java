@@ -32,10 +32,6 @@ public class ChildManager {
         return childList.get(index);
     }
 
-    public int getChildAvatarId(int index) {
-        return childList.get(index).getAvatarId();
-    }
-
     public String getChildName(int index) {
         return childList.get(index).getName();
     }
@@ -72,9 +68,6 @@ public class ChildManager {
         this.childList = childList;
     }
 
-    public void setChildAvatarId(int index, int id) {
-        childList.get(index).setAvatarId(id);
-    }
 
     public void deleteChild(int index) {
         childList.remove(index);

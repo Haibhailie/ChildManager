@@ -68,9 +68,8 @@ public class EditChildActivity extends AppCompatActivity {
     int childPos;
     EditText nameText, ageText;
     ImageView avatarPreview;
-    private int avatarId;
     private int gender;
-    Uri capturedImageUri;
+    Uri avatarUri;
     private List<Integer> avatarImageViewArray;
     private List<Integer> avatarResIDArray;
 
@@ -83,7 +82,7 @@ public class EditChildActivity extends AppCompatActivity {
         nameText = (EditText) findViewById(R.id.et_child_name);
         ageText = (EditText) findViewById(R.id.et_child_age);
         avatarPreview = (ImageView) findViewById(R.id.iv_avatar_preview);
-        avatarId = -1;
+        avatarUri = null;
 
 
         // These two arrays would be used to set click event on imageView (avatar)
@@ -140,7 +139,6 @@ public class EditChildActivity extends AppCompatActivity {
                         bottomSheetDialog.dismiss();
                     }
                 });
-
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
             }
@@ -163,7 +161,6 @@ public class EditChildActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("image/*");
-//        startActivityForResult(Intent.createChooser(intent, "hi!"), GALLERY_REQUEST_CODE);
         startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
 
@@ -177,7 +174,6 @@ public class EditChildActivity extends AppCompatActivity {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else {
@@ -185,16 +181,15 @@ public class EditChildActivity extends AppCompatActivity {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-        capturedImageUri = FileProvider.getUriForFile(
+        avatarUri = FileProvider.getUriForFile(
                 EditChildActivity.this,
                 "com.example.project.provider", //(use your app signature + ".provider" )
                 file);
         Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        i.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, avatarUri);
         startActivityForResult(i, CAMERA_REQUEST_CODE);
     }
 
@@ -206,14 +201,13 @@ public class EditChildActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 final int takeFlags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
                 ContentResolver resolver = EditChildActivity.this.getContentResolver();
-                Uri uri = data.getData();
-                resolver.takePersistableUriPermission(uri, takeFlags);
-                avatarPreview.setImageURI(uri);
-                // savePhotoUri(MainActivity.this, uri.toString());
+                avatarUri = data.getData();
+                resolver.takePersistableUriPermission(avatarUri, takeFlags);
+                avatarPreview.setImageURI(avatarUri);
             }
         } else if (resultCode == RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null) {
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), capturedImageUri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), avatarUri);
                 avatarPreview.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
@@ -264,7 +258,7 @@ public class EditChildActivity extends AppCompatActivity {
                             "Please enter child age",
                             Toast.LENGTH_SHORT).show();
                     return true;
-                } else if (avatarId == -1) {
+                } else if (avatarUri == null) {
                     Toast.makeText(EditChildActivity.this,
                             "Please select an avatar for child",
                             Toast.LENGTH_SHORT).show();
@@ -281,14 +275,14 @@ public class EditChildActivity extends AppCompatActivity {
                 getGender();
                 if (childPos == -1) {
                     // Add new lens
-                    Child child = new Child(name, age, avatarId, gender, getChildID());
+                    Child child = new Child(name, age, avatarUri.toString(), gender, getChildID());
                     childManager.add(child);
                     Toast.makeText(EditChildActivity.this, "New child Added!", Toast.LENGTH_SHORT).show();
                 } else {
                     // edit existed lens
                     childManager.setChildName(childPos, name);
                     childManager.setChildAge(childPos, age);
-                    childManager.setChildAvatarId(childPos, avatarId);
+                    childManager.setChildAvatarUriPath(childPos, avatarUri.toString());
                     childManager.setChildGender(childPos, gender);
                     Toast.makeText(EditChildActivity.this, "child Info Updated!", Toast.LENGTH_SHORT).show();
                 }
@@ -322,9 +316,7 @@ public class EditChildActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(CHILD_PREFS_NAME, Integer.toString(returnValue));
         editor.apply();
-
         Log.println(Log.INFO, "CHILD", "Child's ID: " + returnValue);
-
         return returnValue;
     }
 
@@ -347,12 +339,11 @@ public class EditChildActivity extends AppCompatActivity {
             girlBtn.setChecked(true);
         }
         // set up avatar
-        avatarId = childManager.getChildAvatarId(childPos);
-        for (int i = 0; i < avatarResIDArray.size(); i++) {
-            if (avatarId == avatarResIDArray.get(i)) {
-                ImageView img = (ImageView) findViewById(avatarImageViewArray.get(i));
-                img.performClick();
-            }
+        avatarUri = Uri.parse(childManager.getChildAvatarUriPath(childPos));
+        try {
+            avatarPreview.setImageURI(avatarUri);
+        } catch (RuntimeException e) {
+            avatarPreview.setImageURI(Child.DEFAULT_URI);
         }
     }
 
@@ -390,8 +381,8 @@ public class EditChildActivity extends AppCompatActivity {
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    avatarPreview.setImageResource(avatarResIDArray.get(finalI));
-                    avatarId = avatarResIDArray.get(finalI);
+                    avatarUri = Uri.parse("android.resource://" + getPackageName() + "/" + avatarResIDArray.get(finalI));
+                    avatarPreview.setImageURI(avatarUri);
                     setAvatarsBackground(img);
                 }
             });
