@@ -4,8 +4,13 @@
     package="com.example.project">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:exported ="true"
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/mom_dad_icon"
         android:label="@string/app_name"
@@ -71,6 +76,15 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepath" />
+        </provider>
     </application>
 
 </manifest>

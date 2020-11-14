@@ -4,19 +4,32 @@
 
 package com.example.project.ChildActivities;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,21 +48,29 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class EditChildActivity extends AppCompatActivity {
     private static final String EXTRA_CHILD_POS = "childPos";
-    private ChildManager childManager;
-    int childPos;
-    EditText nameText, ageText;
+    private static final int GALLERY_REQUEST_CODE = 123;
+    private static final int CAMERA_REQUEST_CODE = 124;
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String CHILD_PREFS_NAME = "ChildList";
     private static final String CHILD_CURRENT_ID = "ChildID";
+    private ChildManager childManager;
+    int childPos;
+    EditText nameText, ageText;
+    ImageView avatarPreview;
     private int avatarId;
     private int gender;
+    Uri capturedImageUri;
     private List<Integer> avatarImageViewArray;
     private List<Integer> avatarResIDArray;
 
@@ -61,6 +82,7 @@ public class EditChildActivity extends AppCompatActivity {
         childManager = ChildManager.getInstance();
         nameText = (EditText) findViewById(R.id.et_child_name);
         ageText = (EditText) findViewById(R.id.et_child_age);
+        avatarPreview = (ImageView) findViewById(R.id.iv_avatar_preview);
         avatarId = -1;
 
 
@@ -79,6 +101,7 @@ public class EditChildActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         childPos = extratChildPosFromIntent();
+        checkPermission();
         setupAvatarOption();
         setupAvatarButton();
         // If we are going to edit an existing child
@@ -88,8 +111,12 @@ public class EditChildActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * When user click the button, a dialog will pop up from the bottom
+     * User has two options: take a photo or select image from gallery
+     */
     private void setupAvatarButton() {
-        Button btn = (Button) findViewById(R.id.btn_select_photo);
+        Button btn = (Button) findViewById(R.id.btn_custom_avatar);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,19 +125,120 @@ public class EditChildActivity extends AppCompatActivity {
                 View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
                         R.layout.select_avatar_dialog,
                         (LinearLayout) findViewById(R.id.dialog_avatar));
+                // set up click event for two buttons
                bottomSheetView.findViewById(R.id.btn_gallery).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(EditChildActivity.this, "take photo", Toast.LENGTH_LONG).show();
+                        selectFromGallery();
                         bottomSheetDialog.dismiss();
                     }
                 });
+                bottomSheetView.findViewById(R.id.btn_takephoto).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        capturePhoto();
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
             }
 
             });
     }
+
+    /**
+     * Select image from gallery, assign the Uri to child's avatar property
+     */
+    private void selectFromGallery() {
+        Intent intent;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        }else{
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("image/*");
+//        startActivityForResult(Intent.createChooser(intent, "hi!"), GALLERY_REQUEST_CODE);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+
+    /**
+     * Capture a photo from camera, and save it to external storage
+     */
+    private void capturePhoto() {
+        Calendar cal = Calendar.getInstance();
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),  (cal.getTimeInMillis()+".jpg"));
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        capturedImageUri = FileProvider.getUriForFile(
+                EditChildActivity.this,
+                "com.example.project.provider", //(use your app signature + ".provider" )
+                file);
+        Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri);
+        startActivityForResult(i, CAMERA_REQUEST_CODE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == GALLERY_REQUEST_CODE && data != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                final int takeFlags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                ContentResolver resolver = EditChildActivity.this.getContentResolver();
+                Uri uri = data.getData();
+                resolver.takePersistableUriPermission(uri, takeFlags);
+                avatarPreview.setImageURI(uri);
+                // savePhotoUri(MainActivity.this, uri.toString());
+            }
+        } else if (resultCode == RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null) {
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), capturedImageUri);
+                avatarPreview.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(EditChildActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(EditChildActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+            Log.e("value", "Permission Granted, Now you can take picture .");
+        }
+        if (ContextCompat.checkSelfPermission(EditChildActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(EditChildActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            Log.e("value", "Permission Granted, Now you can write to external  .");
+        }
+    }
+
+
+
+
 
 
     @Override
@@ -262,14 +390,18 @@ public class EditChildActivity extends AppCompatActivity {
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    avatarPreview.setImageResource(avatarResIDArray.get(finalI));
                     avatarId = avatarResIDArray.get(finalI);
-                    setImageViewBackground(img);
+                    setAvatarsBackground(img);
                 }
             });
         }
     }
 
-    private void setImageViewBackground(ImageView targetImg) {
+    /**
+     * Upon click a default avatar, the avatar will be highlighted
+     */
+    private void setAvatarsBackground(ImageView targetImg) {
         for (int i = 0; i < avatarImageViewArray.size(); i++) {
              ImageView imageView = (ImageView) findViewById(avatarImageViewArray.get(i));
              imageView.setBackgroundResource(android.R.color.transparent);

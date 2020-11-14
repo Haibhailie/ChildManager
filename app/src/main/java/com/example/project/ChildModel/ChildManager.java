@@ -84,6 +84,14 @@ public class ChildManager {
         return childList.size();
     }
 
+    public void setChildAvatarUriPath(int index, String path) {
+        childList.get(index).setAvatarUriPath(path);
+    }
+
+    public String getChildAvatarUriPath (int index) {
+        return childList.get(index).getAvatarUriPath();
+    }
+
     public int findChildIndexById(int id){
 
         for(int i = 0; i < this.getLength(); i++){

@@ -14,6 +14,7 @@ public class Child {
     private String name;
     private int age;
     private int avatarID; // can only in String type, otherwise crash in shared preference
+    private String avatarUriPath;
     private int ID;
 
 
@@ -28,6 +29,9 @@ public class Child {
         this.gender = gender;
     }
 
+    public void setAvatarUriPath(String path) {
+        this.avatarUriPath =path;
+    }
     public void setGender(int gender) {
         this.gender = gender;
     }
@@ -62,6 +66,10 @@ public class Child {
 
     public int getGender() {
         return gender;
+    }
+
+    public String getAvatarUriPath() {
+        return avatarUriPath;
     }
 
     @Override
