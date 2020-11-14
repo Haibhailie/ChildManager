@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.project.CoinFlipActivities.ChooseChildCoinFlipActivity;
 import com.example.project.ChildActivities.ViewChildActivity;
-import com.example.project.TaskActivities.TaskActivity;
+import com.example.project.TaskActivities.ViewTaskActivity;
 import com.example.project.Timeout.Timeout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         task.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = TaskActivity.makeLaunchIntent(MainActivity.this);
+                Intent intent = ViewTaskActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });

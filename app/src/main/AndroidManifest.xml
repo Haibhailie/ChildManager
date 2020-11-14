@@ -13,9 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".TaskActivities.TaskActivity"
-            android:label="@string/title_activity_task"
+            android:name=".TaskActivities.EditTaskActivity"
+            android:label="@string/title_activity_edit_task"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".TaskActivities.ViewTaskActivity"
+            android:label="@string/title_activity_task"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AboutUs"
             android:label="@string/title_activity_about_us"

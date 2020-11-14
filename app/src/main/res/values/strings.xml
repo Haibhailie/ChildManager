@@ -60,6 +60,7 @@
     <string name="shanks_about">&lt;b>Shashank Thanalapati&lt;/b>, a name longer than sanity\'s comprehension and with code retention capabilities greater than your SSD.</string>
     <string name="title_activity_about_us">AboutUs</string>
     <string name="who_are_we">Who are we?</string>
-    <string name="title_activity_task">TaskActivity</string>
+    <string name="title_activity_task">Tasks</string>
     <string name="taskText">Task</string>
+    <string name="title_activity_edit_task">EditTaskActivity</string>
 </resources>
