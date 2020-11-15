@@ -1,14 +1,18 @@
 package com.example.project.TaskModel;
 
+import android.widget.Toast;
+
 import com.example.project.ChildModel.Child;
+import com.example.project.ChildModel.ChildManager;
 
 public class Task {
-    private String taskName, description;
-    private Child theNextChild;
+    private String taskName, description, theAssignedChild;
+    private ChildManager childManager = ChildManager.getInstance();
+    private Child theChild;
 
-    public Task(String taskName, Child theNextChild, String description){
+    public Task(String taskName, String theAssignedChild, String description){
         this.taskName = taskName;
-        this.theNextChild = theNextChild;
+        this.theAssignedChild = theAssignedChild;
         this.description = description;
     }
 
@@ -21,12 +25,21 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public Child getTheNextChild() {
-        return theNextChild;
+    public String getTheAssignedChild() {
+        return theAssignedChild;
     }
 
-    public void setTheNextChild(Child theNextChild) {
-        this.theNextChild = theNextChild;
+    public void setTheAssignedChild(String theAssignedChild) {
+        for (int i = 0; i < childManager.getLength(); i++) {
+            if(childManager.getChildName(i) == theAssignedChild){
+                //assigned
+                theChild = childManager.getChild(i);
+            } else{
+                // let the parent to configure the child
+                System.out.println("Please configure the child.");
+            }
+        }
+
     }
 
     public String getDescription() {

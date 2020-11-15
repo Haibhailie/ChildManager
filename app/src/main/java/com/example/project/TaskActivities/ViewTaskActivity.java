@@ -11,10 +11,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.project.ChildActivities.EditChildActivity;
+import com.example.project.ChildActivities.ViewChildActivity;
 import com.example.project.R;
+import com.example.project.TaskModel.Task;
 import com.example.project.TaskModel.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class ViewTaskActivity extends AppCompatActivity {
     private TaskManager taskManager;
@@ -28,6 +33,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         taskManager = TaskManager.getInstance();
+        //List<Task> tasks =
         //up
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -42,23 +48,30 @@ public class ViewTaskActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = EditTaskActivity.makeLaunchIntent(ViewTaskActivity.this, -1);
+                startActivity(intent);
             }
         });
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_blink);
 
 
-
     }
 
-
     private void populateListView() {
+
 
     }
 
     public static Intent makeLaunchIntent(Context context) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         return intent;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        populateListView();
+        setupBasic();
     }
 }

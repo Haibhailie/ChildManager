@@ -46,5 +46,45 @@
         app:layout_constraintStart_toStartOf="@+id/taskDescription"
         app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
 
+    <TextView
+        android:id="@+id/assigned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/assigned_to_who"
+        app:layout_constraintStart_toStartOf="@+id/theTaskDescription"
+        app:layout_constraintTop_toBottomOf="@+id/theTaskDescription" />
+
+    <EditText
+        android:id="@+id/assignedChild"
+        android:layout_width="209dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/assigned"
+        app:layout_constraintTop_toBottomOf="@+id/assigned" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assignedChild"
+        app:layout_constraintVertical_bias="0.482">
+
+        <ImageView
+            android:id="@+id/assignedChildImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/default_avator" />
+
+        <TextView
+            android:id="@+id/assignedChildId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
