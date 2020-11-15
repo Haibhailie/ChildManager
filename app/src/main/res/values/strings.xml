@@ -29,6 +29,11 @@
     <string name="coin_content">Coin</string>
     <string name="tails_coin_desc">Tails</string>
     <string name="heads_coin_desc">Heads</string>
+    <string name="coin_flip_choose_change_child">Change who gets to flip the coin</string>
+    <string name="title_activity_change_child_coin_flip">ChangeChildCoinFlipActivity</string>
+    <string name="coin_flip_choose_pick">Pick</string>
+    <string name="coin_flip_choose_oracle">%s gets to choose!</string>
+    <string name="coin_flip_change_child_other_children">Children:</string>
 
     <string name="countdownTimer">Countdown Timer</string>
     <string name="title_activity_timeout">Timeout</string>
@@ -43,8 +48,6 @@
     <string name="reset">Reset</string>
     <string name="start">Start</string>
     <string name="_10_00">10:00</string>
-    <string name="coin_flip_choose_pick">Pick</string>
-    <string name="coin_flip_choose_oracle">%s gets to choose!</string>
     <string name="str_name">Name</string>
     <string name="str_age">Age</string>
     <string name="str_boy">Boy</string>
@@ -59,13 +62,6 @@
     <string name="knex_about">&lt;b>Kent Nex&lt;/b>, a cool last name and cooler personality. A mathemagician who can find the double derivative before you can count to 5.</string>
     <string name="shanks_about">&lt;b>Shashank Thanalapati&lt;/b>, a name longer than sanity\'s comprehension and with code retention capabilities greater than your SSD.</string>
     <string name="title_activity_about_us">AboutUs</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="who_are_we">Who are we?</string>
+
 </resources>

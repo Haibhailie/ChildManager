@@ -80,6 +80,17 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         setChildNameTag();
         setAvatar();
         setOnClickHeadsTails();
+        setOnClickChangeChild();
+    }
+
+    private void setOnClickChangeChild(){
+        Button changeChild = (Button) findViewById(R.id.coin_flip_choose_change_child);
+        changeChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchChangeChildActivity();
+            }
+        });
     }
 
     private void setOracleText(){
@@ -142,6 +153,12 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private void launchCoinFlipActivity(boolean choice, int index){
         Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, index, choice);
+        startActivity(intent);
+        finish();
+    }
+
+    private void launchChangeChildActivity(){
+        Intent intent = ChangeChildCoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this);
         startActivity(intent);
         finish();
     }
