@@ -1,9 +1,15 @@
 package com.example.project.CoinFlipModel;
 
-import com.example.project.ChildModel.Child;
-
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * CoinFlipQueue: (Singleton)
+ *  A class to keep track of the children's coin flip order
+ *  Children in the back are last the get the flip
+ *  New children are added to the back.
+ *  Can remove children that are no longer there.
+ */
 
 public class CoinFlipQueue {
 
