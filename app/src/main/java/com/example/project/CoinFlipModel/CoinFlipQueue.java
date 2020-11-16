@@ -23,24 +23,40 @@ public class CoinFlipQueue {
         return instance;
     }
 
+    public int get(int i){
+        return childIdQueue.get(i);
+    }
+
     public void addId(int id){
         childIdQueue.add(id);
     }
 
-    public void removeId(int id){
+    public void removeId(Integer id){
         childIdQueue.remove(id);
     }
 
-    public void putToBack(int id){
+    public void putToBack(Integer id){
         childIdQueue.remove(id);
         childIdQueue.add(id);
     }
 
     public void setQueue(List<Integer> savedQueue){
         childIdQueue = savedQueue;
+
+        if(savedQueue == null){
+            childIdQueue = new ArrayList<>();
+        }
+    }
+
+    public List<Integer> getQueue(){
+        return childIdQueue;
     }
 
     public void removeMissingIds(List<Integer> childIdList){
+
+        if(childIdQueue.size() == 0){
+            return;
+        }
 
         List<Integer> newChildIdQueue = new ArrayList<>();
 

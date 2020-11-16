@@ -18,14 +18,18 @@ import android.widget.TextView;
 
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
+import com.example.project.CoinFlipModel.CoinFlipQueue;
 import com.example.project.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChangeChildCoinFlipActivity extends AppCompatActivity {
 
-    ArrayList<Child> childOrderList;
     private ChildManager childManager;
+    private CoinFlipQueue childQueue;
+
+    private List<Child> childrenInOrder = new ArrayList<>();
 
     public static Intent makeLaunchIntent(Context context) {
         Intent intent = new Intent(context, ChangeChildCoinFlipActivity.class);
@@ -40,9 +44,17 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         childManager = ChildManager.getInstance();
+        childQueue = CoinFlipQueue.getInstance();
+        getListOfChildrenInOrder();
 
         populateListView();
         registerListItemClickCallback();
+    }
+
+    private void getListOfChildrenInOrder(){
+        for(int id : childQueue.getQueue()){
+            childrenInOrder.add(childManager.getChild(childManager.findChildIndexById(id)));
+        }
     }
 
     private void populateListView(){
@@ -53,8 +65,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
 
     private class MyListAdapter extends ArrayAdapter<Child> {
         public MyListAdapter(){
-            // TODO CHANGE THE ORDERED CHILD LIST
-            super(ChangeChildCoinFlipActivity.this, R.layout.child_list, childManager.getChildList());
+            super(ChangeChildCoinFlipActivity.this, R.layout.child_list, childrenInOrder);
         }
 
         @Override
@@ -67,11 +78,11 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
 
             // Fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.child_avatar);
-            imageView.setImageResource(childManager.getChildAvatarId(position));
+            imageView.setImageResource(childrenInOrder.get(position).getAvatarId());
 
             // Text:
             TextView itemText = (TextView) itemView.findViewById(R.id.text_childinfo);
-            String item = String.format("%s", childManager.getChildName(position));
+            String item = String.format("%s", childrenInOrder.get(position).getName());
             itemText.setText(item);
 
             return itemView;
@@ -83,7 +94,9 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO ADD ON CLICK
+                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(ChangeChildCoinFlipActivity.this, childManager.findChildIndexById(childrenInOrder.get(position).getID()));
+                startActivity(intent);
+                finish();
             }
         });
     }

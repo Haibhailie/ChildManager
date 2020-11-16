@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.project.CoinFlipModel.CoinFlipQueue;
 import com.example.project.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -56,6 +57,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private ChildManager childManager;
     private CoinFlipHistoryManager flipManager;
+    private CoinFlipQueue coinFlipQueue;
     private Coin coin;
 
     public static Intent makeLaunchIntent(Context context, int index, boolean isHeads) {
@@ -92,6 +94,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         childManager = ChildManager.getInstance();
         flipManager = CoinFlipHistoryManager.getInstance();
+        coinFlipQueue = CoinFlipQueue.getInstance();
         coin = new Coin();
 
         historyButtonListener();
@@ -192,11 +195,17 @@ public class CoinFlipActivity extends AppCompatActivity {
                     winLostIcon, headsTailsIcon);
             flipManager.add(newFlip);
             saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
+            saveQueue();
         }
         setHistoryButtonVisibility(View.VISIBLE);
 
         Log.println(Log.INFO, COIN, "Landed: "  + logInfoText);
 
+    }
+
+    public void saveQueue(){
+        coinFlipQueue.putToBack(childManager.getChildID(indexOfChild));
+        ChooseChildCoinFlipActivity.saveCoinQueue(CoinFlipActivity.this, coinFlipQueue.getQueue());
     }
 
     private void setHistoryButtonVisibility(int visibility) {
@@ -262,7 +271,6 @@ public class CoinFlipActivity extends AppCompatActivity {
                 cleansedFlipList.add(flip);
             }
         }
-
 
         return cleansedFlipList;
     }
