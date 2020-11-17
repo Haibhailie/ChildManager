@@ -25,9 +25,9 @@ import com.example.project.R;
 
 public class EditTaskActivity extends AppCompatActivity {
     private TaskManager taskManager;
-    EditText nameText, descriptionText, assignedChildText;
-    String name, description, assignedChild;
-    //Child assignedChild;
+    private EditText nameText, descriptionText, assignedChildText;
+    private String name, description;
+    private int assignedChild;
     int taskPos;
     private static final String EXTRA_TASK_POS = "taskPos";
 
@@ -61,8 +61,9 @@ public class EditTaskActivity extends AppCompatActivity {
             case R.id.action_save:
                 name = nameText.getText().toString();
                 description = descriptionText.getText().toString();
-                assignedChild = assignedChildText.getText().toString();
-                if(name == ""|| description == "" || assignedChild == ""){
+                assignedChild = Integer. parseInt(assignedChildText.getText().toString());
+
+                if(name == ""|| description == ""){
                     Toast.makeText(EditTaskActivity.this,
                             "Please enter valid input",
                             Toast.LENGTH_SHORT).show();
@@ -71,6 +72,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 if(taskPos == -1){
                     Task newTask = new Task(name, assignedChild, description);
                     taskManager.addTask(newTask);
+
                 } else{
                     taskManager.getTask(taskPos).setTaskName(name);
                     taskManager.getTask(taskPos).setDescription(description);
@@ -91,7 +93,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private void startEditTasks() {
         nameText.setText(taskManager.getTask(taskPos).getTaskName());
         descriptionText.setText(taskManager.getTask(taskPos).getDescription());
-        assignedChildText.setText(taskManager.getTask(taskPos).getTheAssignedChild().toString());
+        assignedChildText.setText(taskManager.getTask(taskPos).getTheAssignedChildId());
     }
 
     public static Intent makeLaunchIntent(ViewTaskActivity context, int taskPos) {

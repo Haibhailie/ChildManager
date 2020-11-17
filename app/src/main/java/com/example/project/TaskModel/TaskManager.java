@@ -31,7 +31,7 @@ public class TaskManager{
         taskArrayList.remove(index);
     }
 
-    public void clear(){
+    public void clearTask(){
         taskArrayList.removeAll(taskArrayList);
     }
 

@@ -34,12 +34,19 @@ public class ViewTaskActivity extends AppCompatActivity {
 
         taskManager = TaskManager.getInstance();
         //List<Task> tasks =
-        //up
+
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
         setupBasic();
         populateListView();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        populateListView();
+        setupBasic();
     }
 
     private void setupBasic() {
@@ -66,12 +73,5 @@ public class ViewTaskActivity extends AppCompatActivity {
     public static Intent makeLaunchIntent(Context context) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         return intent;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        populateListView();
-        setupBasic();
     }
 }

@@ -6,13 +6,13 @@ import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 
 public class Task {
-    private String taskName, description, theAssignedChild;
+    private String taskName, description;
+    private int theAssignedChildId;
     private ChildManager childManager = ChildManager.getInstance();
-    private Child theChild;
 
-    public Task(String taskName, String theAssignedChild, String description){
+    public Task(String taskName, int theAssignedChildId, String description){
         this.taskName = taskName;
-        this.theAssignedChild = theAssignedChild;
+        this.theAssignedChildId = theAssignedChildId;
         this.description = description;
     }
 
@@ -25,21 +25,12 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public String getTheAssignedChild() {
-        return theAssignedChild;
+    public int getTheAssignedChildId() {
+        return theAssignedChildId;
     }
 
-    public void setTheAssignedChild(String theAssignedChild) {
-        for (int i = 0; i < childManager.getLength(); i++) {
-            if(childManager.getChildName(i) == theAssignedChild){
-                //assigned
-                theChild = childManager.getChild(i);
-            } else{
-                // let the parent to configure the child
-                System.out.println("Please configure the child.");
-            }
-        }
-
+    public void setTheAssignedChild(int index) {
+        this.theAssignedChildId = childManager.getChildID(index);
     }
 
     public String getDescription() {
