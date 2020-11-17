@@ -26,9 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,9 +46,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,8 +84,8 @@ public class EditChildActivity extends AppCompatActivity {
         avatarImageViewArray = Arrays.asList(R.id.iv_boy1, R.id.iv_boy2,R.id.iv_boy3,R.id.iv_boy4,R.id.iv_boy5,
                 R.id.iv_girl1,R.id.iv_girl2,R.id.iv_girl3,R.id.iv_girl4,R.id.iv_girl5);
 
-        avatarResIDArray = Arrays.asList(R.drawable.b_avatar1, R.drawable.b_avatar2,R.drawable.b_avatar3,R.drawable.b_avatar4
-        ,R.drawable.b_avatar5,R.drawable.g_avatar1, R.drawable.g_avatar2, R.drawable.g_avatar3, R.drawable.g_avatar4,R.drawable.g_avatar5);
+        avatarResIDArray = Arrays.asList(R.drawable.b_avatar1, R.drawable.b_avatar2,R.drawable.b_avatar3,R.drawable.b_avatar4,
+                R.drawable.b_avatar5,R.drawable.g_avatar1, R.drawable.g_avatar2, R.drawable.g_avatar3, R.drawable.g_avatar4,R.drawable.g_avatar5);
 
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
@@ -99,7 +94,7 @@ public class EditChildActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        childPos = extratChildPosFromIntent();
+        childPos = extractChildPosFromIntent();
         checkPermission();
         setupAvatarOption();
         setupAvatarButton();
@@ -168,30 +163,11 @@ public class EditChildActivity extends AppCompatActivity {
      * Capture a photo from camera, and save it to external storage
      */
     private void capturePhoto() {
-        Calendar cal = Calendar.getInstance();
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),  (cal.getTimeInMillis()+".jpg"));
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            file.delete();
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        avatarUri = FileProvider.getUriForFile(
-                EditChildActivity.this,
-                "com.example.project.provider", //(use your app signature + ".provider" )
-                file);
-        Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        i.putExtra(MediaStore.EXTRA_OUTPUT, avatarUri);
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i, CAMERA_REQUEST_CODE);
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -206,19 +182,17 @@ public class EditChildActivity extends AppCompatActivity {
                 avatarPreview.setImageURI(avatarUri);
             }
         } else if (resultCode == RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null) {
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), avatarUri);
-                avatarPreview.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+                Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
+                avatarPreview.setImageBitmap(capturedImage);
+                Calendar cal = Calendar.getInstance();
+                String path = MediaStore.Images.Media.insertImage(getContentResolver(), capturedImage, ""+cal.getTimeInMillis(), "description");
+                avatarUri = Uri.parse(path);
         }
     }
 
+    /**
+     * Check Read/Write permission
+     */
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(EditChildActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(EditChildActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
@@ -229,11 +203,6 @@ public class EditChildActivity extends AppCompatActivity {
             Log.e("value", "Permission Granted, Now you can write to external  .");
         }
     }
-
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -296,6 +265,7 @@ public class EditChildActivity extends AppCompatActivity {
     }
 
 
+
     private void getGender() {
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group_gender);
         int radioId = radioGroup.getCheckedRadioButtonId();
@@ -320,7 +290,7 @@ public class EditChildActivity extends AppCompatActivity {
         return returnValue;
     }
 
-    private int extratChildPosFromIntent() {
+    private int extractChildPosFromIntent() {
         Intent intent = getIntent();
         return intent.getIntExtra(EXTRA_CHILD_POS, -1);
     }
