@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.graphics.Matrix;
 
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
@@ -42,10 +43,12 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.example.project.Utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,9 +59,11 @@ public class EditChildActivity extends AppCompatActivity {
     private static final String EXTRA_CHILD_POS = "childPos";
     private static final int GALLERY_REQUEST_CODE = 123;
     private static final int CAMERA_REQUEST_CODE = 124;
+    public static final int WRITE_REQUEST_CODE = 100;
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String CHILD_PREFS_NAME = "ChildList";
     private static final String CHILD_CURRENT_ID = "ChildID";
+
     private ChildManager childManager;
     int childPos;
     EditText nameText, ageText;
@@ -78,6 +83,7 @@ public class EditChildActivity extends AppCompatActivity {
         ageText = (EditText) findViewById(R.id.et_child_age);
         avatarPreview = (ImageView) findViewById(R.id.iv_avatar_preview);
         avatarUri = null;
+        checkPermissions();
 
 
         // These two arrays would be used to set click event on imageView (avatar)
@@ -95,13 +101,75 @@ public class EditChildActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         childPos = extractChildPosFromIntent();
-        checkPermission();
         setupAvatarOption();
         setupAvatarButton();
         // If we are going to edit an existing child
         // show original value in each fields
         if (childPos != -1) {
             setupEditModel();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        return true;
+    }
+
+    /**
+     * Set up menu bar
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                String name = nameText.getText().toString();
+                String ageStr = ageText.getText().toString();
+                // First check if all fields are filled
+                if (name.equals("")) {
+                    Toast.makeText(EditChildActivity.this,
+                            "Please enter name of child",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (ageStr.equals("")){
+                    Toast.makeText(EditChildActivity.this,
+                            "Please enter child age",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (avatarUri == null) {
+                    Toast.makeText(EditChildActivity.this,
+                            "Please select an avatar for child",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                // Then check if all fields are valid
+                int age = Integer.parseInt(ageStr);
+                if (age < 0) {
+                    Toast.makeText(EditChildActivity.this,
+                            "age of child 0",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                getGender();
+                if (childPos == -1) {
+                    // Add new lens
+                    Child child = new Child(name, age, avatarUri.toString(), gender, getChildID());
+                    childManager.add(child);
+                    Toast.makeText(EditChildActivity.this, "New child Added!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // edit existed lens
+                    childManager.setChildName(childPos, name);
+                    childManager.setChildAge(childPos, age);
+                    childManager.setChildAvatarUriPath(childPos, avatarUri.toString());
+                    childManager.setChildGender(childPos, gender);
+                    Toast.makeText(EditChildActivity.this, "child Info Updated!", Toast.LENGTH_SHORT).show();
+                }
+                saveChildList(EditChildActivity.this, childManager.getChildList());
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -183,6 +251,7 @@ public class EditChildActivity extends AppCompatActivity {
             }
         } else if (resultCode == RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null) {
                 Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
+//                Bitmap resizedImage = Utils.getResizedBitmap(capturedImage, 100, 100);
                 avatarPreview.setImageBitmap(capturedImage);
                 Calendar cal = Calendar.getInstance();
                 String path = MediaStore.Images.Media.insertImage(getContentResolver(), capturedImage, ""+cal.getTimeInMillis(), "description");
@@ -191,80 +260,31 @@ public class EditChildActivity extends AppCompatActivity {
     }
 
     /**
-     * Check Read/Write permission
+     * Check Camera/Write permission
+     * Reference: https://developer.android.com/reference/android/Manifest.permission
      */
-    private void checkPermission() {
-        if (ContextCompat.checkSelfPermission(EditChildActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(EditChildActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
-            Log.e("value", "Permission Granted, Now you can take picture .");
-        }
-        if (ContextCompat.checkSelfPermission(EditChildActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(EditChildActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-            Log.e("value", "Permission Granted, Now you can write to external  .");
+    private void checkPermissions() {
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA
+        };
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
+    private boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_save:
-                String name = nameText.getText().toString();
-                String ageStr = ageText.getText().toString();
-                // First check if all fields are filled
-                if (name.equals("")) {
-                    Toast.makeText(EditChildActivity.this,
-                            "Please enter name of child",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (ageStr.equals("")){
-                    Toast.makeText(EditChildActivity.this,
-                            "Please enter child age",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (avatarUri == null) {
-                    Toast.makeText(EditChildActivity.this,
-                            "Please select an avatar for child",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                // Then check if all fields are valid
-                int age = Integer.parseInt(ageStr);
-                if (age < 0) {
-                    Toast.makeText(EditChildActivity.this,
-                            "age of child 0",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                getGender();
-                if (childPos == -1) {
-                    // Add new lens
-                    Child child = new Child(name, age, avatarUri.toString(), gender, getChildID());
-                    childManager.add(child);
-                    Toast.makeText(EditChildActivity.this, "New child Added!", Toast.LENGTH_SHORT).show();
-                } else {
-                    // edit existed lens
-                    childManager.setChildName(childPos, name);
-                    childManager.setChildAge(childPos, age);
-                    childManager.setChildAvatarUriPath(childPos, avatarUri.toString());
-                    childManager.setChildGender(childPos, gender);
-                    Toast.makeText(EditChildActivity.this, "child Info Updated!", Toast.LENGTH_SHORT).show();
-                }
-                saveChildList(EditChildActivity.this, childManager.getChildList());
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
 
     private void getGender() {
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group_gender);
@@ -313,6 +333,7 @@ public class EditChildActivity extends AppCompatActivity {
         try {
             avatarPreview.setImageURI(avatarUri);
         } catch (RuntimeException e) {
+            // use setImageURI here because scale of default_URI is 1:1
             avatarPreview.setImageURI(Child.DEFAULT_URI);
         }
     }
