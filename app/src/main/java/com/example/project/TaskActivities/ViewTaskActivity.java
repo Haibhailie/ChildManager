@@ -6,19 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.project.ChildActivities.EditChildActivity;
 import com.example.project.ChildActivities.ViewChildActivity;
+import com.example.project.ChildModel.Child;
 import com.example.project.R;
 import com.example.project.TaskModel.Task;
 import com.example.project.TaskModel.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewTaskActivity extends AppCompatActivity {
@@ -66,12 +71,24 @@ public class ViewTaskActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
+        ArrayList<String> newArray = new ArrayList<>();
+        for(int i = 0; i < taskManager.getTaskLength(); i++){
+            String each ="  " + taskManager.getTask(i).toString();
+            newArray.add(each);
+        }
 
+        String[] arr = newArray.toArray(new String[0]);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.task_list,arr);
 
+        ListView listView = (ListView)findViewById(R.id.taskListview);
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     public static Intent makeLaunchIntent(Context context) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         return intent;
     }
+
+
 }

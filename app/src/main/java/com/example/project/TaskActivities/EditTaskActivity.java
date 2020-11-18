@@ -61,7 +61,7 @@ public class EditTaskActivity extends AppCompatActivity {
             case R.id.action_save:
                 name = nameText.getText().toString();
                 description = descriptionText.getText().toString();
-                assignedChild = Integer. parseInt(assignedChildText.getText().toString());
+                //assignedChild = Integer. parseInt(assignedChildText.getText().toString());
 
                 if(name == ""|| description == ""){
                     Toast.makeText(EditTaskActivity.this,
