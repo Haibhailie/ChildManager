@@ -25,8 +25,6 @@ import android.widget.ToggleButton;
 
 import com.example.project.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +129,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
     private List<CoinFlipHistoryMember> getHistoryOfOneChildFromIndex(int index){
 
         List<CoinFlipHistoryMember> childList = new ArrayList<>();
-        int childID = childManager.getChildID(index);
+        int childID = childManager.getChildId(index);
 
         for(CoinFlipHistoryMember flip : flipManager.getFlipList()){
 

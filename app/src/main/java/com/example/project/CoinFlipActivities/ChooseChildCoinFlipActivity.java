@@ -61,7 +61,8 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         Intent intent = getIntent();
         childIndex = intent.getIntExtra(EXTRA_INDEX, -1);
 
-        if(childIndex == -1){
+        if(childIndex == -1 &&
+                childManager.getLength() != 0){
             childIndex = childManager.findChildIndexById(coinFlipQueue.get(0));
         }
     }
@@ -107,7 +108,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     private List<Integer> listOfChildId(){
         List<Integer> childIdList = new ArrayList<>();
         for(Child child : childManager.getChildList()){
-            childIdList.add(child.getID());
+            childIdList.add(child.getId());
         }
 
         return childIdList;

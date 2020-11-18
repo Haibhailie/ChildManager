@@ -29,11 +29,11 @@
     <string name="coin_content">Coin</string>
     <string name="tails_coin_desc">Tails</string>
     <string name="heads_coin_desc">Heads</string>
-    <string name="coin_flip_choose_change_child">Change who gets to flip the coin</string>
-    <string name="title_activity_change_child_coin_flip">ChangeChildCoinFlipActivity</string>
+    <string name="title_activity_change_child_coin_flip">Who gets to flip a coin instead?</string>
     <string name="coin_flip_choose_pick">Pick</string>
     <string name="coin_flip_choose_oracle">%s gets to choose!</string>
-    <string name="coin_flip_change_child_other_children">Children:</string>
+    <string name="coin_flip_choose_change_child">Change who gets to flip the coin</string>
+    <string name="coin_flip_change_child_other_children">Children (Ordered by who\'s next):</string>
 
     <string name="countdownTimer">Countdown Timer</string>
     <string name="title_activity_timeout">Timeout</string>

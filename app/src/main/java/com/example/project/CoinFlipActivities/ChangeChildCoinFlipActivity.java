@@ -94,7 +94,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(ChangeChildCoinFlipActivity.this, childManager.findChildIndexById(childrenInOrder.get(position).getID()));
+                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(ChangeChildCoinFlipActivity.this, childManager.findChildIndexById(childrenInOrder.get(position).getId()));
                 startActivity(intent);
                 finish();
             }

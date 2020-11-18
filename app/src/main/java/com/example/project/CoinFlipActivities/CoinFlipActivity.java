@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.opengl.Visibility;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.ChildManager;
@@ -191,7 +190,13 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         // Save History if a child chose
         if(indexOfChild != -1) {
-            CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildID(indexOfChild),
+            CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildId(indexOfChild),
+                    winLostIcon, headsTailsIcon);
+            flipManager.add(newFlip);
+            saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
+            saveQueue();
+        } else{
+            CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(-1,
                     winLostIcon, headsTailsIcon);
             flipManager.add(newFlip);
             saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
@@ -204,7 +209,7 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     public void saveQueue(){
-        coinFlipQueue.putToBack(childManager.getChildID(indexOfChild));
+        coinFlipQueue.putToBack(childManager.getChildId(indexOfChild));
         ChooseChildCoinFlipActivity.saveCoinQueue(CoinFlipActivity.this, coinFlipQueue.getQueue());
     }
 
