@@ -55,6 +55,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         for(int id : childQueue.getQueue()){
             childrenInOrder.add(childManager.getChild(childManager.findChildIndexById(id)));
         }
+        childrenInOrder.add(new Child("No Child", 0, R.drawable.default_avator, 0,-2));
     }
 
     private void populateListView(){
@@ -94,7 +95,13 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(ChangeChildCoinFlipActivity.this, childManager.findChildIndexById(childrenInOrder.get(position).getId()));
+                int index;
+                if(childrenInOrder.get(position).getId() != -2) {
+                    index = childManager.findChildIndexById(childrenInOrder.get(position).getId());
+                } else {
+                    index = -2;
+                }
+                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(ChangeChildCoinFlipActivity.this, index);
                 startActivity(intent);
                 finish();
             }

@@ -96,12 +96,15 @@ public class ChildManager {
     public int findChildIndexById(int id){
 
         for(int i = 0; i < this.getLength(); i++){
-            if(this.getChildId(i) == id){
-                return i;
+            try {
+                if (this.getChildId(i) == id) {
+                    return i;
+                }
+            } catch (IndexOutOfBoundsException e){
+                Log.println(Log.ERROR, "CHILD", "Missing Child " + id);
             }
         }
 
-        Log.println(Log.ERROR, "CHILD", "Missing Child " + id);
         return -1;
     }
 

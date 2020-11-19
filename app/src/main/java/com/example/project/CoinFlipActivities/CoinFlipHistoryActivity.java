@@ -107,7 +107,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setButtonToChildName(){
         String text = getString(R.string.coin_flip_history_all);
-        String childName = ((childIndex != -1) ?  childManager.getChildName(childIndex) : "Child Not Found.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "No Child Selected.");
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.coin_flip_history_toggle);
 
         toggleButton.setTextOff(String.format(text, childName));
@@ -115,7 +115,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setTextOfOracleTextSingle(){
         String text = getString(R.string.coin_flip_history_oracle_single);
-        String childName = ((childIndex != -1) ?  childManager.getChildName(childIndex) : "Child Not Found.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "No Child Selected.");
         TextView textView = (TextView) findViewById(R.id.coin_flip_history_oracle_text);
         textView.setText(String.format(text, childName));
     }
@@ -192,11 +192,11 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             TextView itemText = (TextView) itemView.findViewById(R.id.coin_flip_history_history_text);
             TextView dateView = (TextView) itemView.findViewById(R.id.coin_flip_history_date_time);
 
-            String item = "ERROR - Maybe they were removed.";
+            String item = "";
             if(childIndex != -1) {
                 item = String.format("%s", childManager.getChildName(childIndex));
-                dateView.setText(flipList.get(position).getDateTimeFlip());
             }
+            dateView.setText(flipList.get(position).getDateTimeFlip());
             itemText.setText(item);
 
             return itemView;

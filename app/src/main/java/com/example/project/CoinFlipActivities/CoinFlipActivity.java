@@ -214,10 +214,8 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void setHistoryButtonVisibility(int visibility) {
-        if(indexOfChild != -1 || visibility == View.GONE) {
-            Button historyButton = (Button) findViewById(R.id.coin_flip_history_button);
-            historyButton.setVisibility(visibility);
-        }
+        Button historyButton = (Button) findViewById(R.id.coin_flip_history_button);
+        historyButton.setVisibility(visibility);
     }
 
     private void coinFlipTimerSetWinner(){
@@ -272,14 +270,13 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         for(CoinFlipHistoryMember flip : flipList) {
 
-            if (childManager.findChildIndexById(flip.getChildId()) != -1) {
+            if (childManager.findChildIndexById(flip.getChildId()) != -1 ||  flip.getChildId() == -1) {
                 cleansedFlipList.add(flip);
             }
         }
 
         return cleansedFlipList;
     }
-
 
 
 }

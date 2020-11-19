@@ -84,6 +84,10 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         setupQueue();
         extractDataFromIntent();
 
+        if(childIndex == -2){
+            launchCoinFlipActivity(false, -1);
+        }
+
         // Enable "up" on toolbar
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -91,7 +95,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         } catch (NullPointerException e){
             Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
         }
-        if(childManager.getLength() > 0) {
+        if(childManager.getLength() > 0 && childIndex != -2) {
             populateFields();
         }
         Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
@@ -205,8 +209,6 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         if(childManager.getLength() == 0){
             Log.println(Log.INFO, CHILDMANAGER_TAG, "No Children, moving onto coin flip");
             launchCoinFlipActivity(false, -1);
-        } else{
-            populateFields();
         }
     }
 
