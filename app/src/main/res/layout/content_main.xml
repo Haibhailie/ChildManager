@@ -83,12 +83,12 @@
         app:layout_constraintVertical_bias="0.156" />
 
     <Button
-    android:id="@+id/aboutButton"
+    android:id="@+id/taskButton"
+    android:text="@string/taskText"
     android:layout_width="199dp"
     android:layout_height="53dp"
     android:layout_marginTop="20dp"
     android:background="@drawable/main_button"
-    android:text="@string/aboutText"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     android:textSize="18sp"
     app:layout_constraintBottom_toBottomOf="@+id/calmBackground"
@@ -98,17 +98,17 @@
     app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/taskButton"
+        android:id="@+id/aboutButton"
         android:layout_width="199dp"
         android:layout_height="53dp"
         android:background="@drawable/main_button"
-        android:text="@string/taskText"
+        android:text="@string/aboutText"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/calmBackground"
         app:layout_constraintEnd_toEndOf="@+id/calmBackground"
         app:layout_constraintStart_toStartOf="@+id/calmBackground"
-        app:layout_constraintTop_toBottomOf="@+id/aboutButton"
+        app:layout_constraintTop_toBottomOf="@+id/taskButton"
         app:layout_constraintVertical_bias="0.517" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

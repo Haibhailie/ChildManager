@@ -3,6 +3,7 @@ package com.example.project.TaskActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,6 +13,9 @@ import android.widget.ListView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.project.ChildActivities.EditChildActivity;
@@ -27,7 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewTaskActivity extends AppCompatActivity {
-    private TaskManager taskManager;
+    private TaskManager taskManager = TaskManager.getInstance();
+    private ArrayList<String> taskList = new ArrayList<>();
+    private final String TAG = "ViewTaskActivity";
+    private RecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,58 +44,41 @@ public class ViewTaskActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        taskManager = TaskManager.getInstance();
-        //List<Task> tasks =
-
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        setupBasic();
-        populateListView();
+        addDemoTasks();
+        createDisplayArrayList();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        populateListView();
-        setupBasic();
+    public void addDemoTasks(){
+        taskManager.addTask(new Task("Trash", 2, "Take the trash out!"));
+        taskManager.addTask(new Task("Utensils", 1, "Wash the damn utensils"));
+        Log.d(TAG, "Size before calling adapter is: "+taskManager.getTaskLength());
     }
 
-    private void setupBasic() {
-        //fab
-        FloatingActionButton fab = findViewById(R.id.taskFab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = EditTaskActivity.makeLaunchIntent(ViewTaskActivity.this, -1);
-                startActivity(intent);
-            }
-        });
-
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_blink);
-
-
-    }
-
-    private void populateListView() {
-        ArrayList<String> newArray = new ArrayList<>();
-        for(int i = 0; i < taskManager.getTaskLength(); i++){
-            String each ="  " + taskManager.getTask(i).toString();
-            newArray.add(each);
+    public void createDisplayArrayList(){
+        Log.d(TAG, "createDisplayArrayList: Moving object array list onto recycler view");
+        int serialNo = 1;
+        for(Task t:taskManager){
+            taskList.add(serialNo+".\t"+t.getTaskName()+"\t"+t.getTheAssignedChildId());
+            serialNo++;
         }
+        initializeRecyclerView();
+    }
 
-        String[] arr = newArray.toArray(new String[0]);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.task_list,arr);
-
-        ListView listView = (ListView)findViewById(R.id.taskListview);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+    private void initializeRecyclerView(){
+        Log.d(TAG, "initializeRecyclerView: Entered Method");
+        RecyclerView recyclerView = findViewById(R.id.taskRecyclerview);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        adapter = new RecyclerViewAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public static Intent makeLaunchIntent(Context context) {
         Intent intent = new Intent(context, ViewTaskActivity.class);
         return intent;
     }
-
 
 }

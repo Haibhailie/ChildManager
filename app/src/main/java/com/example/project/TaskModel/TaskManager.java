@@ -1,16 +1,24 @@
 package com.example.project.TaskModel;
 
-import java.util.ArrayList;
+import android.util.Log;
 
-public class TaskManager{
-    private ArrayList<Task> taskArrayList = new ArrayList<>();;
+import androidx.annotation.NonNull;
+
+import com.example.project.ChildModel.ChildManager;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class TaskManager implements Iterable<Task>{
+
     private static TaskManager instance;
+    private ArrayList<Task> taskArrayList = new ArrayList<>();;
 
     private TaskManager(){}
 
     public static TaskManager getInstance(){
         if(instance == null) {
-            return new TaskManager();
+            instance = new TaskManager();
         }
         return instance;
     }
@@ -36,6 +44,7 @@ public class TaskManager{
     }
 
     public int getTaskLength(){
+        Log.d("Returning", "length is :" + taskArrayList.size());
         return taskArrayList.size();
     }
 
@@ -43,4 +52,9 @@ public class TaskManager{
         return taskArrayList.get(index);
     }
 
+    @NonNull
+    @Override
+    public Iterator<Task> iterator() {
+        return taskArrayList.iterator();
+    }
 }
