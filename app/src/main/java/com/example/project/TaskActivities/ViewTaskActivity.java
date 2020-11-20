@@ -2,13 +2,11 @@ package com.example.project.TaskActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,16 +15,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.project.ChildActivities.EditChildActivity;
 import com.example.project.ChildActivities.ViewChildActivity;
 import com.example.project.ChildModel.Child;
+import com.example.project.ChildModel.ChildManager;
+import com.example.project.MainActivity;
 import com.example.project.R;
+import com.example.project.TaskModel.RecyclerViewAdapter;
 import com.example.project.TaskModel.Task;
 import com.example.project.TaskModel.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,10 @@ public class ViewTaskActivity extends AppCompatActivity {
     private ArrayList<String> taskList = new ArrayList<>();
     private final String TAG = "ViewTaskActivity";
     private RecyclerViewAdapter adapter;
+    private ChildManager childManager = ChildManager.getInstance();
+    private static final String APP_PREFS_NAME = "AppPrefs";
+    private static final String CHILD_PREFS_NAME = "ChildList";
+    private static final String TASK_PREFS_NAME = "TaskList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +52,45 @@ public class ViewTaskActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        addDemoTasks();
+        loadTaskData();
+        retrieveTasks();
         createDisplayArrayList();
+
+        FloatingActionButton taskFab = findViewById(R.id.taskFab);
+        taskFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AddTaskActivity.makeLaunchIntent(ViewTaskActivity.this);
+                startActivity(intent);
+                finish();
+
+            }
+        });
     }
 
-    public void addDemoTasks(){
-        taskManager.addTask(new Task("Trash", 2, "Take the trash out!"));
-        taskManager.addTask(new Task("Utensils", 1, "Wash the damn utensils"));
-        Log.d(TAG, "Size before calling adapter is: "+taskManager.getTaskLength());
+    public void loadTaskData(){
+        SharedPreferences prefs = this.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString(CHILD_PREFS_NAME, null);
+        Type type = new TypeToken<ArrayList<Child>>() {}.getType();
+        List<Child> childList = gson.fromJson(json, type);
+
+        if (childList != null) {
+            childManager.setChildList(childList);
+        }
+    }
+
+    public void retrieveTasks(){
+        SharedPreferences prefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString(TASK_PREFS_NAME, null);
+        Type type = new TypeToken<ArrayList<Task>>() {}.getType();
+        ArrayList<Task> retrievedTaskList = gson.fromJson(json, type);
+
+        if (retrievedTaskList != null) {
+            taskManager.setTaskArrayList(retrievedTaskList);
+        }
+
     }
 
     public void createDisplayArrayList(){

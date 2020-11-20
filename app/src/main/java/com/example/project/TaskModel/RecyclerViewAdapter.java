@@ -1,7 +1,6 @@
-package com.example.project.TaskActivities;
+package com.example.project.TaskModel;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.project.ChildModel.ChildManager;
 import com.example.project.R;
-import com.example.project.TaskModel.Task;
-import com.example.project.TaskModel.TaskManager;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -25,10 +21,10 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private TaskManager taskManager = TaskManager.getInstance();
+    private ChildManager childManager = ChildManager.getInstance();
     private ArrayList<Task> taskList = taskManager.getTaskArrayList();
     private ArrayList<String> taskListName = new ArrayList<>();
     private ArrayList<String> taskListChildAssigned = new ArrayList<>();
-
     private static final String TAG = "RecycleAdapterClass";
     private Context context;
 
@@ -60,16 +56,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         setTaskDetails();
         Log.d(TAG, "onBindViewHolder: called"); //helps us identify where we failed, if we ever do in the process
 
-        //Glide.with(context).asBitmap().load(lensIcons.get(position)).into(holder.icon); Icon here
+
+        //int avatarId = childManager.getChildAvatarId(position);
+        //imageView.setImageResource(avatarId);
+
+        //use the icon of the child responsible here   Glide.with(context).asBitmap().load(lensIcons.get(position)).into(holder.icon);
+
+        holder.childIcon.setImageResource(taskList.get(position).getAvatarId());
         holder.taskName.setText(taskListName.get(position));
         holder.taskAssigned.setText("Presently assigned to "+taskListChildAssigned.get(position));
 
-        /*holder.parentLayout.setOnClickListener(v -> {
-            Context viewContext = v.getContext();
-                Intent calculateLensData = CalculateLensValues.makeLaunchIntent(viewContext, manager.returnLensFromIndex(position).getLensName(), manager.returnLensFromIndex(position).getAperture(), manager.returnLensFromIndex(position).getFocalLength());
-                context.startActivity(calculateLensData);
-
-        });*/
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context viewContext = v.getContext();
+                //Intent editTaskData = EditTaskActivity.makeLaunchIntent(viewContext, position);
+                //context.startActivity(editTaskData);
+                //Start the expand task activity here ^ and have a button which allows you to edit the activity.
+            }
+        });
     }
 
     @Override

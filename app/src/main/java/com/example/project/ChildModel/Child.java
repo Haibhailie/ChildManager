@@ -17,7 +17,6 @@ public class Child {
     private int ID;
 
 
-
     private int gender; // 0 for boy, 1 for girl
 
     public Child(String name, int age, int avatarID, int gender, int ID) {

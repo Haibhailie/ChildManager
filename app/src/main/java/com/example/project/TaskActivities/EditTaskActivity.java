@@ -1,5 +1,6 @@
 package com.example.project.TaskActivities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,7 +28,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private TaskManager taskManager;
     private EditText nameText, descriptionText, assignedChildText;
     private String name, description;
-    private int assignedChild;
+    private String assignedChild;
     int taskPos;
     private static final String EXTRA_TASK_POS = "taskPos";
 
@@ -38,15 +39,6 @@ public class EditTaskActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        taskManager = TaskManager.getInstance();
-        nameText = (EditText) findViewById(R.id.theTaskName);
-        descriptionText = (EditText) findViewById(R.id.theTaskDescription);
-        assignedChildText = (EditText) findViewById(R.id.assignedChild);
-
-        taskPos = extractTaskPosFromIntent();
-        if(taskPos != -1){
-            startEditTasks();
-        }
     }
 
     @Override
@@ -70,13 +62,13 @@ public class EditTaskActivity extends AppCompatActivity {
                 }
 
                 if(taskPos == -1){
-                    Task newTask = new Task(name, assignedChild, description);
+                    Task newTask = new Task(name, assignedChild, description, 0);
                     taskManager.addTask(newTask);
 
                 } else{
                     taskManager.getTask(taskPos).setTaskName(name);
                     taskManager.getTask(taskPos).setDescription(description);
-                    taskManager.getTask(taskPos).setTheAssignedChild(assignedChild);
+                    //taskManager.getTask(taskPos).setTheAssignedChild(assignedChild);
                 }
                 finish();
                 return true;
@@ -96,7 +88,7 @@ public class EditTaskActivity extends AppCompatActivity {
         assignedChildText.setText(taskManager.getTask(taskPos).getTheAssignedChildId());
     }
 
-    public static Intent makeLaunchIntent(ViewTaskActivity context, int taskPos) {
+    public static Intent makeLaunchIntent(Context context, int taskPos) {
         Intent intent = new Intent(context, EditTaskActivity.class);
         intent.putExtra(EXTRA_TASK_POS, taskPos);
         return intent;

@@ -7,15 +7,20 @@ import com.example.project.ChildModel.ChildManager;
 
 public class Task {
     private String taskName, description;
-    private int theAssignedChildId;
+    private String theAssignedChildId;
+    private int avatarID;
     private ChildManager childManager = ChildManager.getInstance();
 
-    public Task(String taskName, int theAssignedChildId, String description){
+    public Task(String taskName, String theAssignedChildId, String description, int avatarID){
         this.taskName = taskName;
         this.theAssignedChildId = theAssignedChildId;
+        this.avatarID = avatarID;
         this.description = description;
     }
 
+    public int getAvatarId() {
+        return avatarID;
+    }
 
     public String getTaskName() {
         return taskName;
@@ -25,12 +30,12 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public int getTheAssignedChildId() {
+    public String getTheAssignedChildId() {
         return theAssignedChildId;
     }
 
     public void setTheAssignedChild(int index) {
-        this.theAssignedChildId = childManager.getChildID(index);
+        this.theAssignedChildId = childManager.getChildName(index);
     }
 
     public String getDescription() {
