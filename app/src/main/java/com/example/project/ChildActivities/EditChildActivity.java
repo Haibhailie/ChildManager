@@ -47,6 +47,8 @@ import com.example.project.Utils.Utils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -57,9 +59,6 @@ import java.util.List;
 
 public class EditChildActivity extends AppCompatActivity {
     private static final String EXTRA_CHILD_POS = "childPos";
-    private static final int GALLERY_REQUEST_CODE = 123;
-    private static final int CAMERA_REQUEST_CODE = 124;
-    public static final int WRITE_REQUEST_CODE = 100;
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String CHILD_PREFS_NAME = "ChildList";
     private static final String CHILD_CURRENT_ID = "ChildID";
@@ -83,6 +82,7 @@ public class EditChildActivity extends AppCompatActivity {
         ageText = (EditText) findViewById(R.id.et_child_age);
         avatarPreview = (ImageView) findViewById(R.id.iv_avatar_preview);
         avatarUri = null;
+        // Check Write and Read permission of external storage
         checkPermissions();
 
 
@@ -174,6 +174,7 @@ public class EditChildActivity extends AppCompatActivity {
     }
 
     /**
+     * Reference : https://www.youtube.com/watch?v=w06OnGwhh4I&ab_channel=AndroidCoding
      * When user click the button, a dialog will pop up from the bottom
      * User has two options: take a photo or select image from gallery
      */
@@ -182,83 +183,41 @@ public class EditChildActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(EditChildActivity.this,
-                        R.style.BottomSheetDialogTheme);
-                View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(
-                        R.layout.select_avatar_dialog,
-                        (LinearLayout) findViewById(R.id.dialog_avatar));
-                // set up click event for two buttons
-               bottomSheetView.findViewById(R.id.btn_gallery).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        selectFromGallery();
-                        bottomSheetDialog.dismiss();
-                    }
-                });
-                bottomSheetView.findViewById(R.id.btn_takephoto).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        capturePhoto();
-                        bottomSheetDialog.dismiss();
-                    }
-                });
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
+                CropImage.startPickImageActivity(EditChildActivity.this);
             }
 
             });
     }
 
     /**
-     * Select image from gallery, assign the Uri to child's avatar property
-     */
-    private void selectFromGallery() {
-        Intent intent;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        }else{
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
-        }
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("image/*");
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);
-    }
-
-    /**
-     * Capture a photo from camera, and save it to external storage
-     */
-    private void capturePhoto() {
-        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(i, CAMERA_REQUEST_CODE);
-    }
-
-
-    /**
-     * Callback function of selectFromGallery amd capturePhoto
+     * Callback function of CropImage.startPickImageActivity
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == GALLERY_REQUEST_CODE && data != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                final int takeFlags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
-                ContentResolver resolver = EditChildActivity.this.getContentResolver();
-                avatarUri = data.getData();
-                resolver.takePersistableUriPermission(avatarUri, takeFlags);
-                avatarPreview.setImageURI(avatarUri);
+        if (resultCode == RESULT_OK && requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
+            Uri uri = CropImage.getPickImageResultUri(this, data);
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, avatarUri)) {
+                ActivityCompat.requestPermissions(EditChildActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            } else {
+                startCrop(uri);
             }
-        } else if (resultCode == RESULT_OK && requestCode == CAMERA_REQUEST_CODE && data != null) {
-                Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
-//                Bitmap resizedImage = Utils.getResizedBitmap(capturedImage, 100, 100);
-                avatarPreview.setImageBitmap(capturedImage);
-                Calendar cal = Calendar.getInstance();
-                String path = MediaStore.Images.Media.insertImage(getContentResolver(), capturedImage, ""+cal.getTimeInMillis(), "description");
-                avatarUri = Uri.parse(path);
         }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                avatarUri = result.getUri();
+                avatarPreview.setImageURI(result.getUri());
+            }
+        }
+    }
+
+    private void startCrop(Uri uri) {
+        CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .start(this);
     }
 
     /**
@@ -269,7 +228,8 @@ public class EditChildActivity extends AppCompatActivity {
         int PERMISSION_ALL = 1;
         String[] PERMISSIONS = {
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.CAMERA
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
         };
 
         if (!hasPermissions(this, PERMISSIONS)) {
