@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.R;
 import com.example.project.TaskActivities.EditTaskActivity;
+import com.example.project.TaskActivities.ViewTaskActivity;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Context viewContext = v.getContext();
                 Intent editTaskData = EditTaskActivity.makeLaunchIntent(viewContext, position);
                 context.startActivity(editTaskData);
-
+                ((ViewTaskActivity)context).finish();
             }
         });
     }

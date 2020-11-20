@@ -71,8 +71,9 @@ public class EditTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 takeInputsAndExit();
                 Intent intent = ViewTaskActivity.makeLaunchIntent(EditTaskActivity.this);
-                startActivity(intent);
                 finish();
+                startActivity(intent);
+
             }
         });
         setInitialValues();
