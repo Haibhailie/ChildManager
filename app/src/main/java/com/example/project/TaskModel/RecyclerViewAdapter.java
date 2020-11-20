@@ -13,9 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.project.ChildActivities.ViewChildActivity;
 import com.example.project.ChildModel.ChildManager;
+import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.TaskActivities.EditTaskActivity;
+import com.example.project.TaskActivities.PopupActivity;
 import com.example.project.TaskActivities.ViewTaskActivity;
 
 import java.util.ArrayList;
@@ -59,17 +62,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         setTaskDetails();
         Log.d(TAG, "onBindViewHolder: called"); //helps us identify where we failed, if we ever do in the process
 
-        holder.childIcon.setImageResource(taskList.get(position).getAvatarId());
-        holder.taskName.setText(taskListName.get(position));
-        holder.taskAssigned.setText("Presently assigned to "+taskListChildAssigned.get(position));
+//        holder.childIcon.setImageResource(taskList.get(position).getAvatarId());
+//        holder.taskName.setText(taskListName.get(position));
+//        holder.taskAssigned.setText("Presently assigned to "+taskListChildAssigned.get(position));
+
+//        holder.parentLayout.setOnLongClickListener(new View.OnLongClickListener(){
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Context viewContext = v.getContext();
+//                Intent editTaskData = EditTaskActivity.makeLaunchIntent(viewContext, position);
+//                context.startActivity(editTaskData);
+//                ((ViewTaskActivity)context).finish();
+//                return true;
+//            }
+//        });
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context viewContext = v.getContext();
-                Intent editTaskData = EditTaskActivity.makeLaunchIntent(viewContext, position);
-                context.startActivity(editTaskData);
-                ((ViewTaskActivity)context).finish();
+                Intent popup = PopupActivity.makeLaunchIntent(viewContext,position);
+                context.startActivity(popup);
             }
         });
     }

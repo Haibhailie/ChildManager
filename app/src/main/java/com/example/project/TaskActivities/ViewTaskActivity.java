@@ -66,6 +66,15 @@ public class ViewTaskActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadTaskData();
+        retrieveTasks();
+        createDisplayArrayList();
+    }
+
+
     public void loadTaskData(){
         SharedPreferences prefs = this.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
