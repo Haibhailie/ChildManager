@@ -236,7 +236,9 @@ public class EditChildActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Callback function of selectFromGallery amd capturePhoto
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
