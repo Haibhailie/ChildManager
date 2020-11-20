@@ -15,10 +15,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project.ChildActivities.ViewChildActivity;
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
-import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.TaskModel.RecyclerViewAdapter;
 import com.example.project.TaskModel.Task;
@@ -90,7 +88,6 @@ public class ViewTaskActivity extends AppCompatActivity {
         if (retrievedTaskList != null) {
             taskManager.setTaskArrayList(retrievedTaskList);
         }
-
     }
 
     public void createDisplayArrayList(){

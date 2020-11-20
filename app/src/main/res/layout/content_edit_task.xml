@@ -7,92 +7,73 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-        android:id="@+id/taskTitle"
-        android:layout_width="77dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:id="@+id/textTaskName"
+        android:layout_width="244dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/taskName"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/theTaskName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/taskTitle"
-        app:layout_constraintTop_toBottomOf="@+id/taskTitle" />
-
     <TextView
-        android:id="@+id/taskDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:id="@+id/textTaskDescription"
+        android:layout_width="244dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="8dp"
         android:text="@string/taskBriefDescription"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/theTaskName"
-        app:layout_constraintTop_toBottomOf="@+id/theTaskName" />
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskName" />
 
     <EditText
-        android:id="@+id/theTaskDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/editTextTaskDescription"
+        android:layout_width="365dp"
+        android:layout_height="96dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/taskDescription"
-        app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
+        android:hint="Separate trash, recycle and compost, and throw it out!"
+        android:inputType="textMultiLine"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textTaskDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskDescription" />
 
     <TextView
-        android:id="@+id/assigned"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:id="@+id/textChildAssigned"
+        android:layout_width="244dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="8dp"
         android:text="@string/assigned_to_who"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/theTaskDescription"
-        app:layout_constraintTop_toBottomOf="@+id/theTaskDescription" />
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskDescription"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskDescription" />
+
+    <Spinner
+        android:id="@+id/childSelectSpinner"
+        android:layout_width="365dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="22dp"
+        android:scrollbarSize="@dimen/material_emphasis_high_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textChildAssigned"
+        app:layout_constraintTop_toBottomOf="@+id/textChildAssigned" />
 
     <EditText
-        android:id="@+id/assignedChild"
-        android:layout_width="209dp"
-        android:layout_height="38dp"
+        android:id="@+id/editTextTaskName"
+        android:layout_width="371dp"
+        android:layout_height="57dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/assigned"
-        app:layout_constraintTop_toBottomOf="@+id/assigned" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center|center_vertical"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assignedChild"
-        app:layout_constraintVertical_bias="0.482">
-
-        <ImageView
-            android:id="@+id/assignedChildImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/default_avator" />
-
-        <TextView
-            android:id="@+id/assignedChildId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+        android:ems="10"
+        android:hint="Take out the trash!"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textTaskName"
+        app:layout_constraintTop_toBottomOf="@+id/textTaskName" />
 
     <Button
         android:id="@+id/submitNewTask"
@@ -103,6 +84,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/childSelectSpinner" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

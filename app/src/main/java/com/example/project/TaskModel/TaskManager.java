@@ -31,8 +31,9 @@ public class TaskManager implements Iterable<Task>{
         this.taskArrayList = taskArrayList;
     }
 
-    public Task returnTaskFromIndex(int index){
-        return taskArrayList.get(index);
+    public void editTaskWithIndex(int position, String taskName, String taskDescription, String childAssigned, int avatarID){
+        Task editedTask = new Task(taskName, childAssigned, taskDescription, avatarID);
+        taskArrayList.set(position, editedTask);
     }
 
     public void addTask(Task theTask){

@@ -55,9 +55,6 @@ public class EditChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_child);
         childManager = ChildManager.getInstance();
-        nameText = (EditText) findViewById(R.id.theTaskName);
-        ageText = (EditText) findViewById(R.id.theTaskDescription);
-        avatarId = -1;
 
 
         // These two arrays would be used to set click event on imageView (avatar)
