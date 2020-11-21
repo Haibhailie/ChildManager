@@ -86,7 +86,7 @@ public class EditChildActivity extends AppCompatActivity {
         checkPermissions();
 
 
-        // These two arrays would be used to set click event on imageView (avatar)
+        // These two arrays would be used to set click event on avatar imageViews
         avatarImageViewArray = Arrays.asList(R.id.iv_boy1, R.id.iv_boy2,R.id.iv_boy3,R.id.iv_boy4,R.id.iv_boy5,
                 R.id.iv_girl1,R.id.iv_girl2,R.id.iv_girl3,R.id.iv_girl4,R.id.iv_girl5);
 
