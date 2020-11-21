@@ -32,10 +32,6 @@ public class ChildManager {
         return childList.get(index);
     }
 
-    public int getChildAvatarId(int index) {
-        return childList.get(index).getAvatarId();
-    }
-
     public String getChildName(int index) {
         return childList.get(index).getName();
     }
@@ -72,9 +68,6 @@ public class ChildManager {
         this.childList = childList;
     }
 
-    public void setChildAvatarId(int index, int id) {
-        childList.get(index).setAvatarId(id);
-    }
 
     public void deleteChild(int index) {
         childList.remove(index);
@@ -82,6 +75,14 @@ public class ChildManager {
 
     public int getLength() {
         return childList.size();
+    }
+
+    public void setChildAvatarUriPath(int index, String path) {
+        childList.get(index).setAvatarUriPath(path);
+    }
+
+    public String getChildAvatarUriPath (int index) {
+        return childList.get(index).getAvatarUriPath();
     }
 
     public int findChildIndexById(int id){
