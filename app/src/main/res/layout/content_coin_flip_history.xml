@@ -26,7 +26,6 @@
         android:layout_width="394dp"
         android:layout_height="27dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="44dp"
         android:layout_weight="0"
         android:text="Name                          W/L      H/T                  Date"
         android:textAlignment="viewStart"
@@ -35,18 +34,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/coin_flip_history_oracle_text" />
 
     <ListView
         android:id="@+id/coin_flip_history_list"
         android:layout_width="match_parent"
-        android:layout_height="452dp"
+        android:layout_height="0dp"
         android:descendantFocusability="afterDescendants"
         app:layout_constraintBottom_toTopOf="@+id/coin_flip_history_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coin_flip_history_oracle_text"
+        app:layout_constraintTop_toBottomOf="@+id/table_index"
         app:layout_constraintVertical_bias="0.692">
 
     </ListView>

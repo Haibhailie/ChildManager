@@ -108,7 +108,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setButtonToChildName(){
         String text = getString(R.string.coin_flip_history_all);
-        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "Nobody.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "N/A.");
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.coin_flip_history_toggle);
 
         toggleButton.setTextOff(String.format(text, childName));
@@ -116,7 +116,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setTextOfOracleTextSingle(){
         String text = getString(R.string.coin_flip_history_oracle_single);
-        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "Nobody.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "N/A.");
         TextView textView = (TextView) findViewById(R.id.coin_flip_history_oracle_text);
         textView.setText(String.format(text, childName));
     }
@@ -202,7 +202,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             if(childIndex != -1) {
                 item = String.format("%s", childManager.getChildName(childIndex));
             } else {
-                item = "Nobody";
+                item = "N/A";
             }
             dateView.setText(flipList.get(position).getDateTimeFlip());
             itemText.setText(item);
