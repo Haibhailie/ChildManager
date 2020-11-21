@@ -202,6 +202,8 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             String item = "";
             if(childIndex != -1) {
                 item = String.format("%s", childManager.getChildName(childIndex));
+            } else {
+                item = "No Child";
             }
             dateView.setText(flipList.get(position).getDateTimeFlip());
             itemText.setText(item);

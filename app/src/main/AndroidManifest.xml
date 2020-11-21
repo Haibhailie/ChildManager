@@ -20,7 +20,7 @@
         <activity
             android:name=".TaskActivities.PopupActivity"
             android:label="@string/title_activity_popup"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".TaskActivities.AddTaskActivity"
             android:label="@string/title_activity_add_task"
@@ -36,7 +36,7 @@
         <activity
             android:name=".CoinFlipActivities.ChangeChildCoinFlipActivity"
             android:label="@string/title_activity_change_child_coin_flip"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".AboutUs"
             android:label="@string/title_activity_about_us"
@@ -97,7 +97,7 @@
             tools:ignore="LockedOrientationActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"></activity>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

@@ -2,6 +2,7 @@ package com.example.project.CoinFlipActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.project.BuildConfig;
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.CoinFlipModel.CoinFlipQueue;
@@ -55,7 +57,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         for(int id : childQueue.getQueue()){
             childrenInOrder.add(childManager.getChild(childManager.findChildIndexById(id)));
         }
-        childrenInOrder.add(new Child("No Child", 0, R.drawable.default_avator, 0,-2));
+        childrenInOrder.add(new Child("No Child", 0, "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.drawable.default_avator, 0,-2));
     }
 
     private void populateListView(){
@@ -79,7 +81,13 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
 
             // Fill the view
             ImageView imageView = (ImageView) itemView.findViewById(R.id.child_avatar);
-            imageView.setImageResource(childrenInOrder.get(position).getAvatarId());
+            Uri avatarUri = Uri.parse(childrenInOrder.get(position).getAvatarUriPath());
+            // Avatar photo may be deleted, if so we use default avatar
+            try {
+                imageView.setImageURI(avatarUri);
+            } catch (RuntimeException e) {
+                imageView.setImageURI(Child.DEFAULT_URI);
+            }
 
             // Text:
             TextView itemText = (TextView) itemView.findViewById(R.id.text_childinfo);
