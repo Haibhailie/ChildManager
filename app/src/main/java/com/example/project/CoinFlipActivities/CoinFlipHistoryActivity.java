@@ -2,8 +2,10 @@ package com.example.project.CoinFlipActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.CoinFlipModel.CoinFlipHistoryManager;
 import com.example.project.CoinFlipModel.CoinFlipHistoryMember;
@@ -185,7 +187,12 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             if(childIndex == -1) {
                 childAvatar.setImageResource(R.drawable.default_avator);
             }else{
-                childAvatar.setImageResource(childManager.getChildAvatarId(childIndex));
+                Uri avatarUri = Uri.parse(childManager.getChildAvatarUriPath(childIndex));
+                try {
+                    childAvatar.setImageURI(avatarUri);
+                } catch (RuntimeException e) {
+                    childAvatar.setImageURI(Child.DEFAULT_URI);
+                }
             }
 
             // Text:

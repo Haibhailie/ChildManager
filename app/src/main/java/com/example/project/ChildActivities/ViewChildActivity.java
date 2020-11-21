@@ -1,6 +1,6 @@
 /*
-    * This activity give user a list view of children
-    * User may choose to add or edit child from this activity
+ * This activity give user a list view of children
+ * User may choose to add or edit child from this activity
  */
 package com.example.project.ChildActivities;
 
@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -51,6 +52,7 @@ public class ViewChildActivity extends AppCompatActivity {
     boolean showHint;
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String HINT_PREFS_NAME = "HintPref" ;
+
 
 
     @Override
@@ -177,7 +179,6 @@ public class ViewChildActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -197,8 +198,14 @@ public class ViewChildActivity extends AppCompatActivity {
             }
             // Fill the view.
             ImageView imageView = (ImageView) itemView.findViewById(R.id.child_avatar);
-            int avatarId = childManager.getChildAvatarId(position);
-            imageView.setImageResource(avatarId);
+            Uri avatarUri = Uri.parse(childManager.getChildAvatarUriPath(position));
+            // Avatar photo may be deleted, if so we use default avatar
+            try {
+                imageView.setImageURI(avatarUri);
+            } catch (RuntimeException e) {
+                imageView.setImageURI(Child.DEFAULT_URI);
+            }
+
             // Fill the Info Text
             TextView infoText = (TextView) itemView.findViewById(R.id.text_childinfo);
             infoText.setText(childManager.getChild(position).toString());

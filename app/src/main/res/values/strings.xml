@@ -64,4 +64,12 @@
     <string name="title_activity_about_us">AboutUs</string>
     <string name="who_are_we">Who are we?</string>
 
+    <string name="title_activity_task">Tasks</string>
+    <string name="taskText">Task</string>
+    <string name="title_activity_edit_task">EditTaskActivity</string>
+    <string name="taskName">Task Name:</string>
+    <string name="taskBriefDescription">Brief Description:</string>
+    <string name="assigned_to_who">Assigned to:</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="title_activity_popup">PopupActivity</string>
 </resources>

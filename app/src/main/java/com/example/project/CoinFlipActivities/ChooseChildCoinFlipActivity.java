@@ -3,6 +3,7 @@ package com.example.project.CoinFlipActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.project.ChildActivities.EditChildActivity;
@@ -150,7 +151,12 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private void setAvatar(){
         ImageView childAvatar = (ImageView) findViewById(R.id.coin_flip_choose_avatar);
-        childAvatar.setImageResource(childManager.getChildAvatarId(childIndex));
+        Uri avatarUri = Uri.parse(childManager.getChildAvatarUriPath(childIndex));
+        try {
+            childAvatar.setImageURI(avatarUri);
+        } catch (RuntimeException e) {
+            childAvatar.setImageURI(Child.DEFAULT_URI);
+        }
     }
 
     private void setOnClickHeadsTails(){
