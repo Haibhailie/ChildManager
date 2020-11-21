@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/coin_flip_choose_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/avatar_content"
             app:srcCompat="@drawable/default_avator" />
 

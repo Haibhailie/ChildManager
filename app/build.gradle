@@ -42,4 +42,7 @@ dependencies {
     // SwipMenuListView
     implementation 'com.baoyz.swipemenulistview:library:1.3.0'
 
+    // image cropper
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
 }

@@ -8,26 +8,29 @@ package com.example.project.ChildModel;
 
 import android.net.Uri;
 
+import com.example.project.BuildConfig;
 import com.example.project.R;
 
 public class Child {
+    public static final Uri DEFAULT_URI = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.drawable.default_avator);
+
     private String name;
     private int age;
-    private int avatarID; // can only in String type, otherwise crash in shared preference
+    private String avatarUriPath;
     private int ID;
-
-
-
     private int gender; // 0 for boy, 1 for girl
 
-    public Child(String name, int age, int avatarID, int gender, int ID) {
+    public Child(String name, int age, String avatarUriPath, int gender, int ID) {
         this.ID = ID;
         this.name = name;
+        this.avatarUriPath = avatarUriPath;
         this.age = age;
-        this.avatarID = avatarID;
         this.gender = gender;
     }
 
+    public void setAvatarUriPath(String path) {
+        this.avatarUriPath =path;
+    }
     public void setGender(int gender) {
         this.gender = gender;
     }
@@ -40,9 +43,6 @@ public class Child {
         return age;
     }
 
-    public int getAvatarId() {
-        return avatarID;
-    }
 
     public int getID(){
         return ID;
@@ -56,12 +56,13 @@ public class Child {
         this.age = age;
     }
 
-    public void setAvatarId(int id) {
-        this.avatarID = id;
-    }
 
     public int getGender() {
         return gender;
+    }
+
+    public String getAvatarUriPath() {
+        return avatarUriPath;
     }
 
     @Override

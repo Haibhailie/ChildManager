@@ -42,6 +42,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/et_child_name"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -167,5 +168,25 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_custom_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Custom Avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_child_age"
+        app:layout_constraintTop_toBottomOf="@+id/iv_avatar_preview" />
+
+    <ImageView
+        android:id="@+id/iv_avatar_preview"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/et_child_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/default_avator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
