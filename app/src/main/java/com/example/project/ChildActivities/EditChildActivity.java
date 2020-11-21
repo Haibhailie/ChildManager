@@ -318,6 +318,7 @@ public class EditChildActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    // SharedPreference
     public static List<Child> getSavedChildList(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
@@ -326,6 +327,7 @@ public class EditChildActivity extends AppCompatActivity {
         List<Child> childList = gson.fromJson(json, type);
         return childList;
     }
+
 
     private void setupAvatarOption() {
         for (int i = 0; i < avatarImageViewArray.size(); i++) {
