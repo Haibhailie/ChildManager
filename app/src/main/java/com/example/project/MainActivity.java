@@ -1,15 +1,19 @@
 package com.example.project;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.project.CoinFlipActivities.ChooseChildCoinFlipActivity;
 import com.example.project.ChildActivities.ViewChildActivity;
 import com.example.project.TaskActivities.ViewTaskActivity;
+import com.example.project.TaskModel.TaskManager;
 import com.example.project.Timeout.Timeout;
+import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;

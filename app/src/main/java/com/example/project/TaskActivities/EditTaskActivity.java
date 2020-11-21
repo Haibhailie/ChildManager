@@ -3,6 +3,7 @@ package com.example.project.TaskActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.project.ChildActivities.EditChildActivity;
@@ -30,6 +31,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.google.gson.Gson;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private ImageView childAvatar;
     private int taskClickedPosition;
     private static final String EXTRA_TASK_POS = "taskPos";
+    private static final String TASK_PREFS_NAME = "TaskList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,7 @@ public class EditTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 takeInputsAndExit();
                 Intent intent = ViewTaskActivity.makeLaunchIntent(EditTaskActivity.this);
+                saveTasks();
                 finish();
                 startActivity(intent);
 
@@ -88,6 +93,17 @@ public class EditTaskActivity extends AppCompatActivity {
         });
         setInitialValues();
         initializeChildSpinner();
+    }
+
+    public void saveTasks(){
+        SharedPreferences prefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = gson.toJson(taskManager);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("taskManager", json);
+        editor.apply();
+        editor.commit();
     }
 
     public void setInitialValues(){

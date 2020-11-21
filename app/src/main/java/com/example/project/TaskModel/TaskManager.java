@@ -16,6 +16,10 @@ public class TaskManager implements Iterable<Task>{
 
     private TaskManager(){}
 
+    public void setInstance(TaskManager t){
+        instance = t;
+    }
+
     public static TaskManager getInstance(){
         if(instance == null) {
             instance = new TaskManager();

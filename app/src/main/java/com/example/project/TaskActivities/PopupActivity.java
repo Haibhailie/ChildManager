@@ -2,6 +2,7 @@ package com.example.project.TaskActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.project.TaskModel.Task;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.project.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,7 @@ public class PopupActivity extends AppCompatActivity {
     private static final String EXTRA_TASK_POS = "taskPos";
     private TextView taskName, taskDescription, assignedChild;
     private ImageView childIcon;
+    private static final String TASK_PREFS_NAME = "TaskList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,17 @@ public class PopupActivity extends AppCompatActivity {
         childIcon.setImageResource(taskList.get(position).getAvatarId());
     }
 
+    public void saveTasks(){
+        SharedPreferences prefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = gson.toJson(taskManager);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("taskManager", json);
+        editor.apply();
+        editor.commit();
+    }
+
     private void setupEditButton() {
         Button editButton = (Button)findViewById(R.id.editTask);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +92,7 @@ public class PopupActivity extends AppCompatActivity {
                 Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
                 startActivity(intent);
                 taskManager.removeTask(position);
+                saveTasks();
                 finish();
             }
         });
@@ -92,6 +107,7 @@ public class PopupActivity extends AppCompatActivity {
                 taskManager.getTask(position).setNextChildInQueue();
                 Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
                 startActivity(intent);
+                saveTasks();
                 finish();
             }
         });

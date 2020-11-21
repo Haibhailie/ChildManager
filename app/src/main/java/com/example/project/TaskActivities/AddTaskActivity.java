@@ -2,6 +2,7 @@ package com.example.project.TaskActivities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.project.ChildActivities.EditChildActivity;
@@ -28,7 +29,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +43,6 @@ public class AddTaskActivity extends AppCompatActivity {
     private List<Child> childList = new ArrayList<>();
     private final String TAG = "EditTaskActivity";
     private ChildManager childManager = ChildManager.getInstance();
-    private static final String APP_PREFS_NAME = "AppPrefs";
-    private static final String CHILD_PREFS_NAME = "ChildList";
     private static final String TASK_PREFS_NAME = "TaskList";
     private String enteredTaskName;
     private String enteredDescription;
@@ -81,11 +83,22 @@ public class AddTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 takeInputsAndExit();
                 Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
+                saveTasks();
                 startActivity(intent);
                 finish();
             }
         });
         initializeChildSpinner();
+    }
+
+    public void saveTasks(){
+        SharedPreferences prefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = gson.toJson(taskManager);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("taskManager", json);
+        editor.apply();
+        editor.commit();
     }
 
     public void takeInputsAndExit(){

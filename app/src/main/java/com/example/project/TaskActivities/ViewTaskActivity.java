@@ -61,7 +61,6 @@ public class ViewTaskActivity extends AppCompatActivity {
                 Intent intent = AddTaskActivity.makeLaunchIntent(ViewTaskActivity.this);
                 startActivity(intent);
                 finish();
-
             }
         });
     }
@@ -73,7 +72,6 @@ public class ViewTaskActivity extends AppCompatActivity {
         retrieveTasks();
         createDisplayArrayList();
     }
-
 
     public void loadTaskData(){
         SharedPreferences prefs = this.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
@@ -88,15 +86,16 @@ public class ViewTaskActivity extends AppCompatActivity {
     }
 
     public void retrieveTasks(){
-        SharedPreferences prefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences taskPrefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = prefs.getString(TASK_PREFS_NAME, null);
-        Type type = new TypeToken<ArrayList<Task>>() {}.getType();
-        ArrayList<Task> retrievedTaskList = gson.fromJson(json, type);
-
-        if (retrievedTaskList != null) {
-            taskManager.setTaskArrayList(retrievedTaskList);
+        String taskJson = taskPrefs.getString("taskManager", null);
+        Log.d(TAG, "XML is: "+taskJson);
+        if (taskJson != null) {
+            taskManager.setInstance(gson.fromJson(taskJson, TaskManager.class));
+            Log.d(TAG, "Data from SharedPrefs have been copied.");
         }
+        else
+            taskManager=TaskManager.getInstance();
     }
 
     public void createDisplayArrayList(){

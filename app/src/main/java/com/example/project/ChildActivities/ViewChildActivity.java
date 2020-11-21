@@ -52,7 +52,6 @@ public class ViewChildActivity extends AppCompatActivity {
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String HINT_PREFS_NAME = "HintPref" ;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
