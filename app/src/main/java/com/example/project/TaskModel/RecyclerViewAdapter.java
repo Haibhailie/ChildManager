@@ -64,9 +64,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //holder.childIcon.setImageResource(taskList.get(position).getAvatarId());
 
         //Uri avatarUri = Uri.parse(childManager.getChildAvatarUriPath(position));
-        Uri avatarUri = Uri.parse(taskList.get(position).getAvatarId());
+        //Uri avatarUri = Uri.parse(taskList.get(position).getAvatarId());
         // Avatar photo may be deleted, if so we use default avatar
         try {
+            Uri avatarUri = Uri.parse(taskList.get(position).getAvatarId());
             holder.childIcon.setImageURI(avatarUri);
         } catch (RuntimeException e) {
             holder.childIcon.setImageURI(Child.DEFAULT_URI);

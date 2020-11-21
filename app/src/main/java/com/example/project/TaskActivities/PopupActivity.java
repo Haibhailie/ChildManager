@@ -70,9 +70,9 @@ public class PopupActivity extends AppCompatActivity {
         assignedChild.setText(selectedTask.getTheAssignedChildId());
 
         String avatarID = taskList.get(position).getAvatarId();
-        Uri avatarUri = Uri.parse(avatarID);
 
         try {
+            Uri avatarUri = Uri.parse(avatarID);
             childIcon.setImageURI(avatarUri);
         } catch (RuntimeException e) {
             childIcon.setImageURI(Child.DEFAULT_URI);
