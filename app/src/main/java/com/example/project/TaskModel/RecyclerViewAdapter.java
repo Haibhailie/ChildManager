@@ -11,11 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.R;
-import com.example.project.TaskActivities.EditTaskActivity;
+
 import com.example.project.TaskActivities.PopupActivity;
 import com.example.project.TaskActivities.ViewTaskActivity;
 

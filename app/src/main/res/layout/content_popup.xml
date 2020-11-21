@@ -78,43 +78,43 @@
 
     <Button
         android:id="@+id/confirmTask"
-        android:layout_width="237dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="87dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="87dp"
-        android:layout_marginBottom="41dp"
+        android:layout_width="163dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/confirm_button"
-        android:text="Confirm Completion"
+        android:text="Completed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popupChild"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/editTask" />
 
     <Button
         android:id="@+id/finishTask"
         android:layout_width="163dp"
         android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/main_button"
-        android:text="Back"
-        app:layout_constraintEnd_toStartOf="@+id/editTask"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/cancel_button"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/confirmTask"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popupChild" />
+        app:layout_constraintTop_toBottomOf="@+id/editTask" />
 
     <Button
         android:id="@+id/editTask"
         android:layout_width="163dp"
         android:layout_height="44dp"
+        android:layout_marginStart="124dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="124dp"
         android:background="@drawable/main_button"
         android:text="Edit"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popupChild" />
 
     <ImageView

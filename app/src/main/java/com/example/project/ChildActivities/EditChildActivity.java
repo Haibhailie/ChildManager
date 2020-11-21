@@ -1,5 +1,5 @@
 /*
-    * This activity allow a user to edit a child.
+ * This activity allow a user to edit a child.
  */
 
 package com.example.project.ChildActivities;
@@ -55,6 +55,9 @@ public class EditChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_child);
         childManager = ChildManager.getInstance();
+        nameText = (EditText) findViewById(R.id.et_child_name);
+        ageText = (EditText) findViewById(R.id.et_child_age);
+        avatarId = -1;
 
 
         // These two arrays would be used to set click event on imageView (avatar)
@@ -62,7 +65,7 @@ public class EditChildActivity extends AppCompatActivity {
                 R.id.iv_girl1,R.id.iv_girl2,R.id.iv_girl3,R.id.iv_girl4,R.id.iv_girl5);
 
         avatarResIDArray = Arrays.asList(R.drawable.b_avatar1, R.drawable.b_avatar2,R.drawable.b_avatar3,R.drawable.b_avatar4
-        ,R.drawable.b_avatar5,R.drawable.g_avatar1, R.drawable.g_avatar2, R.drawable.g_avatar3, R.drawable.g_avatar4,R.drawable.g_avatar5);
+                ,R.drawable.b_avatar5,R.drawable.g_avatar1, R.drawable.g_avatar2, R.drawable.g_avatar3, R.drawable.g_avatar4,R.drawable.g_avatar5);
 
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
@@ -240,8 +243,8 @@ public class EditChildActivity extends AppCompatActivity {
 
     private void setImageViewBackground(ImageView targetImg) {
         for (int i = 0; i < avatarImageViewArray.size(); i++) {
-             ImageView imageView = (ImageView) findViewById(avatarImageViewArray.get(i));
-             imageView.setBackgroundResource(android.R.color.transparent);
+            ImageView imageView = (ImageView) findViewById(avatarImageViewArray.get(i));
+            imageView.setBackgroundResource(android.R.color.transparent);
         }
         targetImg.setBackgroundResource(android.R.color.holo_blue_bright);
         targetImg.setPadding(1,1,1,1);

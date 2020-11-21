@@ -77,7 +77,7 @@ public class PopupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
                 startActivity(intent);
-                //taskManager.removeTask(taskClickedPosition);
+                taskManager.removeTask(position);
                 finish();
             }
         });
