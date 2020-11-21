@@ -1,6 +1,6 @@
 /*
-    * This activity give user a list view of children
-    * User may choose to add or edit child from this activity
+ * This activity give user a list view of children
+ * User may choose to add or edit child from this activity
  */
 package com.example.project.ChildActivities;
 
@@ -177,7 +177,6 @@ public class ViewChildActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     @Override

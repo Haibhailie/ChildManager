@@ -1,5 +1,5 @@
 /*
-    * This activity allow a user to edit a child.
+ * This activity allow a user to edit a child.
  */
 
 package com.example.project.ChildActivities;
@@ -71,7 +71,6 @@ public class EditChildActivity extends AppCompatActivity {
     Uri avatarUri;
     private List<Integer> avatarImageViewArray;
     private List<Integer> avatarResIDArray;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -349,8 +348,8 @@ public class EditChildActivity extends AppCompatActivity {
      */
     private void setAvatarsBackground(ImageView targetImg) {
         for (int i = 0; i < avatarImageViewArray.size(); i++) {
-             ImageView imageView = (ImageView) findViewById(avatarImageViewArray.get(i));
-             imageView.setBackgroundResource(android.R.color.transparent);
+            ImageView imageView = (ImageView) findViewById(avatarImageViewArray.get(i));
+            imageView.setBackgroundResource(android.R.color.transparent);
         }
         targetImg.setBackgroundResource(android.R.color.holo_blue_bright);
         targetImg.setPadding(1,1,1,1);

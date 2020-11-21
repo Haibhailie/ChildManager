@@ -59,13 +59,13 @@
     <string name="knex_about">&lt;b>Kent Nex&lt;/b>, a cool last name and cooler personality. A mathemagician who can find the double derivative before you can count to 5.</string>
     <string name="shanks_about">&lt;b>Shashank Thanalapati&lt;/b>, a name longer than sanity\'s comprehension and with code retention capabilities greater than your SSD.</string>
     <string name="title_activity_about_us">AboutUs</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="who_are_we">Who are we?</string>
+    <string name="title_activity_task">Tasks</string>
+    <string name="taskText">Task</string>
+    <string name="title_activity_edit_task">EditTaskActivity</string>
+    <string name="taskName">Task Name:</string>
+    <string name="taskBriefDescription">Brief Description:</string>
+    <string name="assigned_to_who">Assigned to:</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
+    <string name="title_activity_popup">PopupActivity</string>
 </resources>
