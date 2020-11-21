@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_height="wrap_content">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textTaskName"
-        android:layout_width="244dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/taskName"
         android:textSize="22sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/popupTaskName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textTaskDescription"
-        android:layout_width="244dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/taskBriefDescription"
         android:textSize="22sp"
@@ -31,8 +38,8 @@
 
     <TextView
         android:id="@+id/popupDescription"
-        android:layout_width="348dp"
-        android:layout_height="118dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textMultiLine"
@@ -42,8 +49,8 @@
 
     <TextView
         android:id="@+id/textChildAssigned"
-        android:layout_width="244dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/assigned_to_who"
         android:textSize="22sp"
@@ -52,9 +59,21 @@
         app:layout_constraintTop_toBottomOf="@+id/popupDescription" />
 
     <TextView
+        android:id="@+id/popupChild"
+        android:layout_width="139dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:scrollbarSize="@dimen/material_emphasis_high_type"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/childIcon"
+        app:layout_constraintStart_toStartOf="@+id/childIcon"
+        app:layout_constraintTop_toBottomOf="@+id/childIcon" />
+
+    <TextView
         android:id="@+id/popupTaskName"
-        android:layout_width="243dp"
-        android:layout_height="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -66,60 +85,45 @@
         android:id="@+id/confirmTask"
         android:layout_width="103dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/confirm_button"
         android:text="Completed"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTask" />
 
     <Button
         android:id="@+id/finishTask"
         android:layout_width="103dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/cancel_button"
-        android:text="Remove"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTask"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTask" />
 
     <Button
         android:id="@+id/editTask"
         android:layout_width="103dp"
         android:layout_height="44dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/main_button"
         android:text="Edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/confirmTask"
-        app:layout_constraintTop_toBottomOf="@+id/popupChild"
-        app:layout_constraintVertical_bias="0.051" />
+        app:layout_constraintEnd_toEndOf="@+id/popupChild"
+        app:layout_constraintStart_toStartOf="@+id/popupChild"
+        app:layout_constraintTop_toBottomOf="@+id/popupChild" />
 
     <ImageView
         android:id="@+id/childIcon"
         android:layout_width="77dp"
         android:layout_height="73dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textChildAssigned"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/popupChild"
-        android:layout_width="139dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
-        android:scrollbarSize="@dimen/material_emphasis_high_type"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="@+id/childIcon"
-        app:layout_constraintStart_toStartOf="@+id/childIcon"
-        app:layout_constraintTop_toBottomOf="@+id/childIcon" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
