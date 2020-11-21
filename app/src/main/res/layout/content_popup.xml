@@ -52,18 +52,6 @@
         app:layout_constraintTop_toBottomOf="@+id/popupDescription" />
 
     <TextView
-        android:id="@+id/popupChild"
-        android:layout_width="139dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        android:scrollbarSize="@dimen/material_emphasis_high_type"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/childIcon"
-        app:layout_constraintStart_toStartOf="@+id/childIcon"
-        app:layout_constraintTop_toBottomOf="@+id/childIcon" />
-
-    <TextView
         android:id="@+id/popupTaskName"
         android:layout_width="243dp"
         android:layout_height="27dp"
@@ -102,13 +90,12 @@
         android:id="@+id/editTask"
         android:layout_width="103dp"
         android:layout_height="44dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/main_button"
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/confirmTask"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="@+id/popupChild"
         app:layout_constraintTop_toBottomOf="@+id/popupChild"
         app:layout_constraintVertical_bias="0.051" />
 
@@ -116,11 +103,23 @@
         android:id="@+id/childIcon"
         android:layout_width="77dp"
         android:layout_height="73dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textChildAssigned"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/popupChild"
+        android:layout_width="139dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="12dp"
+        android:scrollbarSize="@dimen/material_emphasis_high_type"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="@+id/childIcon"
+        app:layout_constraintStart_toStartOf="@+id/childIcon"
+        app:layout_constraintTop_toBottomOf="@+id/childIcon" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
