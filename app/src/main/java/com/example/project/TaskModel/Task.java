@@ -5,6 +5,9 @@ import android.widget.Toast;
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Task {
     private String taskName, description;
     private String theAssignedChildId;
@@ -32,6 +35,24 @@ public class Task {
 
     public String getTheAssignedChildId() {
         return theAssignedChildId;
+    }
+
+    public void setNextChildInQueue(){
+        int presentChildIndex=0;
+        for(int i=0;i<childManager.getLength();i++){
+            if(theAssignedChildId.compareTo(childManager.getChildName(i))==0){
+                presentChildIndex=i;
+                break;
+            }
+        }
+        if(presentChildIndex==childManager.getLength()-1){
+            presentChildIndex=0;
+        }
+        else{
+            presentChildIndex++;
+        }
+        theAssignedChildId=childManager.getChildName(presentChildIndex);
+        avatarID=childManager.getChildAvatarId(presentChildIndex);
     }
 
     public void setTheAssignedChild(int index) {

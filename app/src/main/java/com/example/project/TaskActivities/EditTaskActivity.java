@@ -61,6 +61,13 @@ public class EditTaskActivity extends AppCompatActivity {
         setupInputResources();
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent intent = ViewTaskActivity.makeLaunchIntent(EditTaskActivity.this);
+        finish();
+        startActivity(intent);
+    }
+
     public void setupInputResources(){
         taskName = findViewById(R.id.editTextTaskName);
         taskDescription = findViewById(R.id.editTextTaskDescription);

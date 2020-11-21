@@ -96,7 +96,6 @@ public class AddTaskActivity extends AppCompatActivity {
             enteredDescription=taskDescription.getText().toString();
             taskManager.addTask(new Task(enteredTaskName, enteredChildName,enteredDescription, avatarID));
         }
-
     }
 
     public void initializeChildSpinner(){

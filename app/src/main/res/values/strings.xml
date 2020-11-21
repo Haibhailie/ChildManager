@@ -65,7 +65,7 @@
     <string name="title_activity_edit_task">EditTaskActivity</string>
     <string name="taskName">Task Name:</string>
     <string name="taskBriefDescription">Brief Description:</string>
-    <string name="assigned_to_who">Assigned to who:</string>
+    <string name="assigned_to_who">Assigned to:</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
     <string name="title_activity_popup">PopupActivity</string>
 </resources>
