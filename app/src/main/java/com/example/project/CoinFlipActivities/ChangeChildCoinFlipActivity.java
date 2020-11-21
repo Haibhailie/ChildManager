@@ -57,7 +57,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         for(int id : childQueue.getQueue()){
             childrenInOrder.add(childManager.getChild(childManager.findChildIndexById(id)));
         }
-        childrenInOrder.add(new Child("No Child", 0, "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.drawable.default_avator, 0,-2));
+        childrenInOrder.add(new Child("Nobody", 0, "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.drawable.default_avator, 0,-2));
     }
 
     private void populateListView(){

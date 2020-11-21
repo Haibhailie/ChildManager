@@ -37,7 +37,7 @@ import java.util.List;
  * Flips a two headed coin with equal weight.
  * Returns to MainActivity
  *
- * Passes index of the child
+ * Has save and load history of coin flips.
  */
 public class CoinFlipActivity extends AppCompatActivity {
 

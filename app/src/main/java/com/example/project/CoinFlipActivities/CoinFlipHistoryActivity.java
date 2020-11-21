@@ -32,9 +32,8 @@ import java.util.List;
 
 /**
  * Allows the user to see the history of coin flips.
- * Can sort coin flips by child.
- *
- * Possible bug: User deletes child. - Handled but can be done better
+ * Can sort coin flips by child or all children.
+ * Deletes children history that are deleted.
  */
 
 public class CoinFlipHistoryActivity extends AppCompatActivity {
@@ -109,7 +108,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setButtonToChildName(){
         String text = getString(R.string.coin_flip_history_all);
-        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "No Child Selected.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "Nobody.");
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.coin_flip_history_toggle);
 
         toggleButton.setTextOff(String.format(text, childName));
@@ -117,7 +116,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setTextOfOracleTextSingle(){
         String text = getString(R.string.coin_flip_history_oracle_single);
-        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "No Child Selected.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "Nobody.");
         TextView textView = (TextView) findViewById(R.id.coin_flip_history_oracle_text);
         textView.setText(String.format(text, childName));
     }
@@ -203,7 +202,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             if(childIndex != -1) {
                 item = String.format("%s", childManager.getChildName(childIndex));
             } else {
-                item = "No Child";
+                item = "Nobody";
             }
             dateView.setText(flipList.get(position).getDateTimeFlip());
             itemText.setText(item);
