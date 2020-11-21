@@ -41,9 +41,8 @@ import java.util.List;
  */
 public class CoinFlipActivity extends AppCompatActivity {
 
-    private static final String COIN = "Coin";
-    private static final String UP = "UP";
-    private static final String CHILDMANAGER_TAG = "ChildManager";
+    private static final String COIN_TAG = "Coin";
+    private static final String UP_TAG = "UP";
 
     private static final String EXTRA_INDEX = "CoinFlip - ChildIndex";
     private static final String EXTRA_CHOICE = "CoinFlip - ChildChoice";
@@ -84,7 +83,7 @@ public class CoinFlipActivity extends AppCompatActivity {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException e){
-            Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
+            Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
         }
 
         // Setup
@@ -151,7 +150,7 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         coinHeads.startAnimation(headAnimation);
         coinTails.startAnimation(tailAnimation);
-        Log.println(Log.INFO, COIN, "Starting animation: Coin");
+        Log.println(Log.INFO, COIN_TAG, "Starting animation: Coin");
     }
 
     private void playSound(int soundResource){
@@ -204,7 +203,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         }
         setHistoryButtonVisibility(View.VISIBLE);
 
-        Log.println(Log.INFO, COIN, "Landed: "  + logInfoText);
+        Log.println(Log.INFO, COIN_TAG, "Landed: "  + logInfoText);
 
     }
 

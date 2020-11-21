@@ -39,11 +39,11 @@ import java.util.List;
 
 public class CoinFlipHistoryActivity extends AppCompatActivity {
 
-    private static final String EXTRA_INDEX = "CoinFlipHistory - ChildIndex";
 
-    private static final String CHILDMANAGER_TAG = "ChildManager";
-    private static final String COIN = "Coin";
-    private static final String UP = "UP";
+    private static final String CHILD_MANAGER_TAG = "ChildManager";
+    private static final String UP_TAG = "UP";
+
+    private static final String EXTRA_INDEX = "CoinFlipHistory - ChildIndex";
 
     private int childIndex;
     private ChildManager childManager;
@@ -73,7 +73,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException e){
-            Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
+            Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
         }
 
         // Setup
@@ -88,7 +88,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         setButtonToChildName();
         addOnClickToggle();
 
-        Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
+        Log.println(Log.INFO, CHILD_MANAGER_TAG, childManager.getLength() + "");
     }
 
     private void addOnClickToggle(){
@@ -167,7 +167,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
                 childIndex = childManager.findChildIndexById(flipList.get(position).getChildId());
             } catch (Exception e){
                 childIndex = -1;
-                Log.println(Log.ERROR, CHILDMANAGER_TAG, "Failed to load: " + e.getMessage());
+                Log.println(Log.ERROR, CHILD_MANAGER_TAG, "Failed to load: " + e.getMessage());
             }
 
             // make sure we have a view to work with

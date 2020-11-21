@@ -11,21 +11,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,26 +18,32 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.project.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.project.ChildModel.Child;
+import com.example.project.ChildModel.ChildManager;
+import com.example.project.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 public class ViewChildActivity extends AppCompatActivity {
+
     ChildManager childManager;
     boolean showHint;
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String HINT_PREFS_NAME = "HintPref" ;
-
 
 
     @Override

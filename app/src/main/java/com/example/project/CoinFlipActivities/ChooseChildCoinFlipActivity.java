@@ -39,8 +39,8 @@ import java.util.List;
  */
 public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
-    private final String UP = "UP";
-    private static final String CHILDMANAGER_TAG = "ChildManager";
+    private static final String UP_TAG = "UP";
+    private static final String CHILD_MANAGER_TAG = "ChildManager";
     private static final String QUEUE_TAG ="Queue";
 
     private static final String EXTRA_INDEX = "CoinFlip - ChildIndex";
@@ -58,6 +58,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         return intent;
     }
 
+    // -1 Index means top of the list, -2 means no child.
     private void extractDataFromIntent(){
         Intent intent = getIntent();
         childIndex = intent.getIntExtra(EXTRA_INDEX, -1);
@@ -85,32 +86,34 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         setupQueue();
         extractDataFromIntent();
 
-        if(childIndex == -2){
-            launchCoinFlipActivity(false, -1);
-        }
-
         // Enable "up" on toolbar
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException e){
-            Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
+            Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
         }
+
+        if(childIndex == -2){
+            launchCoinFlipActivity(false, -1);
+        }
+
         if(childManager.getLength() > 0 && childIndex != -2) {
             populateFields();
         }
-        Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
+
+        Log.println(Log.INFO, CHILD_MANAGER_TAG, childManager.getLength() + "");
     }
 
     private void setupQueue(){
-        List<Integer> childIdList = listOfChildId();
+        List<Integer> childIdList = getListOfChildrenId();
 
         coinFlipQueue.setQueue(getCoinQueue(ChooseChildCoinFlipActivity.this));
         coinFlipQueue.removeMissingIds(childIdList);
         coinFlipQueue.addMissingNewIds(childIdList);
     }
 
-    private List<Integer> listOfChildId(){
+    private List<Integer> getListOfChildrenId(){
         List<Integer> childIdList = new ArrayList<>();
         for(Child child : childManager.getChildList()){
             childIdList.add(child.getId());
@@ -160,42 +163,31 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     }
 
     private void setOnClickHeadsTails(){
-        ImageButton heads = (ImageButton) findViewById(R.id.coin_flip_choose_heads_image);
-        ImageButton tails = (ImageButton) findViewById(R.id.coin_flip_choose_tails_image);
+        ImageButton heads_button = (ImageButton) findViewById(R.id.coin_flip_choose_heads_image);
+        ImageButton tails_button = (ImageButton) findViewById(R.id.coin_flip_choose_tails_image);
         Button heads_text = (Button) findViewById(R.id.coin_flip_choose_heads_text_button);
         Button tails_text = (Button) findViewById(R.id.coin_flip_choose_tails_text_button);
 
-        heads.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener heads_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onHeadsTailsClick(true);
+                launchCoinFlipActivity(true, childIndex);
             }
-        });
+        };
 
-        tails.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener tails_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onHeadsTailsClick(false);
+                launchCoinFlipActivity(false, childIndex);
             }
-        });
+        };
 
-        heads_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onHeadsTailsClick(true);
-            }
-        });
+        heads_button.setOnClickListener(heads_listener);
+        heads_text.setOnClickListener(heads_listener);
 
-        tails_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onHeadsTailsClick(false);
-            }
-        });
-    }
+        tails_button.setOnClickListener(tails_listener);
+        tails_text.setOnClickListener(tails_listener);
 
-    private void onHeadsTailsClick(Boolean choice){
-        launchCoinFlipActivity(choice, childIndex);
     }
 
     private void launchCoinFlipActivity(boolean choice, int index){
@@ -211,9 +203,9 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     }
 
     private void checkIfAnyChildrenInManager() {
-        Log.println(Log.INFO, CHILDMANAGER_TAG, "Number of Children: " + childManager.getLength());
+        Log.println(Log.INFO, CHILD_MANAGER_TAG, "Number of Children: " + childManager.getLength());
         if(childManager.getLength() == 0){
-            Log.println(Log.INFO, CHILDMANAGER_TAG, "No Children, moving onto coin flip");
+            Log.println(Log.INFO, CHILD_MANAGER_TAG, "No Children, moving onto coin flip");
             launchCoinFlipActivity(false, -1);
         }
     }
@@ -223,7 +215,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
             List<Child> savedChildList = EditChildActivity.getSavedChildList(ChooseChildCoinFlipActivity.this);
             if (savedChildList != null) {
                 childManager.setChildList(savedChildList);
-                Log.println(Log.INFO, CHILDMANAGER_TAG, "Loaded Child List from EditKidsActivity");
+                Log.println(Log.INFO, CHILD_MANAGER_TAG, "Loaded Child List from EditKidsActivity");
             }
         }
     }
