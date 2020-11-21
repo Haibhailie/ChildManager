@@ -3,8 +3,10 @@ package com.example.project.TaskActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.example.project.ChildModel.Child;
 import com.example.project.TaskModel.Task;
 import com.example.project.TaskModel.TaskManager;
 
@@ -38,7 +40,15 @@ public class PopupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_popup);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
+                startActivity(intent);
+                finish();
+            }
+        });
         Bundle b = getIntent().getExtras();
         position = b.getInt(EXTRA_TASK_POS);
         selectedTask = taskManager.getTask(position);
@@ -58,7 +68,15 @@ public class PopupActivity extends AppCompatActivity {
         taskName.setText(selectedTask.getTaskName());
         taskDescription.setText(selectedTask.getDescription());
         assignedChild.setText(selectedTask.getTheAssignedChildId());
-        childIcon.setImageResource(taskList.get(position).getAvatarId());
+
+        String avatarID = taskList.get(position).getAvatarId();
+        Uri avatarUri = Uri.parse(avatarID);
+
+        try {
+            childIcon.setImageURI(avatarUri);
+        } catch (RuntimeException e) {
+            childIcon.setImageURI(Child.DEFAULT_URI);
+        }
     }
 
     public void saveTasks(){

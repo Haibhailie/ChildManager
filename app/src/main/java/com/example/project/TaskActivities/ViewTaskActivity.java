@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
+import com.example.project.MainActivity;
 import com.example.project.R;
 import com.example.project.TaskModel.RecyclerViewAdapter;
 import com.example.project.TaskModel.Task;
@@ -46,10 +47,13 @@ public class ViewTaskActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         loadTaskData();
         retrieveTasks();
         createDisplayArrayList();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.project.ChildActivities.EditChildActivity;
@@ -46,7 +47,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private List<Child> childList = new ArrayList<>();
     private Spinner childSpinner;
     private EditText taskName;
-    private int avatarID;
+    private String avatarID;
     private EditText taskDescription;
     private Button submitButton;
     Task selectedTask;
@@ -61,6 +62,17 @@ public class EditTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_task);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ViewTaskActivity.makeLaunchIntent(EditTaskActivity.this);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         Bundle b = getIntent().getExtras();
         taskClickedPosition = b.getInt(EXTRA_TASK_POS);
         selectedTask=taskManager.getTask(taskClickedPosition);
@@ -131,7 +143,6 @@ public class EditTaskActivity extends AppCompatActivity {
             enteredDescription=taskDescription.getText().toString();
             taskManager.editTaskWithIndex(taskClickedPosition, enteredTaskName, enteredDescription, enteredChildName, avatarID);
         }
-
     }
 
     public void initializeChildSpinner(){
@@ -152,8 +163,15 @@ public class EditTaskActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 enteredChildName = childSpinner.getSelectedItem().toString();
-                avatarID = childManager.getChildAvatarId(position);
-                childAvatar.setImageResource(avatarID);
+                avatarID = childManager.getChildAvatarUriPath(position);
+                //childAvatar.setImageResource(avatarID);
+                Uri avatarUri = Uri.parse(avatarID);
+
+                try {
+                    childAvatar.setImageURI(avatarUri);
+                } catch (RuntimeException e) {
+                    childAvatar.setImageURI(Child.DEFAULT_URI);
+                }
             }
 
             @Override

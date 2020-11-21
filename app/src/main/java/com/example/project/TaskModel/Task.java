@@ -11,17 +11,17 @@ import java.util.List;
 public class Task {
     private String taskName, description;
     private String theAssignedChildId;
-    private int avatarID;
+    private String avatarID;
     private ChildManager childManager = ChildManager.getInstance();
 
-    public Task(String taskName, String theAssignedChildId, String description, int avatarID){
+    public Task(String taskName, String theAssignedChildId, String description, String avatarID){
         this.taskName = taskName;
         this.theAssignedChildId = theAssignedChildId;
         this.avatarID = avatarID;
         this.description = description;
     }
 
-    public int getAvatarId() {
+    public String getAvatarId() {
         return avatarID;
     }
 
@@ -52,7 +52,7 @@ public class Task {
             presentChildIndex++;
         }
         theAssignedChildId=childManager.getChildName(presentChildIndex);
-        avatarID=childManager.getChildAvatarId(presentChildIndex);
+        avatarID=childManager.getChildAvatarUriPath(presentChildIndex);
     }
 
     public void setTheAssignedChild(int index) {

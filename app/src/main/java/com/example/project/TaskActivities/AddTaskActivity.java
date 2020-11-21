@@ -3,6 +3,7 @@ package com.example.project.TaskActivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.project.ChildActivities.EditChildActivity;
@@ -49,7 +50,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private String enteredChildName;
     private Spinner childSpinner;
     private EditText taskName;
-    private int avatarID;
+    private String avatarID;
     private EditText taskDescription;
     private Button submitButton;
     private ImageView childAvatar;
@@ -61,6 +62,15 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
+                finish();
+                startActivity(intent);
+            }
+        });
         setupInputResources();
 
     }
@@ -133,8 +143,14 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 enteredChildName = childSpinner.getSelectedItem().toString();
-                avatarID = childManager.getChildAvatarId(position);
-                childAvatar.setImageResource(avatarID);
+                avatarID = childManager.getChildAvatarUriPath(position);
+                Uri avatarUri = Uri.parse(avatarID);
+
+                try {
+                    childAvatar.setImageURI(avatarUri);
+                } catch (RuntimeException e) {
+                    childAvatar.setImageURI(Child.DEFAULT_URI);
+                }
             }
 
             @Override

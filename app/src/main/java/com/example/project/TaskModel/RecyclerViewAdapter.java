@@ -2,6 +2,7 @@ package com.example.project.TaskModel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.project.ChildModel.Child;
 import com.example.project.ChildModel.ChildManager;
 import com.example.project.R;
 
@@ -58,32 +61,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         setTaskDetails();
         Log.d(TAG, "onBindViewHolder: called"); //helps us identify where we failed, if we ever do in the process
 
-        holder.childIcon.setImageResource(taskList.get(position).getAvatarId());
+        //holder.childIcon.setImageResource(taskList.get(position).getAvatarId());
+
+        //Uri avatarUri = Uri.parse(childManager.getChildAvatarUriPath(position));
+        Uri avatarUri = Uri.parse(taskList.get(position).getAvatarId());
+        // Avatar photo may be deleted, if so we use default avatar
+        try {
+            holder.childIcon.setImageURI(avatarUri);
+        } catch (RuntimeException e) {
+            holder.childIcon.setImageURI(Child.DEFAULT_URI);
+        }
+
         holder.taskName.setText(taskListName.get(position));
-        holder.taskAssigned.setText("Presently assigned to "+taskListChildAssigned.get(position));
+        holder.taskAssigned.setText("It is "+taskListChildAssigned.get(position)+"'s turn to do it!");
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Context viewContext = v.getContext();
-                /*Intent editTaskData = EditTaskActivity.makeLaunchIntent(viewContext, position);
-                context.startActivity(editTaskData);
-                ((ViewTaskActivity)context).finish();*/
                 Intent popup = PopupActivity.makeLaunchIntent(viewContext,position);
                 context.startActivity(popup);
                 ((ViewTaskActivity)context).finish();
            }
         });
 
-        /*holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context viewContext = v.getContext();
-                Intent popup = PopupActivity.makeLaunchIntent(viewContext,position);
-                context.startActivity(popup);
-                ((ViewTaskActivity)context).finish();
-            }
-        });*/
     }
 
     @Override
