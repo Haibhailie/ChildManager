@@ -49,7 +49,6 @@ public class EditChildActivity extends AppCompatActivity {
     private List<Integer> avatarImageViewArray;
     private List<Integer> avatarResIDArray;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,7 +143,6 @@ public class EditChildActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     private void getGender() {
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_group_gender);

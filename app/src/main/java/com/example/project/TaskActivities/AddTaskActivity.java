@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private int avatarID;
     private EditText taskDescription;
     private Button submitButton;
+    private ImageView childAvatar;
 
 
     @Override
@@ -61,11 +63,19 @@ public class AddTaskActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
+        finish();
+        startActivity(intent);
+    }
+
     public void setupInputResources(){
         taskName = findViewById(R.id.editTextTaskName);
         taskDescription = findViewById(R.id.editTextTaskDescription);
         childSpinner = findViewById(R.id.childSelectSpinner);
         submitButton = findViewById(R.id.submitNewTask);
+        childAvatar = findViewById(R.id.childAvatar);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +121,7 @@ public class AddTaskActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 enteredChildName = childSpinner.getSelectedItem().toString();
                 avatarID = childManager.getChildAvatarId(position);
+                childAvatar.setImageResource(avatarID);
             }
 
             @Override

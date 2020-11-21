@@ -104,7 +104,9 @@ public class PopupActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void onBackPressed(){
+        Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
+        finish();
+        startActivity(intent);
     }
 }

@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private EditText taskDescription;
     private Button submitButton;
     Task selectedTask;
+    private ImageView childAvatar;
     private int taskClickedPosition;
     private static final String EXTRA_TASK_POS = "taskPos";
 
@@ -73,6 +75,7 @@ public class EditTaskActivity extends AppCompatActivity {
         taskDescription = findViewById(R.id.editTextTaskDescription);
         childSpinner = findViewById(R.id.childSelectSpinner);
         submitButton = findViewById(R.id.submitNewTask);
+        childAvatar = findViewById(R.id.childAvatar);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +137,7 @@ public class EditTaskActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 enteredChildName = childSpinner.getSelectedItem().toString();
                 avatarID = childManager.getChildAvatarId(position);
+                childAvatar.setImageResource(avatarID);
             }
 
             @Override
