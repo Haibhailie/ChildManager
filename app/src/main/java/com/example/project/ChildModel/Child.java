@@ -44,8 +44,7 @@ public class Child {
     }
 
 
-    public int getID(){
-        return ID;
+    public int getId(){ return ID;
     }
 
     public void setName(String name) {

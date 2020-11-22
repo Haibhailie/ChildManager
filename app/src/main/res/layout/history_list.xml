@@ -23,6 +23,7 @@
         android:id="@+id/coin_flip_history_history_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/coin_flip_history_child_avatar"
         app:layout_constraintStart_toEndOf="@+id/coin_flip_history_child_avatar"
         app:layout_constraintTop_toTopOf="@+id/coin_flip_history_child_avatar" />

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         flip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(MainActivity.this);
+                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(MainActivity.this, -1);
                 startActivity(intent);
             }
         });

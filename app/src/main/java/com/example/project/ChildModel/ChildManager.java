@@ -60,8 +60,17 @@ public class ChildManager {
         return childList.get(index).getGender();
     }
 
-    public int getChildID(int index) {
-        return childList.get(index).getID();
+    public int getChildId(int index) {
+        int id;
+
+        try{
+            id = childList.get(index).getId();
+        } catch (ArrayIndexOutOfBoundsException e){
+            Log.println(Log.INFO, "ChildManager", "No children in Manager.");
+            id = -1;
+        }
+
+        return id;
     }
 
     public void setChildList(List<Child> childList) {
@@ -88,12 +97,15 @@ public class ChildManager {
     public int findChildIndexById(int id){
 
         for(int i = 0; i < this.getLength(); i++){
-            if(this.getChildID(i) == id){
-                return i;
+            try {
+                if (this.getChildId(i) == id) {
+                    return i;
+                }
+            } catch (IndexOutOfBoundsException e){
+                Log.println(Log.ERROR, "CHILD", "Missing Child " + id);
             }
         }
 
-        Log.println(Log.ERROR, "CHILD", "Missing Child " + id);
         return -1;
     }
 

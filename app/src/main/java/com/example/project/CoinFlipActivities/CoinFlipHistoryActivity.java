@@ -27,25 +27,22 @@ import android.widget.ToggleButton;
 
 import com.example.project.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Allows the user to see the history of coin flips.
- * Can sort coin flips by child.
- *
- * Possible bug: User deletes child. - Handled but can be done better
+ * Can sort coin flips by child or all children.
+ * Deletes children history that are deleted.
  */
 
 public class CoinFlipHistoryActivity extends AppCompatActivity {
 
-    private static final String EXTRA_INDEX = "CoinFlipHistory - ChildIndex";
 
-    private static final String CHILDMANAGER_TAG = "ChildManager";
-    private static final String COIN = "Coin";
-    private static final String UP = "UP";
+    private static final String CHILD_MANAGER_TAG = "ChildManager";
+    private static final String UP_TAG = "UP";
+
+    private static final String EXTRA_INDEX = "CoinFlipHistory - ChildIndex";
 
     private int childIndex;
     private ChildManager childManager;
@@ -75,7 +72,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException e){
-            Log.println(Log.ERROR, UP, "Up bar Error:" + e.getMessage());
+            Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
         }
 
         // Setup
@@ -90,7 +87,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
         setButtonToChildName();
         addOnClickToggle();
 
-        Log.println(Log.INFO, CHILDMANAGER_TAG, childManager.getLength() + "");
+        Log.println(Log.INFO, CHILD_MANAGER_TAG, childManager.getLength() + "");
     }
 
     private void addOnClickToggle(){
@@ -111,7 +108,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setButtonToChildName(){
         String text = getString(R.string.coin_flip_history_all);
-        String childName = ((childIndex != -1) ?  childManager.getChildName(childIndex) : "Child Not Found.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "N/A.");
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.coin_flip_history_toggle);
 
         toggleButton.setTextOff(String.format(text, childName));
@@ -119,7 +116,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
 
     private void setTextOfOracleTextSingle(){
         String text = getString(R.string.coin_flip_history_oracle_single);
-        String childName = ((childIndex != -1) ?  childManager.getChildName(childIndex) : "Child Not Found.");
+        String childName = ((childIndex != -1) ? childManager.getChildName(childIndex) : "N/A.");
         TextView textView = (TextView) findViewById(R.id.coin_flip_history_oracle_text);
         textView.setText(String.format(text, childName));
     }
@@ -133,7 +130,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
     private List<CoinFlipHistoryMember> getHistoryOfOneChildFromIndex(int index){
 
         List<CoinFlipHistoryMember> childList = new ArrayList<>();
-        int childID = childManager.getChildID(index);
+        int childID = childManager.getChildId(index);
 
         for(CoinFlipHistoryMember flip : flipManager.getFlipList()){
 
@@ -169,7 +166,7 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
                 childIndex = childManager.findChildIndexById(flipList.get(position).getChildId());
             } catch (Exception e){
                 childIndex = -1;
-                Log.println(Log.ERROR, CHILDMANAGER_TAG, "Failed to load: " + e.getMessage());
+                Log.println(Log.ERROR, CHILD_MANAGER_TAG, "Failed to load: " + e.getMessage());
             }
 
             // make sure we have a view to work with
@@ -201,11 +198,13 @@ public class CoinFlipHistoryActivity extends AppCompatActivity {
             TextView itemText = (TextView) itemView.findViewById(R.id.coin_flip_history_history_text);
             TextView dateView = (TextView) itemView.findViewById(R.id.coin_flip_history_date_time);
 
-            String item = "ERROR - Maybe they were removed.";
+            String item = "";
             if(childIndex != -1) {
                 item = String.format("%s", childManager.getChildName(childIndex));
-                dateView.setText(flipList.get(position).getDateTimeFlip());
+            } else {
+                item = "N/A";
             }
+            dateView.setText(flipList.get(position).getDateTimeFlip());
             itemText.setText(item);
 
             return itemView;
