@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.R;
@@ -132,11 +133,17 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void initializeChildSpinner(){
+        TextView emptyChildren = findViewById(R.id.NoChildrenText);
+        emptyChildren.setVisibility(View.GONE);
         childList = childManager.getChildList();
         final List<String> childNameList = new ArrayList<>();
         for(Child t:childList){
             childNameList.add(t.getName());
         }
+        if(childList.isEmpty()){
+            emptyChildren.setVisibility(View.VISIBLE);
+        }
+
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, childNameList);
         childSpinner.setAdapter(spinnerAdapter);
         childSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

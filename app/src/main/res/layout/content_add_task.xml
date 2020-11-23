@@ -59,9 +59,25 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="22dp"
         android:scrollbarSize="@dimen/material_emphasis_high_type"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textChildAssigned"
         app:layout_constraintTop_toBottomOf="@+id/textChildAssigned" />
+
+    <TextView
+        android:id="@+id/NoChildrenText"
+        android:layout_width="244dp"
+        android:layout_height="34dp"
+        android:text="No children in database"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/childSelectSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/childSelectSpinner"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="@+id/childSelectSpinner"
+        app:layout_constraintTop_toTopOf="@+id/childSelectSpinner"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/editTextTaskName"

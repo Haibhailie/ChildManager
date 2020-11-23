@@ -36,6 +36,7 @@ public class PopupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,7 +53,7 @@ public class PopupActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         position = b.getInt(EXTRA_TASK_POS);
         selectedTask = taskManager.getTask(position);
-
+        selectedTask.refreshChildInstance();
         setupInfo();
         setupEditButton();
         setupConfirmButton();
@@ -64,10 +65,16 @@ public class PopupActivity extends AppCompatActivity {
         taskDescription = findViewById(R.id.popupDescription);
         assignedChild =findViewById(R.id.popupChild);
         childIcon = findViewById(R.id.childIcon);
+        Button finishButton = (Button)findViewById(R.id.confirmTask);
 
         taskName.setText(selectedTask.getTaskName());
         taskDescription.setText(selectedTask.getDescription());
-        assignedChild.setText(selectedTask.getTheAssignedChildId());
+        if(stringIsNull(selectedTask.getTheAssignedChildId())) {
+            assignedChild.setText("UNASSIGNED");
+            finishButton.setText("Assign");
+        }
+        else
+            assignedChild.setText(selectedTask.getTheAssignedChildId());
 
         String avatarID = taskList.get(position).getAvatarId();
 
@@ -114,7 +121,6 @@ public class PopupActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private void setupConfirmButton() {
@@ -136,6 +142,13 @@ public class PopupActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_TASK_POS, taskPos);
         return intent;
     }
+
+    private boolean stringIsNull(String str) {
+        if(str != null && !str.isEmpty())
+            return false;
+        return true;
+    }
+
 
     @Override
     public void onBackPressed(){
