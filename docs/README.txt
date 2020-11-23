@@ -1,8 +1,11 @@
 This application has been developed and tested on API24.
 On the Pixel 2, API24 AVD present on Android Studio.
 
-Upon building or execution, in case there is an error related to CropImage api,
-please click Sync Project with Gradle Files to syncyour project.
+After pulling, there may be an editor error inside EditChildActivity related to the statement
+"import com.theartofdev.edmodo.cropper.CropImage;"
+If that is the case, please go to File and click Invalidate Caches/Restart.
+
+
 
 
 
