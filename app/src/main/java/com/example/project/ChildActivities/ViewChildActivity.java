@@ -240,7 +240,7 @@ public class ViewChildActivity extends AppCompatActivity {
             hintArrow.setVisibility(View.GONE);
             if (showHint) {
                 hintButton.setVisibility(View.VISIBLE);
-                addInstruction.setText("You may swap the list to edit child");
+                addInstruction.setText("Swap the list to edit or delete child");
             } else {
                 addInstruction.setVisibility(View.GONE);
                 hintButton.setVisibility(View.GONE);
