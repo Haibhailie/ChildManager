@@ -4,7 +4,7 @@
     * can manipulate added child from the instance
  */
 
-package com.example.project.ChildModel;
+package com.example.project.childmodel;
 
 import android.util.Log;
 

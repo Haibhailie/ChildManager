@@ -4,7 +4,7 @@
  */
 
 
-package com.example.project.ChildModel;
+package com.example.project.childmodel;
 
 import android.net.Uri;
 

@@ -1,27 +1,24 @@
-package com.example.project.TaskActivities;
+package com.example.project.taskactivities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
-import com.example.project.MainActivity;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
 import com.example.project.R;
-import com.example.project.TaskModel.RecyclerViewAdapter;
-import com.example.project.TaskModel.Task;
-import com.example.project.TaskModel.TaskManager;
+import com.example.project.taskmodel.RecyclerViewAdapter;
+import com.example.project.taskmodel.Task;
+import com.example.project.taskmodel.TaskManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

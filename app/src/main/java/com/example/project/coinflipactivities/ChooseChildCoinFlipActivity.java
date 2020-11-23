@@ -1,4 +1,4 @@
-package com.example.project.CoinFlipActivities;
+package com.example.project.coinflipactivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,9 +6,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.project.ChildActivities.EditChildActivity;
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
+import com.example.project.childactivities.EditChildActivity;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.project.CoinFlipModel.CoinFlipQueue;
+import com.example.project.coinflipmodel.CoinFlipQueue;
 import com.example.project.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
