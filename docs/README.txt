@@ -1,6 +1,14 @@
 This application has been developed and tested on API24.
 On the Pixel 2, API24 AVD present on Android Studio.
 
+Upon building or execution, in case there is an error related to CropImage api,
+please click Sync Project with Gradle Files to syncyour project.
+
+
+
+
+
+
 Few of the images, GIFs, or sounds do not belong to us. THe citations are as follows:
 
 1. Main menu kids moving gif:
