@@ -1,4 +1,4 @@
-package com.example.project.TaskModel;
+package com.example.project.taskmodel;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
 import com.example.project.R;
 
-import com.example.project.TaskActivities.PopupActivity;
-import com.example.project.TaskActivities.ViewTaskActivity;
+import com.example.project.taskactivities.PopupActivity;
+import com.example.project.taskactivities.ViewTaskActivity;
 
 import java.util.ArrayList;
 

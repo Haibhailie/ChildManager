@@ -1,10 +1,8 @@
-package com.example.project.TaskModel;
+package com.example.project.taskmodel;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
-import com.example.project.ChildModel.ChildManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;

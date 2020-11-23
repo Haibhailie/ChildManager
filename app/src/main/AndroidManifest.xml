@@ -18,23 +18,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".TaskActivities.PopupActivity"
+            android:name=".taskactivities.PopupActivity"
             android:label="@string/title_activity_popup"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".TaskActivities.AddTaskActivity"
+            android:name=".taskactivities.AddTaskActivity"
             android:label="@string/title_activity_add_task"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TaskActivities.EditTaskActivity"
+            android:name=".taskactivities.EditTaskActivity"
             android:label="@string/title_activity_edit_task"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TaskActivities.ViewTaskActivity"
+            android:name=".taskactivities.ViewTaskActivity"
             android:label="@string/title_activity_task"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CoinFlipActivities.ChangeChildCoinFlipActivity"
+            android:name=".coinflipactivities.ChangeChildCoinFlipActivity"
             android:label="@string/title_activity_change_child_coin_flip"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
@@ -44,27 +44,27 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".CoinFlipActivities.CoinFlipHistoryActivity"
+            android:name=".coinflipactivities.CoinFlipHistoryActivity"
             android:label="@string/title_activity_coin_flip_history"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Timeout.Timeout"
+            android:name=".timeout.Timeout"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".CoinFlipActivities.ChooseChildCoinFlipActivity"
+            android:name=".coinflipactivities.ChooseChildCoinFlipActivity"
             android:label="@string/title_activity_choose_child_coin_flip"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".CoinFlipActivities.CoinFlipActivity"
+            android:name=".coinflipactivities.CoinFlipActivity"
             android:label="@string/title_activity_coin_flip"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
@@ -83,14 +83,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChildActivities.EditChildActivity"
+            android:name=".childactivities.EditChildActivity"
             android:label="Edit Child"
-            android:parentActivityName=".ChildActivities.ViewChildActivity"
+            android:parentActivityName=".childactivities.ViewChildActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ChildActivities.ViewChildActivity"
+            android:name=".childactivities.ViewChildActivity"
             android:label="Children List"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"

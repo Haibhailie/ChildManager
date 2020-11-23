@@ -2,7 +2,7 @@
  * This activity allow a user to edit a child.
  */
 
-package com.example.project.ChildActivities;
+package com.example.project.childactivities;
 
 import android.Manifest;
 import android.content.Context;
@@ -31,8 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
 import com.example.project.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

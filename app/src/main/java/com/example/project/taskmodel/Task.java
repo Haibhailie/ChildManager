@@ -1,12 +1,6 @@
-package com.example.project.TaskModel;
+package com.example.project.taskmodel;
 
-import android.widget.Toast;
-
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.project.childmodel.ChildManager;
 
 public class Task {
     private String taskName, description;
