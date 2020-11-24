@@ -110,6 +110,9 @@ public class PopupActivity extends AppCompatActivity {
 
     private void setupEditButton() {
         Button editButton = (Button)findViewById(R.id.editTask);
+        if(stringIsNull(selectedTask.getTheAssignedChildId())) {
+            editButton.setVisibility(View.GONE);
+        }
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +125,9 @@ public class PopupActivity extends AppCompatActivity {
 
     private void setupFinishButton() {
         Button finishButton = (Button)findViewById(R.id.finishTask);
+        if(stringIsNull(selectedTask.getTheAssignedChildId())) {
+            finishButton.setVisibility(View.GONE);
+        }
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
