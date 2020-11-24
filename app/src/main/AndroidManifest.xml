@@ -36,6 +36,7 @@
         <activity
             android:name=".coinmodelactivities.ChangeChildCoinFlipActivity"
             android:label="@string/title_activity_change_child_coin_flip"
+            android:parentActivityName=".coinmodelactivities.ChooseChildCoinFlipActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".AboutUs"

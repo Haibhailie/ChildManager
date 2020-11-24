@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,7 +30,16 @@ import com.example.project.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Changes which child is selected to flip the coin.
+ * Returns to MainActivitiy
+ *
+ * Returns to ChooseChild when a listItem is selected. -2 = No child.
+ * */
+
 public class ChangeChildCoinFlipActivity extends AppCompatActivity {
+
+    private static final String UP_TAG = "UP";
 
     private ChildManager childManager;
     private CoinFlipQueue childQueue;
@@ -45,10 +58,39 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         childManager = ChildManager.getInstance();
         childQueue = CoinFlipQueue.getInstance();
+
+        // Enable "up" on toolbar
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        catch (NullPointerException e) {
+            Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
+        }
+
         //show on the list view
         getListOfChildrenInOrder();
         populateListView();
         registerListItemClickCallback();
+    }
+
+    // Creation of Up Button
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+            case android.R.id.home:
+                // Finish so that it doesn't bug when pressing back after updating.
+                Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(ChangeChildCoinFlipActivity.this, -1);
+                startActivity(intent);
+                finish();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     private void getListOfChildrenInOrder(){
