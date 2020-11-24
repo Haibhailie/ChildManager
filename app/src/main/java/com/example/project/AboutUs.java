@@ -29,7 +29,6 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class AboutUs extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +42,6 @@ public class AboutUs extends AppCompatActivity {
                 finish();
             }
         });
-
         setupText();
         setupFlipButton();
     }
@@ -56,7 +54,6 @@ public class AboutUs extends AppCompatActivity {
     public void setupFlipButton(){
 
         final ToggleButton flipButton = findViewById(R.id.flipButton);
-
         flipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -77,7 +74,6 @@ public class AboutUs extends AppCompatActivity {
                     introParagraph.setText(Html.fromHtml(getString(R.string.about_us_intro_text)));
                     introParagraph.setMovementMethod(LinkMovementMethod.getInstance());
                     introParagraph.setLinkTextColor(Color.BLUE);
-
                 }
             }
         });

@@ -1,27 +1,20 @@
-package com.example.project.TaskActivities;
+package com.example.project.taskactivities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.project.ChildActivities.EditChildActivity;
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
-import com.example.project.TaskModel.Task;
-import com.example.project.TaskModel.TaskManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
+import com.example.project.taskmodel.Task;
+import com.example.project.taskmodel.TaskManager;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;

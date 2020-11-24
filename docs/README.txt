@@ -1,6 +1,17 @@
 This application has been developed and tested on API24.
 On the Pixel 2, API24 AVD present on Android Studio.
 
+After pulling, there may be an editor error inside EditChildActivity related to the statement
+"import com.theartofdev.edmodo.cropper.CropImage;"
+If that is the case, please go to File and click Invalidate Caches/Restart.
+
+
+
+
+
+
+
+
 Few of the images, GIFs, or sounds do not belong to us. THe citations are as follows:
 
 1. Main menu kids moving gif:

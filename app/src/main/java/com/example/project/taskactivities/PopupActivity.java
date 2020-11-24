@@ -1,4 +1,4 @@
-package com.example.project.TaskActivities;
+package com.example.project.taskactivities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,13 +7,14 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
-import com.example.project.TaskModel.Task;
-import com.example.project.TaskModel.TaskManager;
+import com.example.project.childmodel.Child;
+import com.example.project.taskmodel.Task;
+import com.example.project.taskmodel.TaskManager;
+import com.example.project.childmodel.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 
 import android.view.View;
 import android.widget.Button;
@@ -125,6 +126,7 @@ public class PopupActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     private void setupConfirmButton() {

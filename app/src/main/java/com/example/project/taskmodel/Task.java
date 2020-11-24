@@ -1,6 +1,6 @@
-package com.example.project.TaskModel;
+package com.example.project.taskmodel;
 
-import com.example.project.ChildModel.ChildManager;
+import com.example.project.childmodel.ChildManager;
 
 public class Task {
     private String taskName, description;

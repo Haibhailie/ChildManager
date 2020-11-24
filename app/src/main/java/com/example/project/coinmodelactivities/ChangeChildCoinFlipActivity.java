@@ -1,4 +1,4 @@
-package com.example.project.CoinFlipActivities;
+package com.example.project.coinflipactivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,9 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.project.BuildConfig;
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
-import com.example.project.CoinFlipModel.CoinFlipQueue;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
+import com.example.project.coinflipmodel.CoinFlipQueue;
 import com.example.project.R;
 
 import java.util.ArrayList;

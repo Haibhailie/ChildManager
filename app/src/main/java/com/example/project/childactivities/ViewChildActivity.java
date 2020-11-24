@@ -2,7 +2,7 @@
  * This activity give user a list view of children
  * User may choose to add or edit child from this activity
  */
-package com.example.project.ChildActivities;
+package com.example.project.childactivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,8 +31,8 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
 import com.example.project.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -240,7 +240,7 @@ public class ViewChildActivity extends AppCompatActivity {
             hintArrow.setVisibility(View.GONE);
             if (showHint) {
                 hintButton.setVisibility(View.VISIBLE);
-                addInstruction.setText("You may swap the list to edit child");
+                addInstruction.setText("Swap the list to edit or delete child");
             } else {
                 addInstruction.setVisibility(View.GONE);
                 hintButton.setVisibility(View.GONE);

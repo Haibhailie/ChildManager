@@ -1,14 +1,14 @@
-package com.example.project.CoinFlipActivities;
+package com.example.project.coinflipactivities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.project.ChildModel.Child;
-import com.example.project.ChildModel.ChildManager;
-import com.example.project.CoinFlipModel.CoinFlipHistoryManager;
-import com.example.project.CoinFlipModel.CoinFlipHistoryMember;
+import com.example.project.childmodel.Child;
+import com.example.project.childmodel.ChildManager;
+import com.example.project.coinflipmodel.CoinFlipHistoryManager;
+import com.example.project.coinflipmodel.CoinFlipHistoryMember;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;

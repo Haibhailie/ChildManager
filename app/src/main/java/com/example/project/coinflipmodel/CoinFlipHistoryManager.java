@@ -1,4 +1,4 @@
-package com.example.project.CoinFlipModel;
+package com.example.project.coinflipmodel;
 
 import java.util.ArrayList;
 import java.util.List;
