@@ -26,6 +26,12 @@ import com.example.project.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Changes which child is selected to flip the coin.
+ * Returns to MainActivitiy
+ *
+ * Returns to ChooseChild when a listItem is selected. -2 = No child.
+ * */
 public class ChangeChildCoinFlipActivity extends AppCompatActivity {
 
     private ChildManager childManager;

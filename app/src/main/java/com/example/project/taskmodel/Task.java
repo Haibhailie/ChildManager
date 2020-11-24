@@ -2,6 +2,11 @@ package com.example.project.taskmodel;
 
 import com.example.project.childmodel.ChildManager;
 
+/**
+ * Model class for task, has the name, description, child assigned and the child avatar.
+ * Has functions to retrieve the above data
+ * Also has the function to set the next child in queue to task once their turn is complete
+ */
 public class Task {
     private String taskName, description;
     private String theAssignedChildId;

@@ -32,6 +32,11 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Edit task is invoked when an edit item is clicked on the task page
+ * Gives options to change the name, description and present child
+ *
+ */
 public class EditTaskActivity extends AppCompatActivity {
     private TaskManager taskManager = TaskManager.getInstance();
     private ChildManager childManager = ChildManager.getInstance();

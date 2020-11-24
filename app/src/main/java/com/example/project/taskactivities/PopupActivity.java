@@ -27,6 +27,10 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+/**
+ * Invoked when an item is clicked on recycler view
+ * Shows details of each task, name, description and child assigned with icon
+ */
 public class PopupActivity extends AppCompatActivity {
     private TaskManager taskManager = TaskManager.getInstance();
     Task selectedTask;
