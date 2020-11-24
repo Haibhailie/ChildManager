@@ -34,7 +34,7 @@
             android:label="@string/title_activity_task"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".coinflipactivities.ChangeChildCoinFlipActivity"
+            android:name=".coinmodelactivities.ChangeChildCoinFlipActivity"
             android:label="@string/title_activity_change_child_coin_flip"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
@@ -44,7 +44,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".coinflipactivities.CoinFlipHistoryActivity"
+            android:name=".coinmodelactivities.CoinFlipHistoryActivity"
             android:label="@string/title_activity_coin_flip_history"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
@@ -57,14 +57,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".coinflipactivities.ChooseChildCoinFlipActivity"
+            android:name=".coinmodelactivities.ChooseChildCoinFlipActivity"
             android:label="@string/title_activity_choose_child_coin_flip"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".coinflipactivities.CoinFlipActivity"
+            android:name=".coinmodelactivities.CoinFlipActivity"
             android:label="@string/title_activity_coin_flip"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"

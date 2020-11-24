@@ -32,7 +32,7 @@ import java.util.Random;
 
 import pl.droidsonroids.gif.GifImageView;
 
-/*
+/**
 * Time out:
 * For count down timer
 * Have the choice for user
@@ -43,7 +43,6 @@ import pl.droidsonroids.gif.GifImageView;
 * */
 
 public class Timeout extends AppCompatActivity implements View.OnClickListener {
-
     private TextView CDText;
     private Button CDButton, CDTimerA, CDTimerB, CDTimerC, CDTimerD, CDTimerE, CDTimerCustom, CDTimerReset;
     private CountDownTimer timer;
@@ -61,9 +60,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private int[] gifSelector = {R.drawable.relaxing1, R.drawable.relaxing2, R.drawable.relaxing3, R.drawable.relaxing4, R.drawable.relaxing5};
     private final String TAG = "Timout Activity";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -74,7 +71,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         fadeIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
         fadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
-
+        //setup toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +83,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 finish();
             }
         });
-
+        //initialization
         initializeTimerScreen();
         CDText = findViewById(R.id.countdownText);
         CDButton = findViewById(R.id.startCountdown);
@@ -99,21 +96,21 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void toggleTimeout() {
-        if (isRunning)
+        if (isRunning) {
             pauseTimerCountdown();
-        else
+        }
+        else {
             startTimerCountdown();
+        }
     }
 
     public void updateProgressBar(){
-
         double progressComplete = 100*((float)timeLeftbackup-(float)timeLeft)/(float)timeLeftbackup;
         progress.setProgress((int)progressComplete);
         Log.d(TAG, "The progressbar percentage is: " +progressComplete+ "%");
     }
 
     public void sendNotification(){
-
         String textTitle = "Timeout Timer Running";
         String textContent = "Time left: " + (int)timeLeft/60000 +"minutes and " + (int)(timeLeft % 60000) / 1000 + "seconds." ;
         Intent pauseTimer = new Intent(this, Timeout.class);
@@ -128,7 +125,6 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         Intent notificationIntent = new Intent(this, Timeout.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         builder.setContentIntent(contentIntent);
-
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
     }
@@ -179,15 +175,13 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         hideAllButtons();
         sendNotification();
         timer = new CountDownTimer(timeLeft, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
+            @Override public void onTick(long millisUntilFinished) {
                 timeLeft = millisUntilFinished;
                 setTimerText();
                 updateProgressBar();
                 updateNotification();
             }
-            @Override
-            public void onFinish() {
+            @Override public void onFinish() {
                 timeLeft=0;
                 playAlarmSound();
                 CDText.setText("0:00");
@@ -195,7 +189,6 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 updateNotification();
             }
         }.start();
-
         isRunning = true;
         CDButton.setText("STOP");
     }
@@ -214,8 +207,9 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
 
         String minsLeftString = String.valueOf(minsLeft);
         String secsLeftString = "";
-        if (secsLeft < 10)
+        if (secsLeft < 10) {
             secsLeftString += "0";
+        }
         secsLeftString += String.valueOf(secsLeft);
         CDText.setText(minsLeftString + ":" + secsLeftString);
     }
@@ -248,7 +242,6 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void initializeTimerScreen(){
-
         progress = (ProgressBar) findViewById(R.id.timerProgress);
         calmingBGVideo = (GifImageView) findViewById(R.id.calmBackground);
         CDTimerA = findViewById(R.id.min1Button);
@@ -259,7 +252,6 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         CDTimerCustom = findViewById(R.id.customButton);
         CDTimerReset = findViewById(R.id.resetCountdown);
         customTimerText = findViewById(R.id.customTimerText);
-
         CDTimerA.setOnClickListener(this);
         CDTimerB.setOnClickListener(this);
         CDTimerC.setOnClickListener(this);
@@ -280,8 +272,9 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private void stopCalmingVideo(){
         calmingBGVideo.setVisibility(View.GONE);
         CDText.setTextColor(Color.BLACK);
-        if(isRunning)
+        if(isRunning) {
             calmingBGVideo.startAnimation(fadeOut);
+        }
     }
 
     private void hideAllButtons(){
@@ -315,8 +308,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         }
     };
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         CDButton.setText("Start");
         switch (v.getId()) {
             case R.id.min1Button:

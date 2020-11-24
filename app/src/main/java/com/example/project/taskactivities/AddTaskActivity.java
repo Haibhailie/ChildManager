@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddTaskActivity extends AppCompatActivity {
-
     private TaskManager taskManager = TaskManager.getInstance();
     private ArrayList<String> taskList = new ArrayList<>();
     private List<Child> childList = new ArrayList<>();
@@ -50,8 +49,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private ImageView childAvatar;
     private boolean setFinish=true;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -70,8 +68,7 @@ public class AddTaskActivity extends AppCompatActivity {
         setupInputResources();
     }
 
-    @Override
-    public void onBackPressed(){
+    @Override public void onBackPressed(){
         Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
         finish();
         startActivity(intent);
@@ -115,15 +112,18 @@ public class AddTaskActivity extends AppCompatActivity {
             inputErrorOccured=true;
             setFinish=false;
         }
+
         if(TextUtils.isEmpty(taskDescription.getText().toString())){
             taskDescription.setError("Task name cannot be empty!");
             inputErrorOccured=true;
             setFinish=false;
         }
+
         if(inputErrorOccured){
             Toast.makeText(this, "Check your inputs!", Toast.LENGTH_SHORT).show();
             setFinish=false;
         }
+
         else{
             setFinish=true;
             enteredTaskName=taskName.getText().toString();
@@ -140,28 +140,27 @@ public class AddTaskActivity extends AppCompatActivity {
         for(Child t:childList){
             childNameList.add(t.getName());
         }
+
         if(childList.isEmpty()){
             emptyChildren.setVisibility(View.VISIBLE);
         }
-
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, childNameList);
         childSpinner.setAdapter(spinnerAdapter);
         childSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 enteredChildName = childSpinner.getSelectedItem().toString();
                 avatarID = childManager.getChildAvatarUriPath(position);
                 Uri avatarUri = Uri.parse(avatarID);
-
                 try {
                     childAvatar.setImageURI(avatarUri);
-                } catch (RuntimeException e) {
+                }
+
+                catch (RuntimeException e) {
                     childAvatar.setImageURI(Child.DEFAULT_URI);
                 }
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            @Override public void onNothingSelected(AdapterView<?> parent) {
                 enteredChildName = "Unassigned";
             }
         });

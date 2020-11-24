@@ -1,4 +1,4 @@
-/*
+/**
  * This activity give user a list view of children
  * User may choose to add or edit child from this activity
  */
@@ -39,15 +39,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class ViewChildActivity extends AppCompatActivity {
-
     ChildManager childManager;
     boolean showHint;
     private static final String APP_PREFS_NAME = "AppPrefs";
-    private static final String HINT_PREFS_NAME = "HintPref" ;
+    private static final String HINT_PREFS_NAME = "HintPref";
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
         childManager = ChildManager.getInstance();
@@ -62,7 +59,6 @@ public class ViewChildActivity extends AppCompatActivity {
         // Enable "up" on toolbar
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +68,7 @@ public class ViewChildActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //show the list view
         populateListView();
         // click to show statistics
         registerClickCallback();
@@ -80,13 +76,11 @@ public class ViewChildActivity extends AppCompatActivity {
         setupHintHideButton();
     }
 
-    @Override
-    public void onStart() {
+    @Override public void onStart() {
         super.onStart();
         populateListView();
         showInstruction();
     }
-
 
     // if the button on the left side of hint is clicked
     // the hint will not show up again
@@ -107,7 +101,6 @@ public class ViewChildActivity extends AppCompatActivity {
         ArrayAdapter<Child> adapter = new MyListAdapter();
         SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listview_child);
         listView.setAdapter(adapter);
-
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
@@ -121,13 +114,12 @@ public class ViewChildActivity extends AppCompatActivity {
                 openItem.setWidth(170);
                 // set item title
                 openItem.setTitle("Edit");
-                // set item title fontsize
+                // set item title font size
                 openItem.setTitleSize(18);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(openItem);
-
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
                         getApplicationContext());
@@ -143,7 +135,6 @@ public class ViewChildActivity extends AppCompatActivity {
             }
         };
         listView.setMenuCreator(creator);
-
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -169,9 +160,7 @@ public class ViewChildActivity extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_kids_list, menu);
         return true;
@@ -181,8 +170,8 @@ public class ViewChildActivity extends AppCompatActivity {
         public MyListAdapter() {
             super(ViewChildActivity.this, R.layout.child_list, childManager.getChildList());
         }
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+
+        @Override public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.child_list, parent, false);
@@ -196,7 +185,6 @@ public class ViewChildActivity extends AppCompatActivity {
             } catch (RuntimeException e) {
                 imageView.setImageURI(Child.DEFAULT_URI);
             }
-
             // Fill the Info Text
             TextView infoText = (TextView) itemView.findViewById(R.id.text_childinfo);
             infoText.setText(childManager.getChild(position).toString());
@@ -224,7 +212,7 @@ public class ViewChildActivity extends AppCompatActivity {
         ImageView hintArrow = (ImageView) findViewById(R.id.hint_arrow);
         TextView addInstruction = (TextView) findViewById(R.id.tv_add_instruction);
         ImageButton hintButton = (ImageButton) findViewById(R.id.btn_hide_hint);
-
+        //if empty
         if (childManager.getLength() == 0) {
             // no child, show add instruction
             hintButton.setVisibility(View.GONE);

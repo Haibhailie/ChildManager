@@ -1,4 +1,4 @@
-/*
+/**
     * Class with singleton support
     * return an instance which have a list (childList) of all added children in the program
     * can manipulate added child from the instance
@@ -13,7 +13,6 @@ import java.util.List;
 
 public class ChildManager {
     private static ChildManager instance;
-
     private List<Child> childList = new ArrayList<>();
     private ChildManager() {}
 
@@ -77,7 +76,6 @@ public class ChildManager {
         this.childList = childList;
     }
 
-
     public void deleteChild(int index) {
         childList.remove(index);
     }
@@ -105,8 +103,6 @@ public class ChildManager {
                 Log.println(Log.ERROR, "CHILD", "Missing Child " + id);
             }
         }
-
         return -1;
     }
-
 }

@@ -20,7 +20,7 @@ import java.util.Random;
 
 import pl.droidsonroids.gif.GifImageView;
 
-/*
+/**
  * About Us:
  * Introducing each person in the group
  * Putting random gif at the end
@@ -28,9 +28,7 @@ import pl.droidsonroids.gif.GifImageView;
  * */
 
 public class AboutUs extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,7 +50,6 @@ public class AboutUs extends AppCompatActivity {
     }
 
     public void setupFlipButton(){
-
         final ToggleButton flipButton = findViewById(R.id.flipButton);
         flipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

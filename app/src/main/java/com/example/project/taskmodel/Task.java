@@ -59,7 +59,8 @@ public class Task {
         try{
         theAssignedChildId=childManager.getChildName(presentChildIndex);
         avatarID=childManager.getChildAvatarUriPath(presentChildIndex);
-        }catch (Exception e){ }
+        }
+        catch (Exception e){ }
     }
 
     private boolean stringIsNull(String str) {
@@ -80,8 +81,7 @@ public class Task {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return taskName;
     }
 

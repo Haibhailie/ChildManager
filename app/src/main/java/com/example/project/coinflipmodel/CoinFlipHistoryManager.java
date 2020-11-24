@@ -3,7 +3,6 @@ package com.example.project.coinflipmodel;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * CoinFlipManager: (Singleton)
  *  Manages CoinFlipMemebers in a List
@@ -19,9 +18,7 @@ import java.util.List;
  *  add(CoinFlipHistoryMember) adds an item to the beginning of the list
  */
 public class CoinFlipHistoryManager {
-
     private static CoinFlipHistoryManager instance;
-
     private List<CoinFlipHistoryMember> flipList = new ArrayList<>();
     private CoinFlipHistoryManager() {}
 
@@ -63,6 +60,4 @@ public class CoinFlipHistoryManager {
     public void setFlipList(List<CoinFlipHistoryMember> flipList) {
         this.flipList = flipList;
     }
-
-
 }

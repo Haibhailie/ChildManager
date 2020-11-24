@@ -12,7 +12,6 @@ import java.util.List;
  */
 
 public class CoinFlipQueue {
-
     private static CoinFlipQueue instance;
     private List<Integer> childIdQueue = new ArrayList<>();
 
@@ -42,7 +41,7 @@ public class CoinFlipQueue {
 
     public void setQueue(List<Integer> savedQueue){
         childIdQueue = savedQueue;
-
+        //if empty
         if(savedQueue == null){
             childIdQueue = new ArrayList<>();
         }
@@ -53,19 +52,16 @@ public class CoinFlipQueue {
     }
 
     public void removeMissingIds(List<Integer> childIdList){
-
+        //if empty
         if(childIdQueue.size() == 0){
             return;
         }
-
         List<Integer> newChildIdQueue = new ArrayList<>();
-
         for(int id : childIdQueue){
             if(childIdList.contains(id)){
                 newChildIdQueue.add(id);
             }
         }
-
         childIdQueue = newChildIdQueue;
     }
 
@@ -76,7 +72,4 @@ public class CoinFlipQueue {
             }
         }
     }
-
-
-
 }

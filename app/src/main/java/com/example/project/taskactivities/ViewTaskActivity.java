@@ -37,11 +37,9 @@ public class ViewTaskActivity extends AppCompatActivity {
     private static final String CHILD_PREFS_NAME = "ChildList";
     private static final String TASK_PREFS_NAME = "TaskList";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,7 +52,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         loadTaskData();
         retrieveTasks();
         createDisplayArrayList();
-
+        //setup fab
         FloatingActionButton taskFab = findViewById(R.id.taskFab);
         taskFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +64,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onStart() {
+    @Override public void onStart() {
         super.onStart();
         loadTaskData();
         retrieveTasks();
@@ -80,7 +77,6 @@ public class ViewTaskActivity extends AppCompatActivity {
         String json = prefs.getString(CHILD_PREFS_NAME, null);
         Type type = new TypeToken<ArrayList<Child>>() {}.getType();
         List<Child> childList = gson.fromJson(json, type);
-
         if (childList != null) {
             childManager.setChildList(childList);
         }
@@ -95,8 +91,10 @@ public class ViewTaskActivity extends AppCompatActivity {
             taskManager.setInstance(gson.fromJson(taskJson, TaskManager.class));
             Log.d(TAG, "Data from SharedPrefs have been copied.");
         }
-        else
-            taskManager=TaskManager.getInstance();
+
+        else {
+            taskManager = TaskManager.getInstance();
+        }
     }
 
     public void createDisplayArrayList(){
