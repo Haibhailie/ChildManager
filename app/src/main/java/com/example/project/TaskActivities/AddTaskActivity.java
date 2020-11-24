@@ -55,7 +55,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private EditText taskDescription;
     private Button submitButton;
     private ImageView childAvatar;
-
+    private boolean setFinish=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +67,14 @@ public class AddTaskActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
-                finish();
-                startActivity(intent);
+                if(setFinish) {
+                    Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
         setupInputResources();
-
     }
 
     @Override
@@ -93,10 +94,12 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 takeInputsAndExit();
-                Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
-                saveTasks();
-                startActivity(intent);
-                finish();
+                if (setFinish) {
+                    Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
+                    saveTasks();
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         initializeChildSpinner();
@@ -117,15 +120,19 @@ public class AddTaskActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(taskName.getText().toString())){
             taskName.setError("Task name cannot be empty!");
             inputErrorOccured=true;
+            setFinish=false;
         }
         if(TextUtils.isEmpty(taskDescription.getText().toString())){
             taskDescription.setError("Task name cannot be empty!");
             inputErrorOccured=true;
+            setFinish=false;
         }
         if(inputErrorOccured){
             Toast.makeText(this, "Check your inputs!", Toast.LENGTH_SHORT).show();
+            setFinish=false;
         }
         else{
+            setFinish=true;
             enteredTaskName=taskName.getText().toString();
             enteredDescription=taskDescription.getText().toString();
             taskManager.addTask(new Task(enteredTaskName, enteredChildName,enteredDescription, avatarID));

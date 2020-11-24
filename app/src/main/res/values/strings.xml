@@ -65,12 +65,13 @@
 
     <string name="title_activity_about_us">AboutUs</string>
     <string name="who_are_we">Who are we?</string>
+    <string name="citation_title">What we used</string>
     <string name="citations">The resources used in this application are as follows:
-        &lt;br /&gt;1. Main menu kids moving gif: https://gfycat.com/rewardingcalmgroundhog">https://gfycat.com/rewardingcalmgroundhog
-        &lt;br /&gt;2. The relaxing video GIFs were taken as snips from the following YouTube video: &lt;br /&gt;https://www.youtube.com/watch?v=r3fE6FQT82s&amp;ab_channel=DestinationSj%C3%A6lland2
-        &lt;br /&gt;3. The sound for the coin flip animation was taken from: &lt;br /&gt;https:// freesound.org/people/SpaceJoe/sounds/485724/
-        &lt;br /&gt;4. The icons for the children, on the add child and configuration page were from flaticon: &lt;br /&gt;https://www.flaticon.com/ and https://www.flaticon.com/packs/children-20
-        &lt;br /&gt;5. The application Icon (mom, dad and child) was from subPNG: &lt;br /&gt;https://www.subpng.com/png-hd956q/download.html
+        &lt;br /&gt; &lt;b>1. Main menu kids moving gif:&lt;/b> https://gfycat.com/rewardingcalmgroundhog">https://gfycat.com/rewardingcalmgroundhog
+        &lt;br /&gt; &lt;b>2. The relaxing video GIFs were taken as snips from the following YouTube video:&lt;/b> &lt;br /&gt;https://www.youtube.com/watch?v=r3fE6FQT82s&amp;ab_channel=DestinationSj%C3%A6lland2
+        &lt;br /&gt; &lt;b>3. The sound for the coin flip animation was taken from: &lt;br /&gt;https:&lt;/b> // freesound.org/people/SpaceJoe/sounds/485724/
+        &lt;br /&gt; &lt;b>4. The icons for the children, on the add child and configuration page were from flaticon:&lt;/b>  &lt;br /&gt;https://www.flaticon.com/ and https://www.flaticon.com/packs/children-20
+        &lt;br /&gt; &lt;b>5. The application Icon (mom, dad and child) was from subPNG:&lt;/b> &lt;br /&gt;https://www.subpng.com/png-hd956q/download.html
     </string>
     <string name="title_activity_task">Tasks</string>
     <string name="taskText">Task</string>

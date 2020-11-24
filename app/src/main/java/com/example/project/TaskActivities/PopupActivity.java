@@ -1,5 +1,6 @@
 package com.example.project.TaskActivities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.project.ChildModel.Child;
+import com.example.project.ChildModel.ChildManager;
 import com.example.project.TaskModel.Task;
 import com.example.project.TaskModel.TaskManager;
 
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project.R;
 import com.google.gson.Gson;
@@ -27,6 +30,7 @@ public class PopupActivity extends AppCompatActivity {
 
     private TaskManager taskManager = TaskManager.getInstance();
     Task selectedTask;
+    private ChildManager childManager = ChildManager.getInstance();
     private ArrayList<Task> taskList = taskManager.getTaskArrayList();
     private int position;
     private static final String EXTRA_TASK_POS = "taskPos";
@@ -124,10 +128,13 @@ public class PopupActivity extends AppCompatActivity {
     }
 
     private void setupConfirmButton() {
+
         Button finishButton = (Button)findViewById(R.id.confirmTask);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(childManager.getLength()==0)
+                    Toast.makeText(v.getContext(), "No child configured yet! Add one first.", Toast.LENGTH_SHORT).show();
                 taskManager.getTask(position).setNextChildInQueue();
                 Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
                 startActivity(intent);

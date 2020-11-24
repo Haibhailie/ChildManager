@@ -12,7 +12,9 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.Random;
 
@@ -53,15 +55,30 @@ public class AboutUs extends AppCompatActivity {
 
     public void setupFlipButton(){
 
-        final Button flipButton = findViewById(R.id.flipButton);
-        flipButton.setOnClickListener(new View.OnClickListener() {
+        final ToggleButton flipButton = findViewById(R.id.flipButton);
+
+        flipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                TextView introParagraph = findViewById(R.id.textAboutUs);
-                flipButton.setText("ABOUT");
-                introParagraph.setText(Html.fromHtml(getString(R.string.citations)));
-                introParagraph.setMovementMethod(LinkMovementMethod.getInstance());
-                introParagraph.setLinkTextColor(Color.BLUE);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    TextView title = findViewById(R.id.welcome);
+                    title.setText(getString(R.string.citation_title));
+                    TextView introParagraph = findViewById(R.id.textAboutUs);
+                    flipButton.setText("ABOUT");
+                    introParagraph.setText(Html.fromHtml(getString(R.string.citations)));
+                    introParagraph.setMovementMethod(LinkMovementMethod.getInstance());
+                    introParagraph.setLinkTextColor(Color.BLUE);
+                }
+                else {
+                    TextView title = findViewById(R.id.welcome);
+                    title.setText(getString(R.string.who_are_we));
+                    TextView introParagraph = findViewById(R.id.textAboutUs);
+                    flipButton.setText("ABOUT");
+                    introParagraph.setText(Html.fromHtml(getString(R.string.about_us_intro_text)));
+                    introParagraph.setMovementMethod(LinkMovementMethod.getInstance());
+                    introParagraph.setLinkTextColor(Color.BLUE);
+
+                }
             }
         });
     }
