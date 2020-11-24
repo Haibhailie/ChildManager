@@ -1,5 +1,6 @@
 package com.example.project.taskactivities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,14 +10,17 @@ import android.os.Bundle;
 import com.example.project.childmodel.Child;
 import com.example.project.taskmodel.Task;
 import com.example.project.taskmodel.TaskManager;
+import com.example.project.childmodel.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project.R;
 import com.google.gson.Gson;
@@ -27,6 +31,7 @@ public class PopupActivity extends AppCompatActivity {
 
     private TaskManager taskManager = TaskManager.getInstance();
     Task selectedTask;
+    private ChildManager childManager = ChildManager.getInstance();
     private ArrayList<Task> taskList = taskManager.getTaskArrayList();
     private int position;
     private static final String EXTRA_TASK_POS = "taskPos";
@@ -36,6 +41,7 @@ public class PopupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -52,7 +58,7 @@ public class PopupActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         position = b.getInt(EXTRA_TASK_POS);
         selectedTask = taskManager.getTask(position);
-
+        selectedTask.refreshChildInstance();
         setupInfo();
         setupEditButton();
         setupConfirmButton();
@@ -64,10 +70,16 @@ public class PopupActivity extends AppCompatActivity {
         taskDescription = findViewById(R.id.popupDescription);
         assignedChild =findViewById(R.id.popupChild);
         childIcon = findViewById(R.id.childIcon);
+        Button finishButton = (Button)findViewById(R.id.confirmTask);
 
         taskName.setText(selectedTask.getTaskName());
         taskDescription.setText(selectedTask.getDescription());
-        assignedChild.setText(selectedTask.getTheAssignedChildId());
+        if(stringIsNull(selectedTask.getTheAssignedChildId())) {
+            assignedChild.setText("UNASSIGNED");
+            finishButton.setText("Assign");
+        }
+        else
+            assignedChild.setText(selectedTask.getTheAssignedChildId());
 
         String avatarID = taskList.get(position).getAvatarId();
 
@@ -118,10 +130,13 @@ public class PopupActivity extends AppCompatActivity {
     }
 
     private void setupConfirmButton() {
+
         Button finishButton = (Button)findViewById(R.id.confirmTask);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(childManager.getLength()==0)
+                    Toast.makeText(v.getContext(), "No child configured yet! Add one first.", Toast.LENGTH_SHORT).show();
                 taskManager.getTask(position).setNextChildInQueue();
                 Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
                 startActivity(intent);
@@ -136,6 +151,13 @@ public class PopupActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_TASK_POS, taskPos);
         return intent;
     }
+
+    private boolean stringIsNull(String str) {
+        if(str != null && !str.isEmpty())
+            return false;
+        return true;
+    }
+
 
     @Override
     public void onBackPressed(){

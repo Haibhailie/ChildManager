@@ -56,14 +56,23 @@
     <string name="str_swap_hint">Swap to edit or delete a child</string>
     <string name="msg_edit_hint">Click here to add a child</string>
     <string name="aboutText">About Us</string>
-    <string name="about_us_intro_text">We are team &lt;b>Jade&lt;/b>. A very young, and very very awesome group of Android developers. This iteration of our project has given us an opportunity to try out a new role in a development pipeline. The team is as follows:</string>
-    <string name="kelly_about">&lt;b>Kelly Zheng&lt;/b>, one blessed with creativity, a writer renowned to become one with her books.</string>
-    <string name="zirui_about">&lt;b>Zirui Huang&lt;/b>, a developer truly known for his punctuality and how he gets things done before you assign it to him.</string>
-    <string name="knex_about">&lt;b>Kent Nex&lt;/b>, a cool last name and cooler personality. A mathemagician who can find the double derivative before you can count to 5.</string>
-    <string name="shanks_about">&lt;b>Shashank Thanalapati&lt;/b>, a name longer than sanity\'s comprehension and with code retention capabilities greater than your SSD.</string>
+    <string name="about_us_intro_text">We are team &lt;b>Jade&lt;/b>. A very young, and very very awesome group of Android developers. This iteration of our project has given us an opportunity to try out a new role in a development pipeline.
+        &lt;br /&gt;The team is as follows:
+        &lt;br /&gt;&lt;b>Kelly Zheng&lt;/b>, one blessed with creativity, a writer renowned to become one with her books.
+        &lt;br /&gt;&lt;b>Zirui Huang&lt;/b>, a developer truly known for his punctuality and how he gets things done before you assign it to him.
+        &lt;br /&gt;&lt;b>Kent Nex&lt;/b>, a cool last name and cooler personality. A mathemagician who can find the double derivative before you can count to 5.
+        &lt;br /&gt;&lt;b>Shashank Thanalapati&lt;/b>, a name longer than sanity\'s comprehension and with code retention capabilities greater than your SSD.</string>
+
     <string name="title_activity_about_us">AboutUs</string>
     <string name="who_are_we">Who are we?</string>
-
+    <string name="citation_title">What we used</string>
+    <string name="citations">The resources used in this application are as follows:
+        &lt;br /&gt; &lt;b>1. Main menu kids moving gif:&lt;/b> https://gfycat.com/rewardingcalmgroundhog">https://gfycat.com/rewardingcalmgroundhog
+        &lt;br /&gt; &lt;b>2. The relaxing video GIFs were taken as snips from the following YouTube video:&lt;/b> &lt;br /&gt;https://www.youtube.com/watch?v=r3fE6FQT82s&amp;ab_channel=DestinationSj%C3%A6lland2
+        &lt;br /&gt; &lt;b>3. The sound for the coin flip animation was taken from: &lt;br /&gt;https:&lt;/b> // freesound.org/people/SpaceJoe/sounds/485724/
+        &lt;br /&gt; &lt;b>4. The icons for the children, on the add child and configuration page were from flaticon:&lt;/b>  &lt;br /&gt;https://www.flaticon.com/ and https://www.flaticon.com/packs/children-20
+        &lt;br /&gt; &lt;b>5. The application Icon (mom, dad and child) was from subPNG:&lt;/b> &lt;br /&gt;https://www.subpng.com/png-hd956q/download.html
+    </string>
     <string name="title_activity_task">Tasks</string>
     <string name="taskText">Task</string>
     <string name="title_activity_edit_task">EditTaskActivity</string>

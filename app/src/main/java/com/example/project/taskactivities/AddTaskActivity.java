@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.R;
@@ -47,7 +48,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private EditText taskDescription;
     private Button submitButton;
     private ImageView childAvatar;
-
+    private boolean setFinish=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +60,14 @@ public class AddTaskActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
-                finish();
-                startActivity(intent);
+                if(setFinish) {
+                    Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
         setupInputResources();
-
     }
 
     @Override
@@ -85,10 +87,12 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 takeInputsAndExit();
-                Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
-                saveTasks();
-                startActivity(intent);
-                finish();
+                if (setFinish) {
+                    Intent intent = ViewTaskActivity.makeLaunchIntent(AddTaskActivity.this);
+                    saveTasks();
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         initializeChildSpinner();
@@ -109,15 +113,19 @@ public class AddTaskActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(taskName.getText().toString())){
             taskName.setError("Task name cannot be empty!");
             inputErrorOccured=true;
+            setFinish=false;
         }
         if(TextUtils.isEmpty(taskDescription.getText().toString())){
             taskDescription.setError("Task name cannot be empty!");
             inputErrorOccured=true;
+            setFinish=false;
         }
         if(inputErrorOccured){
             Toast.makeText(this, "Check your inputs!", Toast.LENGTH_SHORT).show();
+            setFinish=false;
         }
         else{
+            setFinish=true;
             enteredTaskName=taskName.getText().toString();
             enteredDescription=taskDescription.getText().toString();
             taskManager.addTask(new Task(enteredTaskName, enteredChildName,enteredDescription, avatarID));
@@ -125,11 +133,17 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void initializeChildSpinner(){
+        TextView emptyChildren = findViewById(R.id.NoChildrenText);
+        emptyChildren.setVisibility(View.GONE);
         childList = childManager.getChildList();
         final List<String> childNameList = new ArrayList<>();
         for(Child t:childList){
             childNameList.add(t.getName());
         }
+        if(childList.isEmpty()){
+            emptyChildren.setVisibility(View.VISIBLE);
+        }
+
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, childNameList);
         childSpinner.setAdapter(spinnerAdapter);
         childSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

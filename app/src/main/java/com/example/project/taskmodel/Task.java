@@ -15,6 +15,10 @@ public class Task {
         this.description = description;
     }
 
+    public void refreshChildInstance(){
+        childManager = ChildManager.getInstance();
+    }
+
     public String getAvatarId() {
         return avatarID;
     }
@@ -34,19 +38,34 @@ public class Task {
     public void setNextChildInQueue(){
         int presentChildIndex=0;
         for(int i=0;i<childManager.getLength();i++){
-            if(theAssignedChildId.compareTo(childManager.getChildName(i))==0){
+            if(stringIsNull(theAssignedChildId)) {
+                presentChildIndex = -1;
+                break;
+            }
+            else if(theAssignedChildId.compareTo(childManager.getChildName(i))==0){
                 presentChildIndex=i;
                 break;
             }
         }
-        if(presentChildIndex==childManager.getLength()-1){
+        if(presentChildIndex==-1){
+            presentChildIndex=0;
+        }
+        else if(presentChildIndex==childManager.getLength()-1){
             presentChildIndex=0;
         }
         else{
             presentChildIndex++;
         }
+        try{
         theAssignedChildId=childManager.getChildName(presentChildIndex);
         avatarID=childManager.getChildAvatarUriPath(presentChildIndex);
+        }catch (Exception e){ }
+    }
+
+    private boolean stringIsNull(String str) {
+        if(str != null && !str.isEmpty())
+            return false;
+        return true;
     }
 
     public void setTheAssignedChild(int index) {

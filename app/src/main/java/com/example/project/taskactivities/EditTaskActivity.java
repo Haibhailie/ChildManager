@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.R;
@@ -139,6 +140,8 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     public void initializeChildSpinner(){
+        TextView emptyChildren = findViewById(R.id.NoChildrenText);
+        emptyChildren.setVisibility(View.GONE);
         childList = childManager.getChildList();
         int defaultPosition=0, i=0;
         final List<String> childNameList = new ArrayList<>();
@@ -147,6 +150,9 @@ public class EditTaskActivity extends AppCompatActivity {
                 defaultPosition=i;
             childNameList.add(t.getName());
             i++;
+        }
+        if(childList.isEmpty()){
+            emptyChildren.setVisibility(View.VISIBLE);
         }
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, childNameList);

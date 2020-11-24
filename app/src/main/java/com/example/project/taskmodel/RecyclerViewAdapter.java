@@ -49,9 +49,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void setTaskDetails(){
         for(Task t:taskList){
+
             taskListName.add(t.getTaskName());
+            if(stringIsNull(t.getTheAssignedChildId()))
+                taskListChildAssigned.add("UNASSIGNED");
+            else
             taskListChildAssigned.add(String.valueOf(t.getTheAssignedChildId()));
-            Log.d(TAG, "Task name is: "+taskListName);
         }
     }
 
@@ -61,20 +64,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         setTaskDetails();
         Log.d(TAG, "onBindViewHolder: called"); //helps us identify where we failed, if we ever do in the process
 
-        //holder.childIcon.setImageResource(taskList.get(position).getAvatarId());
-
-        //Uri avatarUri = Uri.parse(childManager.getChildAvatarUriPath(position));
-        //Uri avatarUri = Uri.parse(taskList.get(position).getAvatarId());
         // Avatar photo may be deleted, if so we use default avatar
+
         try {
             Uri avatarUri = Uri.parse(taskList.get(position).getAvatarId());
             holder.childIcon.setImageURI(avatarUri);
         } catch (RuntimeException e) {
             holder.childIcon.setImageURI(Child.DEFAULT_URI);
         }
-
         holder.taskName.setText(taskListName.get(position));
-        holder.taskAssigned.setText("It is "+taskListChildAssigned.get(position)+"'s turn to do it!");
+
+        Log.d(TAG, "Child name "+taskListChildAssigned.get(position));
+        if((taskListChildAssigned.get(position)).compareTo("UNASSIGNED")==0)
+            holder.taskAssigned.setText("This task is unassigned");
+        else
+            holder.taskAssigned.setText("It is "+taskListChildAssigned.get(position)+"'s turn to do it!");
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -85,7 +89,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 ((ViewTaskActivity)context).finish();
            }
         });
+    }
 
+
+    public static boolean stringIsNull(String checkStr) {
+        if(checkStr != null && !checkStr.isEmpty())
+            return false;
+        return true;
     }
 
     @Override
