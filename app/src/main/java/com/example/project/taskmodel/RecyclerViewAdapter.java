@@ -22,7 +22,9 @@ import com.example.project.taskactivities.ViewTaskActivity;
 
 import java.util.ArrayList;
 
-
+/**
+ * Adapter that handles the recycler view that holds task details
+ */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private TaskManager taskManager = TaskManager.getInstance();
     private ChildManager childManager = ChildManager.getInstance();

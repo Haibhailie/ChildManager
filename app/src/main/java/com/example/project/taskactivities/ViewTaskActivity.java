@@ -27,6 +27,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is invoked when we click on the task button from the main menu
+ * SHows the recycler view with all the presently available tasks and is the main class that connects the app to tasks
+ */
 public class ViewTaskActivity extends AppCompatActivity {
     private TaskManager taskManager = TaskManager.getInstance();
     private ArrayList<String> taskList = new ArrayList<>();

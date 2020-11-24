@@ -7,8 +7,12 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Task manager singleton class that holds all the details for available tasks in the application
+ * The set instance rewrites the empty instance with one that is taken from sharedpreferences if applicable
+ * It has an array list of tasks and functions to receive certain necessary data from it
+ */
 public class TaskManager implements Iterable<Task>{
-
     private static TaskManager instance;
     private ArrayList<Task> taskArrayList = new ArrayList<>();
     private TaskManager(){}

@@ -31,6 +31,11 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Each task is added using this activity, the activity is invoked using a FAB
+ * On return, adds the added task to queue
+ * If no children are configures, there will be nobody assigned to the tasks, and can be assigned once a child has been made
+ */
 public class AddTaskActivity extends AppCompatActivity {
     private TaskManager taskManager = TaskManager.getInstance();
     private ArrayList<String> taskList = new ArrayList<>();
