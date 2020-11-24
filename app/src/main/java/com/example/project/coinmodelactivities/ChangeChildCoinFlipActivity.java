@@ -1,4 +1,4 @@
-package com.example.project.coinflipactivities;
+package com.example.project.coinmodelactivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,17 +38,15 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         return intent;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_child_coin_flip);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         childManager = ChildManager.getInstance();
         childQueue = CoinFlipQueue.getInstance();
+        //show on the list view
         getListOfChildrenInOrder();
-
         populateListView();
         registerListItemClickCallback();
     }
@@ -71,8 +69,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
             super(ChangeChildCoinFlipActivity.this, R.layout.child_list, childrenInOrder);
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @Override public View getView(int position, View convertView, ViewGroup parent) {
             // make sure we have a view to work with
             View itemView = convertView;
             if(itemView == null){
@@ -85,7 +82,9 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
             // Avatar photo may be deleted, if so we use default avatar
             try {
                 imageView.setImageURI(avatarUri);
-            } catch (RuntimeException e) {
+            }
+
+            catch (RuntimeException e) {
                 imageView.setImageURI(Child.DEFAULT_URI);
             }
 
@@ -93,7 +92,6 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
             TextView itemText = (TextView) itemView.findViewById(R.id.text_childinfo);
             String item = String.format("%s", childrenInOrder.get(position).getName());
             itemText.setText(item);
-
             return itemView;
         }
     }
@@ -115,5 +113,4 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
             }
         });
     }
-
 }

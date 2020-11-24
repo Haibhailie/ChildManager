@@ -27,7 +27,6 @@ public class Coin {
     public boolean flipCoin(){
         double randomNumber = randomGenerator.nextDouble();
         boolean result = randomNumber >= headRate;
-
         return result;
     }
 

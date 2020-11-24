@@ -1,4 +1,4 @@
-package com.example.project.coinflipactivities;
+package com.example.project.coinmodelactivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.example.project.coinflipmodel.CoinFlipQueue;
 import com.example.project.R;
+import com.example.project.coinmodelactivities.ChooseChildCoinFlipActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -43,16 +44,12 @@ public class CoinFlipActivity extends AppCompatActivity {
 
     private static final String COIN_TAG = "Coin";
     private static final String UP_TAG = "UP";
-
     private static final String EXTRA_INDEX = "CoinFlip - ChildIndex";
     private static final String EXTRA_CHOICE = "CoinFlip - ChildChoice";
-
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String FLIP_PREFS_NAME = "FlipPrefs";
-
     private int indexOfChild;
     private boolean childChoiceIsHeads;
-
     private ChildManager childManager;
     private CoinFlipHistoryManager flipManager;
     private CoinFlipQueue coinFlipQueue;
@@ -71,8 +68,7 @@ public class CoinFlipActivity extends AppCompatActivity {
         childChoiceIsHeads = intent.getBooleanExtra(EXTRA_CHOICE, false);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coin_flip);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -89,16 +85,13 @@ public class CoinFlipActivity extends AppCompatActivity {
         // Setup
         extractDataFromIntent();
         setHistoryButtonVisibility(View.GONE);
-
         childManager = ChildManager.getInstance();
         flipManager = CoinFlipHistoryManager.getInstance();
         coinFlipQueue = CoinFlipQueue.getInstance();
         coin = new Coin();
-
         historyButtonListener();
         loadSavedHistory();
         coinAnimation();
-
     }
 
     private void loadSavedHistory(){
@@ -124,7 +117,6 @@ public class CoinFlipActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void coinAnimation(){
         View coinTails = findViewById(R.id.coin_flip_tails);
         View coinHeads = findViewById(R.id.coin_flip_heads);
@@ -136,16 +128,13 @@ public class CoinFlipActivity extends AppCompatActivity {
         playSound(R.raw.coinflip);
 
         tailAnimation.setAnimationListener(new Animation.AnimationListener(){
-            @Override
-            public void onAnimationStart(Animation arg0) {
+            @Override public void onAnimationStart(Animation arg0) {
                 coinFlipTimerSetWinner();
             }
-            @Override
-            public void onAnimationRepeat(Animation arg0) {
-            }
-            @Override
-            public void onAnimationEnd(Animation arg0) {
-            }
+
+            @Override public void onAnimationRepeat(Animation arg0) { }
+
+            @Override public void onAnimationEnd(Animation arg0) { }
         });
 
         coinHeads.startAnimation(headAnimation);
@@ -181,12 +170,13 @@ public class CoinFlipActivity extends AppCompatActivity {
 
         if(heads == childChoiceIsHeads) {
             winLostIcon = R.drawable.y_mark;
-        } else{
+        }
+
+        else{
             winLostIcon = R.drawable.x_mark;
         }
 
         coinImage.setAlpha(0f);
-
         // Save History if a child chose
         if(indexOfChild != -1) {
             CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(childManager.getChildId(indexOfChild),
@@ -194,15 +184,17 @@ public class CoinFlipActivity extends AppCompatActivity {
             flipManager.add(newFlip);
             saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
             saveQueue();
-        } else{
+        }
+
+        else{
             CoinFlipHistoryMember newFlip = new CoinFlipHistoryMember(-1,
                     winLostIcon, headsTailsIcon);
             flipManager.add(newFlip);
             saveHistory(CoinFlipActivity.this, flipManager.getFlipList());
             saveQueue();
         }
-        setHistoryButtonVisibility(View.VISIBLE);
 
+        setHistoryButtonVisibility(View.VISIBLE);
         Log.println(Log.INFO, COIN_TAG, "Landed: "  + logInfoText);
 
     }
@@ -218,15 +210,11 @@ public class CoinFlipActivity extends AppCompatActivity {
     }
 
     private void coinFlipTimerSetWinner(){
-
         int delay = (int)(getResources().getInteger(R.integer.coin_flip_quarter_time)*3.5);
         CountDownTimer timer = new CountDownTimer(delay, 1) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
+            @Override public void onTick(long millisUntilFinished) { }
 
-            @Override
-            public void onFinish() {
+            @Override public void onFinish() {
                 setCoinToWinningCoin();
                 playSound(R.raw.coinland);
             }
@@ -248,7 +236,6 @@ public class CoinFlipActivity extends AppCompatActivity {
         String json = gson.toJson(flipList);
         editor.putString(FLIP_PREFS_NAME, json);
         editor.apply();
-
         Log.println(Log.INFO, FLIP_PREFS_NAME, "Saved History. Total Saved: " + ((flipList != null) ? flipList.size() : ""));
     }
 
@@ -258,24 +245,17 @@ public class CoinFlipActivity extends AppCompatActivity {
         String json = prefs.getString(FLIP_PREFS_NAME, null);
         Type type = new TypeToken<ArrayList<CoinFlipHistoryMember>>() {}.getType();
         List<CoinFlipHistoryMember> flipList = gson.fromJson(json, type);
-
         Log.println(Log.INFO, FLIP_PREFS_NAME, "Loaded History. Total Loaded: " + ((flipList != null) ? flipList.size() : ""));
-
         return flipList;
     }
 
     private List<CoinFlipHistoryMember> removeMissingChildren(List<CoinFlipHistoryMember> flipList){
         List<CoinFlipHistoryMember> cleansedFlipList = new ArrayList<>();
-
         for(CoinFlipHistoryMember flip : flipList) {
-
             if (childManager.findChildIndexById(flip.getChildId()) != -1 ||  flip.getChildId() == -1) {
                 cleansedFlipList.add(flip);
             }
         }
-
         return cleansedFlipList;
     }
-
-
 }

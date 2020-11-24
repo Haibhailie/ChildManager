@@ -50,13 +50,11 @@ public class EditTaskActivity extends AppCompatActivity {
     private static final String EXTRA_TASK_POS = "taskPos";
     private static final String TASK_PREFS_NAME = "TaskList";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,15 +64,14 @@ public class EditTaskActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        //get info from other activities
         Bundle b = getIntent().getExtras();
         taskClickedPosition = b.getInt(EXTRA_TASK_POS);
         selectedTask=taskManager.getTask(taskClickedPosition);
         setupInputResources();
     }
 
-    @Override
-    public void onBackPressed(){
+    @Override public void onBackPressed(){
         Intent intent = ViewTaskActivity.makeLaunchIntent(EditTaskActivity.this);
         finish();
         startActivity(intent);
@@ -94,7 +91,6 @@ public class EditTaskActivity extends AppCompatActivity {
                 saveTasks();
                 finish();
                 startActivity(intent);
-
             }
         });
         setInitialValues();
@@ -105,7 +101,6 @@ public class EditTaskActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = gson.toJson(taskManager);
-
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("taskManager", json);
         editor.apply();
@@ -115,9 +110,7 @@ public class EditTaskActivity extends AppCompatActivity {
     public void setInitialValues(){
         taskName.setText(selectedTask.getTaskName());
         taskDescription.setText(selectedTask.getDescription());
-
     }
-
 
     public void takeInputsAndExit(){
         boolean inputErrorOccured = false;
@@ -125,13 +118,16 @@ public class EditTaskActivity extends AppCompatActivity {
             taskName.setError("Task name cannot be empty!");
             inputErrorOccured=true;
         }
+
         if(TextUtils.isEmpty(taskDescription.getText().toString())){
             taskDescription.setError("Task name cannot be empty!");
             inputErrorOccured=true;
         }
+
         if(inputErrorOccured){
             Toast.makeText(this, "Check your inputs!", Toast.LENGTH_SHORT).show();
         }
+
         else{
             enteredTaskName=taskName.getText().toString();
             enteredDescription=taskDescription.getText().toString();
@@ -151,6 +147,7 @@ public class EditTaskActivity extends AppCompatActivity {
             childNameList.add(t.getName());
             i++;
         }
+
         if(childList.isEmpty()){
             emptyChildren.setVisibility(View.VISIBLE);
         }
@@ -159,24 +156,21 @@ public class EditTaskActivity extends AppCompatActivity {
         childSpinner.setAdapter(spinnerAdapter);
         childSpinner.setSelection(defaultPosition);
         childSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 enteredChildName = childSpinner.getSelectedItem().toString();
                 avatarID = childManager.getChildAvatarUriPath(position);
-                //childAvatar.setImageResource(avatarID);
                 Uri avatarUri = Uri.parse(avatarID);
-
                 try {
                     childAvatar.setImageURI(avatarUri);
-                } catch (RuntimeException e) {
+                }
+
+                catch (RuntimeException e) {
                     childAvatar.setImageURI(Child.DEFAULT_URI);
                 }
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            @Override public void onNothingSelected(AdapterView<?> parent) {
                 enteredChildName = taskManager.getTask(taskClickedPosition).getTheAssignedChildId();
-
             }
         });
     }

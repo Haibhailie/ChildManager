@@ -1,4 +1,4 @@
-/*
+/**
  * This activity allow a user to edit a child.
  */
 
@@ -49,18 +49,17 @@ public class EditChildActivity extends AppCompatActivity {
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String CHILD_PREFS_NAME = "ChildList";
     private static final String CHILD_CURRENT_ID = "ChildID";
-
     private ChildManager childManager;
     int childPos;
-    EditText nameText, ageText;
+    EditText nameText;
+    EditText ageText;
     ImageView avatarPreview;
     private int gender;
     Uri avatarUri;
     private List<Integer> avatarImageViewArray;
     private List<Integer> avatarResIDArray;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_child);
         childManager = ChildManager.getInstance();
@@ -70,34 +69,27 @@ public class EditChildActivity extends AppCompatActivity {
         avatarUri = null;
         // Check Write and Read permission of external storage
         checkPermissions();
-
-
         // These two arrays would be used to set click event on avatar imageViews
-        avatarImageViewArray = Arrays.asList(R.id.iv_boy1, R.id.iv_boy2,R.id.iv_boy3,R.id.iv_boy4,R.id.iv_boy5,
-                R.id.iv_girl1,R.id.iv_girl2,R.id.iv_girl3,R.id.iv_girl4,R.id.iv_girl5);
-
-        avatarResIDArray = Arrays.asList(R.drawable.b_avatar1, R.drawable.b_avatar2,R.drawable.b_avatar3,R.drawable.b_avatar4,
-                R.drawable.b_avatar5,R.drawable.g_avatar1, R.drawable.g_avatar2, R.drawable.g_avatar3, R.drawable.g_avatar4,R.drawable.g_avatar5);
-
+        avatarImageViewArray = Arrays.asList(R.id.iv_boy1, R.id.iv_boy2, R.id.iv_boy3, R.id.iv_boy4, R.id.iv_boy5,
+                R.id.iv_girl1, R.id.iv_girl2, R.id.iv_girl3, R.id.iv_girl4, R.id.iv_girl5);
+        avatarResIDArray = Arrays.asList(R.drawable.b_avatar1, R.drawable.b_avatar2, R.drawable.b_avatar3, R.drawable.b_avatar4,
+                R.drawable.b_avatar5, R.drawable.g_avatar1, R.drawable.g_avatar2, R.drawable.g_avatar3, R.drawable.g_avatar4, R.drawable.g_avatar5);
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
-
         // Enable "up" on toolbar
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-
         childPos = extractChildPosFromIntent();
         setupAvatarOption();
         setupAvatarButton();
         // If we are going to edit an existing child
-        // show original value in each fields
         if (childPos != -1) {
+            // show original value in each fields
             setupEditModel();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
@@ -105,8 +97,7 @@ public class EditChildActivity extends AppCompatActivity {
     /**
      * Set up menu bar
      */
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
                 String name = nameText.getText().toString();
@@ -117,7 +108,7 @@ public class EditChildActivity extends AppCompatActivity {
                             "Please enter name of child",
                             Toast.LENGTH_SHORT).show();
                     return true;
-                } else if (ageStr.equals("")){
+                } else if (ageStr.equals("")) {
                     Toast.makeText(EditChildActivity.this,
                             "Please enter child age",
                             Toast.LENGTH_SHORT).show();
@@ -172,20 +163,19 @@ public class EditChildActivity extends AppCompatActivity {
                 CropImage.startPickImageActivity(EditChildActivity.this);
             }
 
-            });
+        });
     }
 
     /**
      * Callback function of CropImage.startPickImageActivity
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    @Override protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
             Uri uri = CropImage.getPickImageResultUri(this, data);
             if (CropImage.isReadExternalStoragePermissionsRequired(this, avatarUri)) {
-                ActivityCompat.requestPermissions(EditChildActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                ActivityCompat.requestPermissions(EditChildActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
             } else {
                 startCrop(uri);
             }
@@ -246,11 +236,9 @@ public class EditChildActivity extends AppCompatActivity {
 
     private int getChildID() {
         int returnValue = 0;
-
         SharedPreferences prefs = getSharedPreferences(CHILD_CURRENT_ID, MODE_PRIVATE);
         String idString = prefs.getString(CHILD_PREFS_NAME, "0");
         returnValue = Integer.parseInt(idString) + 1;
-
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(CHILD_PREFS_NAME, Integer.toString(returnValue));
         editor.apply();
@@ -286,13 +274,11 @@ public class EditChildActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent makeLaunchIntent (Context context, int childPos) {
+    public static Intent makeLaunchIntent(Context context, int childPos) {
         Intent intent = new Intent(context, EditChildActivity.class);
         intent.putExtra(EXTRA_CHILD_POS, childPos);
         return intent;
     }
-
-
 
     // Reference: https://www.youtube.com/watch?v=jcliHGR3CHo&ab_channel=CodinginFlow
     public static void saveChildList(Context context, List<Child> childList) {
@@ -309,11 +295,11 @@ public class EditChildActivity extends AppCompatActivity {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString(CHILD_PREFS_NAME, null);
-        Type type = new TypeToken<ArrayList<Child>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Child>>() {
+        }.getType();
         List<Child> childList = gson.fromJson(json, type);
         return childList;
     }
-
 
     private void setupAvatarOption() {
         for (int i = 0; i < avatarImageViewArray.size(); i++) {
@@ -339,6 +325,6 @@ public class EditChildActivity extends AppCompatActivity {
             imageView.setBackgroundResource(android.R.color.transparent);
         }
         targetImg.setBackgroundResource(android.R.color.holo_blue_bright);
-        targetImg.setPadding(1,1,1,1);
+        targetImg.setPadding(1, 1, 1, 1);
     }
 }

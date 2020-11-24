@@ -28,20 +28,19 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class PopupActivity extends AppCompatActivity {
-
     private TaskManager taskManager = TaskManager.getInstance();
     Task selectedTask;
     private ChildManager childManager = ChildManager.getInstance();
     private ArrayList<Task> taskList = taskManager.getTaskArrayList();
     private int position;
     private static final String EXTRA_TASK_POS = "taskPos";
-    private TextView taskName, taskDescription, assignedChild;
+    private TextView taskName;
+    private TextView taskDescription;
+    private TextView assignedChild;
     private ImageView childIcon;
     private static final String TASK_PREFS_NAME = "TaskList";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popup);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -55,6 +54,7 @@ public class PopupActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         Bundle b = getIntent().getExtras();
         position = b.getInt(EXTRA_TASK_POS);
         selectedTask = taskManager.getTask(position);
@@ -71,22 +71,25 @@ public class PopupActivity extends AppCompatActivity {
         assignedChild =findViewById(R.id.popupChild);
         childIcon = findViewById(R.id.childIcon);
         Button finishButton = (Button)findViewById(R.id.confirmTask);
-
         taskName.setText(selectedTask.getTaskName());
         taskDescription.setText(selectedTask.getDescription());
         if(stringIsNull(selectedTask.getTheAssignedChildId())) {
             assignedChild.setText("UNASSIGNED");
             finishButton.setText("Assign");
         }
-        else
+
+        else {
             assignedChild.setText(selectedTask.getTheAssignedChildId());
+        }
 
         String avatarID = taskList.get(position).getAvatarId();
 
         try {
             Uri avatarUri = Uri.parse(avatarID);
             childIcon.setImageURI(avatarUri);
-        } catch (RuntimeException e) {
+        }
+
+        catch (RuntimeException e) {
             childIcon.setImageURI(Child.DEFAULT_URI);
         }
     }
@@ -95,7 +98,6 @@ public class PopupActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(TASK_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = gson.toJson(taskManager);
-
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("taskManager", json);
         editor.apply();
@@ -130,7 +132,6 @@ public class PopupActivity extends AppCompatActivity {
     }
 
     private void setupConfirmButton() {
-
         Button finishButton = (Button)findViewById(R.id.confirmTask);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,9 +159,7 @@ public class PopupActivity extends AppCompatActivity {
         return true;
     }
 
-
-    @Override
-    public void onBackPressed(){
+    @Override public void onBackPressed(){
         Intent intent = ViewTaskActivity.makeLaunchIntent(PopupActivity.this);
         finish();
         startActivity(intent);

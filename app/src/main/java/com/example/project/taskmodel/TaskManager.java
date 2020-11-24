@@ -10,8 +10,7 @@ import java.util.Iterator;
 public class TaskManager implements Iterable<Task>{
 
     private static TaskManager instance;
-    private ArrayList<Task> taskArrayList = new ArrayList<>();;
-
+    private ArrayList<Task> taskArrayList = new ArrayList<>();
     private TaskManager(){}
 
     public void setInstance(TaskManager t){
@@ -59,9 +58,7 @@ public class TaskManager implements Iterable<Task>{
         return taskArrayList.get(index);
     }
 
-    @NonNull
-    @Override
-    public Iterator<Task> iterator() {
+    @NonNull @Override public Iterator<Task> iterator() {
         return taskArrayList.iterator();
     }
 }
