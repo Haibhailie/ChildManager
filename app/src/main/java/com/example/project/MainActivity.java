@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.project.childactivities.ViewChildActivity;
 import com.example.project.coinmodelactivities.ChooseChildCoinFlipActivity;
+import com.example.project.takebreathactivities.TakeBreathActivity;
 import com.example.project.taskactivities.ViewTaskActivity;
 import com.example.project.timeout.Timeout;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setupFlipCoinButton();
         setupAboutUsButton();
         setupTaskButton();
+        setupBreathButton();
     }
 
     private void setupConfigureButton() {
@@ -86,6 +88,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = ViewTaskActivity.makeLaunchIntent(MainActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setupBreathButton() {
+        Button task = (Button) findViewById(R.id.breathButton);
+        task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = TakeBreathActivity.makeLaunchIntent(MainActivity.this);
                 startActivity(intent);
             }
         });

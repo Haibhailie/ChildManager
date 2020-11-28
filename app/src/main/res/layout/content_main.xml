@@ -41,74 +41,77 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="199dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="48dp"
         android:background="@drawable/main_button"
         android:text="@string/configureMyChildren"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/calmBackground"
         app:layout_constraintStart_toStartOf="@+id/calmBackground"
-        app:layout_constraintTop_toTopOf="@+id/calmBackground"
-        app:layout_constraintVertical_bias="0.11" />
+        app:layout_constraintTop_toTopOf="@+id/calmBackground" />
 
     <Button
         android:id="@+id/countdownButton"
         android:layout_width="199dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/main_button"
         android:text="@string/countdownTimer"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/calmBackground"
-        app:layout_constraintTop_toBottomOf="@+id/configureButton"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintEnd_toEndOf="@+id/configureButton"
+        app:layout_constraintStart_toStartOf="@+id/configureButton"
+        app:layout_constraintTop_toBottomOf="@+id/configureButton" />
 
     <Button
         android:id="@+id/flipButton"
         android:layout_width="199dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/main_button"
         android:text="@string/flip_the_coin"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/calmBackground"
-        app:layout_constraintStart_toStartOf="@+id/calmBackground"
-        app:layout_constraintTop_toBottomOf="@+id/countdownButton"
-        app:layout_constraintVertical_bias="0.156" />
+        app:layout_constraintEnd_toEndOf="@+id/countdownButton"
+        app:layout_constraintStart_toStartOf="@+id/countdownButton"
+        app:layout_constraintTop_toBottomOf="@+id/countdownButton" />
 
     <Button
-    android:id="@+id/taskButton"
-    android:text="@string/taskText"
-    android:layout_width="199dp"
-    android:layout_height="53dp"
-    android:layout_marginTop="20dp"
-    android:background="@drawable/main_button"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    android:textSize="18sp"
-    app:layout_constraintBottom_toBottomOf="@+id/calmBackground"
-    app:layout_constraintEnd_toEndOf="@+id/calmBackground"
-    app:layout_constraintStart_toStartOf="@+id/calmBackground"
-    app:layout_constraintTop_toBottomOf="@+id/flipButton"
-    app:layout_constraintVertical_bias="0.0" />
+        android:id="@+id/taskButton"
+        android:layout_width="199dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/main_button"
+        android:text="@string/taskText"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/flipButton"
+        app:layout_constraintStart_toStartOf="@+id/flipButton"
+        app:layout_constraintTop_toBottomOf="@+id/flipButton" />
+
+    <Button
+        android:id="@+id/breathButton"
+        android:layout_width="199dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/main_button"
+        android:text="@string/breath"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/taskButton"
+        app:layout_constraintStart_toStartOf="@+id/taskButton"
+        app:layout_constraintTop_toBottomOf="@+id/taskButton" />
 
     <Button
         android:id="@+id/aboutButton"
         android:layout_width="199dp"
         android:layout_height="53dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/main_button"
         android:text="@string/aboutText"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/calmBackground"
-        app:layout_constraintEnd_toEndOf="@+id/calmBackground"
-        app:layout_constraintStart_toStartOf="@+id/calmBackground"
-        app:layout_constraintTop_toBottomOf="@+id/taskButton"
-        app:layout_constraintVertical_bias="0.517" />
+        app:layout_constraintEnd_toEndOf="@+id/breathButton"
+        app:layout_constraintStart_toStartOf="@+id/breathButton"
+        app:layout_constraintTop_toBottomOf="@+id/breathButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
