@@ -21,6 +21,10 @@ public class TakeBreathActivity extends AppCompatActivity {
 
     private static int THREE_SECONDS = 3000;
     private static int SEVEN_SECONDS = 7000;
+    private static int TEN_SECONDS = 10000;
+
+    public int breathsLeft = 3;
+    private boolean buttonDown = false;
 
     public static Intent makeLaunchIntent(MainActivity context) {
         Intent intent = new Intent(context, TakeBreathActivity.class);
@@ -33,7 +37,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setState(waitingInhaleState);
+        setState(startState);
         setupBeginButton();
     }
 
@@ -44,8 +48,10 @@ public class TakeBreathActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    buttonDown = true;
                     currentState.handleClickOn();
                 } else if (event.getAction() == MotionEvent.ACTION_UP){
+                    buttonDown = false;
                     currentState.handleClickOff();
                 }
                 return true;
@@ -64,8 +70,11 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private final State waitingInhaleState = new WaitingInhaleState();
+    private final State waitingExhaleState = new WaitingExhaleState();
     private final State inhaleState = new InhaleState();
     private final State exhaleState = new ExhaleState();
+    private final State startState = new StartState();
+    private final State idleState = new IdleState();
 
     private State currentState = new IdleState();
 
@@ -75,7 +84,6 @@ public class TakeBreathActivity extends AppCompatActivity {
         currentState.handleEnter();
     }
 
-
     public abstract class State{
         void handleEnter() {}
         void handleExit(){}
@@ -83,15 +91,29 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleClickOn() {}
     }
 
+    // START STATE
+    private class StartState extends State{
+        void handleEnter(){
+            setButtonText("Begin");
+        }
+
+        void handleClickOn(){
+            setState(inhaleState);
+        }
+    }
+
     // INHALE STATE
     private class InhaleState extends State {
         Handler timerHandler = new Handler();
-        Runnable timerRunnable = () -> setState(exhaleState);
+        Runnable timerRunnable = () -> setState(waitingExhaleState);
 
         @Override
         void handleEnter() {
             setButtonText("In");
             setHelpText("Hold button and breath in");
+            if(buttonDown) {
+                timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
+            }
 
             Log.println(Log.INFO, "STATE", "Inhale Enter");
         }
@@ -99,67 +121,124 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
+
             Log.println(Log.INFO, "STATE", "Inhale Exit");
         }
 
         @Override
         void handleClickOff() {
             timerHandler.removeCallbacks(timerRunnable);
+
             Log.println(Log.INFO, "STATE", "Inhale Click Off");
         }
 
         @Override
         void handleClickOn() {
             timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
+
             Log.println(Log.INFO, "STATE", "Inhale Click On");
         }
+
     }
 
     // EXHALE STATE
     private class ExhaleState extends State {
         Handler timerHandler = new Handler();
-        Runnable timerRunnable = () -> setState(inhaleState);
-        Runnable heldTooLongRunnable = () -> heldTooLong();
+        Runnable inhaleStateTimer = () -> setState(waitingInhaleState);
 
         @Override
         void handleEnter() {
-            setButtonText("Out");
-            setHelpText("Let go off button and breath out");
-            timerHandler.postDelayed(heldTooLongRunnable, SEVEN_SECONDS);
+            setHelpText(" ");
+            timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
 
             Log.println(Log.INFO, "STATE", "Exhale Enter");
         }
 
         @Override
         void handleExit() {
-            timerHandler.removeCallbacks(timerRunnable);
+            timerHandler.removeCallbacks(inhaleStateTimer);
+
             Log.println(Log.INFO, "STATE", "Exhale Exit");
         }
 
         @Override
         void handleClickOff() {
-            timerHandler.removeCallbacks(heldTooLongRunnable);
-            timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
+            timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
+
             Log.println(Log.INFO, "STATE", "Exhale Click Off");
         }
 
         @Override
         void handleClickOn() {
-            timerHandler.removeCallbacks(timerRunnable);
+            timerHandler.removeCallbacks(inhaleStateTimer);
+
             Log.println(Log.INFO, "STATE", "Exhale Click On");
         }
 
-        void heldTooLong(){
-            setHelpText("LET GO");
-            Log.println(Log.INFO, "STATE", "Inhale Held too long");
+    }
+
+    // WAITING EXHALE STATE
+    private class WaitingExhaleState extends State {
+        Handler timerHandler = new Handler();
+        Runnable timerRunnable = () -> setHelpText("Release Button and breath out");
+
+        @Override
+        void handleEnter() {
+            setButtonText("Out");
+            setHelpText("");
+            timerHandler.postDelayed(timerRunnable, SEVEN_SECONDS);
+
+            Log.println(Log.INFO, "STATE", "Waiting Exhale Enter");
         }
+
+        @Override
+        void handleExit() {
+            timerHandler.removeCallbacks(timerRunnable);
+
+            Log.println(Log.INFO, "STATE", "Waiting Exhale Exit");
+        }
+
+        @Override
+        void handleClickOff() {
+            setState(exhaleState);
+            breathsLeft--;
+            Log.println(Log.INFO, "STATE", "Waiting Exhale Click Off");
+        }
+
     }
 
     // WAITING INHALE STATE
     private class WaitingInhaleState extends State {
+        Handler timerHandler = new Handler();
+        Runnable timerRunnable = () -> setState(inhaleState);
+
+        @Override
+        void handleEnter() {
+
+            if(breathsLeft == 0){
+                setButtonText("Good Job");
+                setState(idleState);
+            } else{
+                setButtonText("In");
+                timerHandler.postDelayed(timerRunnable, SEVEN_SECONDS);
+            }
+            setHelpText("");
+
+            Log.println(Log.INFO, "STATE", "Waiting Exhale Enter");
+        }
+
+        @Override
+        void handleExit() {
+            timerHandler.removeCallbacks(timerRunnable);
+
+            Log.println(Log.INFO, "STATE", "Waiting Exhale Exit");
+        }
+
         @Override
         void handleClickOn() {
             setState(inhaleState);
+
+            Log.println(Log.INFO, "STATE", "Waiting Exhale Click Off");
         }
     }
 
