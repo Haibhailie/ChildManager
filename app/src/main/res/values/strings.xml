@@ -85,4 +85,10 @@
     <string name="title_activity_take_breath">Take A Breathe</string>
     <string name="begin">Begin</string>
     <string name="breath">Breath</string>
+    <string name="breath_in">In</string>
+    <string name="breath_out">Out</string>
+    <string name="breath_help_breath_in">Hold the Button and Breath in</string>
+    <string name="breath_good_job">Good Job</string>
+    <string name="breath_help_breath_out">Release the button and breath out</string>
+
 </resources>

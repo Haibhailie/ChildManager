@@ -104,10 +104,14 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private void changeBreatheCountByIncrement(int inc){
-        breathesLeft = breathesLeft + inc;
+        breathesLeft = (breathesLeft + inc);
+
         if(breathesLeft < 1){
             breathesLeft = 1;
+        } else if(breathesLeft > 10){
+            breathesLeft = 10;
         }
+
         updateBreathNumberText();
         saveBreatheCount(this, breathesLeft);
     }
@@ -166,7 +170,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     // START STATE
     private class StartState extends State{
         void handleEnter(){
-            setButtonText("Begin");
+            setButtonText(getString(R.string.begin));
         }
 
         void handleClickOn(){
@@ -181,8 +185,9 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         @Override
         void handleEnter() {
-            setButtonText("In");
-            setHelpText("Hold button and breath in");
+            setButtonText(getString(R.string.breath_in));
+            setHelpText(getString(R.string.breath_help_breath_in));
+
             if(buttonDown) {
                 timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
             }
@@ -200,6 +205,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleClickOff() {
             timerHandler.removeCallbacks(timerRunnable);
+            setState(startState);
 
             Log.println(Log.INFO, "STATE", "Inhale Click Off");
         }
@@ -219,7 +225,6 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         @Override
         void handleEnter() {
-            setHelpText(" ");
             timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
 
             Log.println(Log.INFO, "STATE", "Exhale Enter");
@@ -254,8 +259,8 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         @Override
         void handleEnter() {
-            setButtonText("Out");
-            setHelpText("");
+            setButtonText(getString(R.string.breath_out));
+            setHelpText(getString(R.string.breath_help_breath_out));
             timerHandler.postDelayed(timerRunnable, SEVEN_SECONDS);
 
             Log.println(Log.INFO, "STATE", "Waiting Exhale Enter");
@@ -287,13 +292,14 @@ public class TakeBreathActivity extends AppCompatActivity {
             updateBreathNumberText();
 
             if(breathesLeft == 0){
-                setButtonText("Good Job");
+                setButtonText(getString(R.string.breath_good_job));
                 setState(idleState);
+                setHelpText("");
             } else{
-                setButtonText("In");
+                setButtonText(getString(R.string.breath_in));
                 timerHandler.postDelayed(timerRunnable, SEVEN_SECONDS);
+                setHelpText(getString(R.string.breath_help_breath_in));
             }
-            setHelpText("");
 
             Log.println(Log.INFO, "STATE", "Waiting Exhale Enter");
         }
