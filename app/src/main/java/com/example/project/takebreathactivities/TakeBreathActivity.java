@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.project.MainActivity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,6 +19,8 @@ import android.widget.TextView;
 import com.example.project.R;
 
 public class TakeBreathActivity extends AppCompatActivity {
+
+    private static final String UP_TAG = "UP";
 
     private static int THREE_SECONDS = 3000;
     private static int SEVEN_SECONDS = 7000;
@@ -36,6 +39,14 @@ public class TakeBreathActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_breath);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Enable "up" on toolbar
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e){
+            Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
+        }
 
         setUpBreatheChangeButtons();
         updateBreathNumberText();

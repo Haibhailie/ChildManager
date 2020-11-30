@@ -21,8 +21,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".takebreathactivities.TakeBreathActivity"
+            android:parentActivityName=".MainActivity"
             android:label="@string/title_activity_take_breath"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".taskactivities.PopupActivity"
             android:label="@string/title_activity_popup"
