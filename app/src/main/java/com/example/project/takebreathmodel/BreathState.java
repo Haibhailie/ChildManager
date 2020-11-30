@@ -1,8 +1,12 @@
 package com.example.project.takebreathmodel;
 
+import android.util.Log;
+
 import java.util.Date;
 
-public class TakeBreathModel {
+public class BreathState {
+
+    private static String BREATH_TAG = "BREATH_STATE";
 
     private State breathState;
 
@@ -18,7 +22,7 @@ public class TakeBreathModel {
 
     private static long THREE_SECONDS = 3000;
 
-    public void TakeBreathModel(){
+    public BreathState(){
         breathState = State.WAITING_INHALE;
         breathCount = 3;
     }
@@ -27,15 +31,19 @@ public class TakeBreathModel {
         switch (breathState){
             case WAITING_INHALE:
                 waitingInhale();
+                Log.println(Log.INFO, BREATH_TAG, "WAITING_INHALE");
                 break;
             case INHALE:
                 inhale();
+                Log.println(Log.INFO, BREATH_TAG, "INHALE");
                 break;
             case EXHALE:
                 exhale();
+                Log.println(Log.INFO, BREATH_TAG, "EXHALE");
                 break;
             case DONE:
                 done();
+                Log.println(Log.INFO, BREATH_TAG, "DONE");
                 break;
         }
     }
