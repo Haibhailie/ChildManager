@@ -23,7 +23,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     private static int SEVEN_SECONDS = 7000;
     private static int TEN_SECONDS = 10000;
 
-    public int breathsLeft = 3;
+    public int breathesLeft = 3;
     private boolean buttonDown = false;
 
     public static Intent makeLaunchIntent(MainActivity context) {
@@ -37,6 +37,8 @@ public class TakeBreathActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setUpBreatheChangeButtons();
+        updateBreathNumberText();
         setState(startState);
         setupBeginButton();
     }
@@ -57,6 +59,52 @@ public class TakeBreathActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void setUpBreatheChangeButtons(){
+        Button breatheDown = (Button) findViewById(R.id.take_breath_lower_button);
+        Button breatheUp = (Button) findViewById(R.id.take_breath_raise_button);
+
+        breatheDown.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                changeBreatheCountByIncrement(-1);
+            }
+        });
+
+        breatheUp.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                changeBreatheCountByIncrement(1);
+            }
+        });
+    }
+
+    private void changeBreatheCountByIncrement(int inc){
+        breathesLeft = breathesLeft + inc;
+        if(breathesLeft < 1){
+            breathesLeft = 1;
+        }
+        updateBreathNumberText();
+    }
+
+    private void setVisibilityOfBreatheChangeButtons(int visibility){
+        Button breatheDown = (Button) findViewById(R.id.take_breath_lower_button);
+        Button breatheUp = (Button) findViewById(R.id.take_breath_raise_button);
+
+        breatheDown.setVisibility(visibility);
+        breatheUp.setVisibility(visibility);
+    }
+
+    private void updateBreathNumberText(){
+
+        TextView breathCount = (TextView) findViewById(R.id.take_breath_number_of_breathes);
+
+        if (breathesLeft == 0){
+            breathCount.setVisibility(View.GONE);
+        }
+
+        breathCount.setText(breathesLeft + "");
     }
 
     private void setButtonText(String text){
@@ -99,10 +147,10 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         void handleClickOn(){
             setState(inhaleState);
+            setVisibilityOfBreatheChangeButtons(View.GONE);
         }
     }
 
-    // INHALE STATE
     private class InhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> setState(waitingExhaleState);
@@ -141,7 +189,6 @@ public class TakeBreathActivity extends AppCompatActivity {
 
     }
 
-    // EXHALE STATE
     private class ExhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable inhaleStateTimer = () -> setState(waitingInhaleState);
@@ -177,7 +224,6 @@ public class TakeBreathActivity extends AppCompatActivity {
 
     }
 
-    // WAITING EXHALE STATE
     private class WaitingExhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> setHelpText("Release Button and breath out");
@@ -201,13 +247,12 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleClickOff() {
             setState(exhaleState);
-            breathsLeft--;
+            breathesLeft--;
             Log.println(Log.INFO, "STATE", "Waiting Exhale Click Off");
         }
 
     }
 
-    // WAITING INHALE STATE
     private class WaitingInhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> setState(inhaleState);
@@ -215,7 +260,9 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleEnter() {
 
-            if(breathsLeft == 0){
+            updateBreathNumberText();
+
+            if(breathesLeft == 0){
                 setButtonText("Good Job");
                 setState(idleState);
             } else{
@@ -242,16 +289,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         }
     }
 
-    // NULL STATE
     private class IdleState extends State {
     }
-
-
-
-
-
-
-
-
 
 }

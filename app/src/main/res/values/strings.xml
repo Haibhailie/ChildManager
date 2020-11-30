@@ -81,8 +81,8 @@
     <string name="assigned_to_who">Assigned to:</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
     <string name="title_activity_popup">PopupActivity</string>
-    <string name="title_activity_take_breath">TakeBreathActivity</string>
+
+    <string name="title_activity_take_breath">Take A Breathe</string>
     <string name="begin">Begin</string>
     <string name="breath">Breath</string>
-    <string name="take_breath_help">Help:</string>
 </resources>
