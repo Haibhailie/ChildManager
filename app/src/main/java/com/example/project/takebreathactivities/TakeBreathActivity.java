@@ -1,6 +1,8 @@
 package com.example.project.takebreathactivities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.project.MainActivity;
@@ -17,16 +19,25 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.project.R;
+import com.example.project.coinflipmodel.CoinFlipHistoryMember;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TakeBreathActivity extends AppCompatActivity {
 
     private static final String UP_TAG = "UP";
+    private static final String APP_PREFS_NAME = "AppPrefs";
+    private static final String BREATHE_PREFS_NAME = "TakeBreathePrefs";
 
     private static int THREE_SECONDS = 3000;
     private static int SEVEN_SECONDS = 7000;
     private static int TEN_SECONDS = 10000;
 
-    public int breathesLeft = 3;
+    public int breathesLeft;
     private boolean buttonDown = false;
 
     public static Intent makeLaunchIntent(MainActivity context) {
@@ -39,6 +50,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_breath);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        breathesLeft = getBreatheCount(this);
 
         // Enable "up" on toolbar
         try {
@@ -97,6 +109,7 @@ public class TakeBreathActivity extends AppCompatActivity {
             breathesLeft = 1;
         }
         updateBreathNumberText();
+        saveBreatheCount(this, breathesLeft);
     }
 
     private void setVisibilityOfBreatheChangeButtons(int visibility){
@@ -301,6 +314,21 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private class IdleState extends State {
+    }
+
+    public static void saveBreatheCount(Context context, int breathesLeft) {
+        SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(BREATHE_PREFS_NAME, breathesLeft);
+        editor.apply();
+        Log.println(Log.INFO, BREATHE_PREFS_NAME, "Saved breathe count: " + breathesLeft);
+    }
+
+    public static int getBreatheCount(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
+        int breathesLeft = prefs.getInt(BREATHE_PREFS_NAME, 3);
+        Log.println(Log.INFO, BREATHE_PREFS_NAME, "Loaded breathe count: " + breathesLeft);
+        return breathesLeft;
     }
 
 }
