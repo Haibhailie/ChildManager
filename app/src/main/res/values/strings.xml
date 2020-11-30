@@ -84,4 +84,5 @@
     <string name="title_activity_take_breath">TakeBreathActivity</string>
     <string name="begin">Begin</string>
     <string name="breath">Breath</string>
+    <string name="take_breath_help">Help:</string>
 </resources>
