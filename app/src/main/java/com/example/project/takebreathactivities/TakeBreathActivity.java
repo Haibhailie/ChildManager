@@ -225,10 +225,10 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleEnter() {
             setButtonText(getString(R.string.breath_in));
             setHelpText(getString(R.string.breath_help_breath_in));
-            setupInhaleMusic();
 
             if(buttonDown) {
                 timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
+                setupInhaleMusic();
             }
             Log.println(Log.INFO, "STATE", "Inhale Enter");
         }
@@ -236,14 +236,14 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
-            theInhaleMusic.stop();
             Log.println(Log.INFO, "STATE", "Inhale Exit");
         }
 
         @Override
         void handleClickOff() {
             timerHandler.removeCallbacks(timerRunnable);
-            setState(startState);
+            theInhaleMusic.stop();
+            setState(inhaleState);
 
             Log.println(Log.INFO, "STATE", "Inhale Click Off");
         }
@@ -251,6 +251,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleClickOn() {
             timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
+            setupInhaleMusic();
 
             Log.println(Log.INFO, "STATE", "Inhale Click On");
         }
@@ -277,13 +278,13 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleExit() {
             setButtonColor("cyan");
             timerHandler.removeCallbacks(inhaleStateTimer);
-            theExhaleMusic.stop();
             Log.println(Log.INFO, "STATE", "Exhale Exit");
         }
 
         @Override
         void handleClickOff() {
             timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
+            setupExhaleMusic();
 
             Log.println(Log.INFO, "STATE", "Exhale Click Off");
         }
@@ -291,6 +292,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleClickOn() {
             timerHandler.removeCallbacks(inhaleStateTimer);
+            theExhaleMusic.stop();
 
             Log.println(Log.INFO, "STATE", "Exhale Click On");
         }
@@ -317,6 +319,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
+            theInhaleMusic.stop();
 
             Log.println(Log.INFO, "STATE", "Waiting Exhale Exit");
         }
@@ -329,7 +332,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         }
 
         void stopAnimationMusic(){
-
+            theInhaleMusic.stop();
         }
 
     }
@@ -350,6 +353,7 @@ public class TakeBreathActivity extends AppCompatActivity {
                 setButtonText(getString(R.string.breath_good_job));
                 setState(idleState);
                 setHelpText("");
+                theExhaleMusic.stop();
             }
 
             else{
@@ -364,6 +368,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
+            theExhaleMusic.stop();
 
             Log.println(Log.INFO, "STATE", "Waiting Inhale Exit");
         }
