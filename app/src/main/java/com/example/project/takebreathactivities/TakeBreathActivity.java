@@ -53,7 +53,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_breath);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        theInhaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.anim_inhale);
+        theInhaleAnimation = (Animation) AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.anim_inhale_shake);
         theExhaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.anim_exhale);
 
         breathesLeft = getBreatheCount(this);
@@ -81,23 +81,41 @@ public class TakeBreathActivity extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     // no more animation when all breaths are done
                     if (breathesLeft != 0) {
-//                        v.animate().scaleXBy(1.5f).setDuration(THREE_SECONDS).start();
-//                        v.animate().scaleYBy(1.5f).setDuration(THREE_SECONDS).start();
-                        v.startAnimation(theInhaleAnimation);
+                        inhaleAnimation(v);
+//                        v.startAnimation(theInhaleAnimation);
                     }
                     buttonDown = true;
                     currentState.handleClickOn();
                 } else if (event.getAction() == MotionEvent.ACTION_UP){
-//                    v.animate().cancel();
-//                    v.animate().scaleX(1f).setDuration(THREE_SECONDS).start();
-//                    v.animate().scaleY(1f).setDuration(THREE_SECONDS).start();
-                    v.startAnimation(theExhaleAnimation);
+                    exhaleAnimation(v);
+//                    v.startAnimation(theExhaleAnimation);
                     buttonDown = false;
                     currentState.handleClickOff();
                 }
                 return true;
             }
         });
+    }
+
+    private void inhaleShakeStart(){
+        Button breatheButton = (Button) findViewById(R.id.take_breath_breath_button);
+        breatheButton.startAnimation(theInhaleAnimation);
+    }
+
+    private void inhaleShakeStop(){
+        Button breatheButton = (Button) findViewById(R.id.take_breath_breath_button);
+        breatheButton.clearAnimation();
+    }
+
+    private void inhaleAnimation(View v){
+        v.animate().scaleXBy(1.25f).setDuration(THREE_SECONDS).start();
+        v.animate().scaleYBy(1.25f).setDuration(THREE_SECONDS).start();
+    }
+
+    private void exhaleAnimation(View v){
+        v.animate().cancel();
+        v.animate().scaleX(1f).setDuration(THREE_SECONDS).start();
+        v.animate().scaleY(1f).setDuration(THREE_SECONDS).start();
     }
 
     private void setUpBreatheChangeButtons(){
@@ -162,7 +180,6 @@ public class TakeBreathActivity extends AppCompatActivity {
         } else {
             breathButton.setBackground(ContextCompat.getDrawable(TakeBreathActivity.this, R.drawable.exhale_button_border));
         }
-
     }
 
     private void setHelpText(String text){
@@ -313,6 +330,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleEnter() {
             setButtonText(getString(R.string.breath_out));
             setHelpText(getString(R.string.breath_help_breath_out));
+            inhaleShakeStart();
             timerHandler.postDelayed(timerRunnable, SEVEN_SECONDS);
 
             Log.println(Log.INFO, "STATE", "Waiting Exhale Enter");
@@ -322,6 +340,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
             theInhaleMusic.stop();
+            inhaleShakeStop();
 
             Log.println(Log.INFO, "STATE", "Waiting Exhale Exit");
         }
@@ -334,6 +353,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         }
 
         void stopAnimationMusic(){
+            inhaleShakeStop();
             theInhaleMusic.stop();
         }
 
@@ -359,6 +379,7 @@ public class TakeBreathActivity extends AppCompatActivity {
             }
 
             else{
+                inhaleShakeStart();
                 setButtonText(getString(R.string.breath_in));
                 timerHandler.postDelayed(timerRunnable, SEVEN_SECONDS);
                 setHelpText(getString(R.string.breath_help_breath_in));
@@ -371,6 +392,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
             theExhaleMusic.stop();
+            inhaleShakeStop();
 
             Log.println(Log.INFO, "STATE", "Waiting Inhale Exit");
         }
