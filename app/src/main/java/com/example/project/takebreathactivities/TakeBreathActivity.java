@@ -11,6 +11,7 @@ import com.example.project.MainActivity;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.os.Handler;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -51,6 +53,9 @@ public class TakeBreathActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_breath);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        theInhaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.anim_inhale);
+        theExhaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(TakeBreathActivity.this, R.anim.anim_exhale);
+
         breathesLeft = getBreatheCount(this);
 
         // Enable "up" on toolbar
@@ -74,9 +79,17 @@ public class TakeBreathActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // no more animation when all breaths are done
+                    if (breathesLeft != 0) {
+                        v.animate().scaleXBy(1.5f).setDuration(THREE_SECONDS).start();
+                        v.animate().scaleYBy(1.5f).setDuration(THREE_SECONDS).start();
+                    }
                     buttonDown = true;
                     currentState.handleClickOn();
                 } else if (event.getAction() == MotionEvent.ACTION_UP){
+                    v.animate().cancel();
+                    v.animate().scaleX(1f).setDuration(THREE_SECONDS).start();
+                    v.animate().scaleY(1f).setDuration(THREE_SECONDS).start();
                     buttonDown = false;
                     currentState.handleClickOff();
                 }
@@ -138,6 +151,16 @@ public class TakeBreathActivity extends AppCompatActivity {
     private void setButtonText(String text){
         Button breathButton = (Button) findViewById(R.id.take_breath_breath_button);
         breathButton.setText(text);
+    }
+
+    private void setButtonColor(String color) {
+        Button breathButton = (Button) findViewById(R.id.take_breath_breath_button);
+        if (color.equals("cyan")) {
+            breathButton.setBackground(ContextCompat.getDrawable(TakeBreathActivity.this, R.drawable.round_button));
+        } else {
+            breathButton.setBackground(ContextCompat.getDrawable(TakeBreathActivity.this, R.drawable.exhale_button_border));
+        }
+
     }
 
     private void setHelpText(String text){
@@ -244,6 +267,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         @Override
         void handleEnter() {
+            setButtonColor("green");
             timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
             setupExhaleMusic();
             Log.println(Log.INFO, "STATE", "Exhale Enter");
@@ -251,6 +275,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         @Override
         void handleExit() {
+            setButtonColor("cyan");
             timerHandler.removeCallbacks(inhaleStateTimer);
             theExhaleMusic.stop();
             Log.println(Log.INFO, "STATE", "Exhale Exit");
@@ -314,6 +339,7 @@ public class TakeBreathActivity extends AppCompatActivity {
     // Once the button is pressed the state moves to inhaleState
     // TODO: stop animations and music
     private class WaitingInhaleState extends State {
+
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> setState(inhaleState);
 
