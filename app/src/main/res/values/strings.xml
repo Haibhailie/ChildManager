@@ -81,4 +81,5 @@
     <string name="assigned_to_who">Assigned to:</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
     <string name="title_activity_popup">PopupActivity</string>
+    <string name="initial_present_speed">Present Speed: 100%</string>
 </resources>
