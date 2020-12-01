@@ -3,6 +3,7 @@ package com.example.project.takebreathactivities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.example.project.MainActivity;
@@ -15,17 +16,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.project.R;
-import com.example.project.coinflipmodel.CoinFlipHistoryMember;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TakeBreathActivity extends AppCompatActivity {
 
@@ -40,6 +36,11 @@ public class TakeBreathActivity extends AppCompatActivity {
     public int breathesLeft;
     private boolean buttonDown = false;
 
+    private MediaPlayer theInhaleMusic;
+    private MediaPlayer theExhaleMusic;
+    private Animation theInhaleAnimation;
+    private Animation theExhaleAnimation;
+
     public static Intent makeLaunchIntent(MainActivity context) {
         Intent intent = new Intent(context, TakeBreathActivity.class);
         return intent;
@@ -51,6 +52,8 @@ public class TakeBreathActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         breathesLeft = getBreatheCount(this);
+        theInhaleMusic = MediaPlayer.create(getApplicationContext(),R.raw.relax);
+
 
         // Enable "up" on toolbar
         try {
@@ -125,7 +128,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private void updateBreathNumberText(){
-
         TextView breathCount = (TextView) findViewById(R.id.take_breath_number_of_breathes);
 
         if (breathesLeft == 0){
@@ -192,18 +194,18 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleEnter() {
             setButtonText(getString(R.string.breath_in));
             setHelpText(getString(R.string.breath_help_breath_in));
+            theInhaleMusic.start();
 
             if(buttonDown) {
                 timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
             }
-
             Log.println(Log.INFO, "STATE", "Inhale Enter");
         }
 
         @Override
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
-
+            theInhaleMusic.pause();
             Log.println(Log.INFO, "STATE", "Inhale Exit");
         }
 
@@ -249,7 +251,6 @@ public class TakeBreathActivity extends AppCompatActivity {
         @Override
         void handleClickOff() {
             timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
-
             Log.println(Log.INFO, "STATE", "Exhale Click Off");
         }
 
@@ -294,7 +295,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         }
 
         void stopAnimationMusic(){
-
+            theInhaleMusic.stop();
         }
 
     }
@@ -309,14 +310,14 @@ public class TakeBreathActivity extends AppCompatActivity {
 
         @Override
         void handleEnter() {
-
             updateBreathNumberText();
-
             if(breathesLeft == 0){
                 setButtonText(getString(R.string.breath_good_job));
                 setState(idleState);
                 setHelpText("");
-            } else{
+            }
+
+            else{
                 setButtonText(getString(R.string.breath_in));
                 timerHandler.postDelayed(timerRunnable, SEVEN_SECONDS);
                 setHelpText(getString(R.string.breath_help_breath_in));
@@ -342,8 +343,7 @@ public class TakeBreathActivity extends AppCompatActivity {
 
     // Null state
     // Handles no state found errors.
-    private class IdleState extends State {
-    }
+    private class IdleState extends State { }
 
     public static void saveBreatheCount(Context context, int breathesLeft) {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
