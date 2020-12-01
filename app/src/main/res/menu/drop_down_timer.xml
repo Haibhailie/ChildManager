@@ -3,37 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/speed25"
-        android:title="25%"
+        android:title="@string/menu_25"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/speed50"
-        android:title="50%"
+        android:title="@string/menu_50"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/speed75"
-        android:title="75%"
+        android:title="@string/menu_75"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/speed100"
-        android:title="100% (normal)"
+        android:title="@string/menu_100"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/speed200"
-        android:title="200%"
+        android:title="@string/menu_200"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/speed300"
-        android:title="300%"
+        android:title="@string/menu_300"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/speed400"
-        android:title="400%"
+        android:title="@string/menu_400"
         app:showAsAction="never"
         />
 </menu>

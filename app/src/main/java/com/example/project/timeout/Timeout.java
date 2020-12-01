@@ -121,49 +121,49 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                     timeInterval = 1000 * 4;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
-                    speedText.setText("Present speed: 25%");
+                    speedText.setText(R.string.speed25);
                     break;
                 case R.id.speed50:
                     hiddenTimeLeft = timeLeft * 2;
                     timeInterval = 1000 * 2;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
-                    speedText.setText("Present speed: 50%");
+                    speedText.setText(R.string.speed50);
                     break;
                 case R.id.speed75:
                     hiddenTimeLeft = timeLeft * 3 / 4;
                     timeInterval = 1000 * 3 / 4;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
-                    speedText.setText("Present speed: 75%");
+                    speedText.setText(R.string.speed75);
                     break;
                 case R.id.speed100:
                     hiddenTimeLeft = timeLeft;
                     timeInterval = 1000;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
-                    speedText.setText("Present speed: 100%");
+                    speedText.setText(R.string.speed100);
                     break;
                 case R.id.speed200:
                     hiddenTimeLeft = timeLeft / 2;
                     timeInterval = 1000 / 4;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
-                    speedText.setText("Present speed: 200%");
+                    speedText.setText(R.string.speed200);
                     break;
                 case R.id.speed300:
                     hiddenTimeLeft = timeLeft / 3;
                     timeInterval = 1000 / 3;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
-                    speedText.setText("Present speed: 300%");
+                    speedText.setText(R.string.speed300);
                     break;
                 case R.id.speed400:
                     hiddenTimeLeft = timeLeft / 4;
                     timeInterval = 1000 / 4;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
-                    speedText.setText("Present speed: 400%");
+                    speedText.setText(R.string.speed400);
                     break;
             }
         }
