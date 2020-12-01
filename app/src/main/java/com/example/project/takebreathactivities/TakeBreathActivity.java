@@ -167,7 +167,8 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleClickOn() {}
     }
 
-    // START STATE
+    // Start state
+    // Moves to inhaleState when button pressed
     private class StartState extends State{
         void handleEnter(){
             setButtonText(getString(R.string.begin));
@@ -179,6 +180,10 @@ public class TakeBreathActivity extends AppCompatActivity {
         }
     }
 
+    // Deals with inhaling.
+    // After 3 seconds held the state will move to waitingExhaleState
+    // If the button is let go, the state resets
+    // TODO: Add animations and music
     private class InhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> setState(waitingExhaleState);
@@ -219,6 +224,10 @@ public class TakeBreathActivity extends AppCompatActivity {
 
     }
 
+    // Deals with exhaling.
+    // After 3 seconds of not being held the state will move to waitingInhaleState
+    // If the button is pressed, the state resets
+    // TODO: Add animations and music
     private class ExhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable inhaleStateTimer = () -> setState(waitingInhaleState);
@@ -253,9 +262,13 @@ public class TakeBreathActivity extends AppCompatActivity {
 
     }
 
+    // Deals with the time where the button is held too long.
+    // After 7 seconds of being held the animations and music will stop
+    // Once button is released the state moves to exhaleState
+    // TODO: stop animations and music
     private class WaitingExhaleState extends State {
         Handler timerHandler = new Handler();
-        Runnable timerRunnable = () -> setHelpText("Release Button and breath out");
+        Runnable timerRunnable = () -> stopAnimationMusic();
 
         @Override
         void handleEnter() {
@@ -280,8 +293,16 @@ public class TakeBreathActivity extends AppCompatActivity {
             Log.println(Log.INFO, "STATE", "Waiting Exhale Click Off");
         }
 
+        void stopAnimationMusic(){
+
+        }
+
     }
 
+    // Deals with the time where the button is not pressed for a while.
+    // After 7 seconds of not being pressed the animations and music will stop
+    // Once the button is pressed the state moves to inhaleState
+    // TODO: stop animations and music
     private class WaitingInhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> setState(inhaleState);
@@ -301,24 +322,26 @@ public class TakeBreathActivity extends AppCompatActivity {
                 setHelpText(getString(R.string.breath_help_breath_in));
             }
 
-            Log.println(Log.INFO, "STATE", "Waiting Exhale Enter");
+            Log.println(Log.INFO, "STATE", "Waiting Inhale Enter");
         }
 
         @Override
         void handleExit() {
             timerHandler.removeCallbacks(timerRunnable);
 
-            Log.println(Log.INFO, "STATE", "Waiting Exhale Exit");
+            Log.println(Log.INFO, "STATE", "Waiting Inhale Exit");
         }
 
         @Override
         void handleClickOn() {
             setState(inhaleState);
 
-            Log.println(Log.INFO, "STATE", "Waiting Exhale Click Off");
+            Log.println(Log.INFO, "STATE", "Waiting Inhale Click Off");
         }
     }
 
+    // Null state
+    // Handles no state found errors.
     private class IdleState extends State {
     }
 
