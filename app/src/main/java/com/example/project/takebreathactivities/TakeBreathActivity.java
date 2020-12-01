@@ -81,15 +81,17 @@ public class TakeBreathActivity extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     // no more animation when all breaths are done
                     if (breathesLeft != 0) {
-                        v.animate().scaleXBy(1.5f).setDuration(THREE_SECONDS).start();
-                        v.animate().scaleYBy(1.5f).setDuration(THREE_SECONDS).start();
+//                        v.animate().scaleXBy(1.5f).setDuration(THREE_SECONDS).start();
+//                        v.animate().scaleYBy(1.5f).setDuration(THREE_SECONDS).start();
+                        v.startAnimation(theInhaleAnimation);
                     }
                     buttonDown = true;
                     currentState.handleClickOn();
                 } else if (event.getAction() == MotionEvent.ACTION_UP){
-                    v.animate().cancel();
-                    v.animate().scaleX(1f).setDuration(THREE_SECONDS).start();
-                    v.animate().scaleY(1f).setDuration(THREE_SECONDS).start();
+//                    v.animate().cancel();
+//                    v.animate().scaleX(1f).setDuration(THREE_SECONDS).start();
+//                    v.animate().scaleY(1f).setDuration(THREE_SECONDS).start();
+                    v.startAnimation(theExhaleAnimation);
                     buttonDown = false;
                     currentState.handleClickOff();
                 }
