@@ -197,6 +197,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 playAlarmSound();
                 CDText.setText("0:00");
                 progress.setProgress(100);
+                speedText.setVisibility(View.GONE);
                 updateNotification();
             }
         }.start();
@@ -225,6 +226,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 CDText.setText("0:00");
                 progress.setProgress(100);
                 updateNotification();
+                speedText.setVisibility(View.GONE);
             }
         }.start();
         isRunning = true;
