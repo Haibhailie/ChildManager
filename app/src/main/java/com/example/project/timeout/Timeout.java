@@ -17,6 +17,9 @@ import androidx.core.app.NotificationCompat;
 
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,14 +36,14 @@ import java.util.Random;
 import pl.droidsonroids.gif.GifImageView;
 
 /**
-* Time out:
-* For count down timer
-* Have the choice for user
-* Allow start, stop, and reset
-* Gif relaxing background shown as the timer starts
-* Alarm when the time is up
-* Continuous count down when using other app and put the phone into sleep
-* */
+ * Time out:
+ * For count down timer
+ * Have the choice for user
+ * Allow start, stop, and reset
+ * Gif relaxing background shown as the timer starts
+ * Alarm when the time is up
+ * Continuous count down when using other app and put the phone into sleep
+ */
 
 public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private TextView CDText;
@@ -54,23 +57,29 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
     private MediaPlayer alarmSound;
     private Animation fadeIn;
     private Animation fadeOut;
+    private TextView speedText;
     private long timeLeft = 600000; //default value is 10 mins
     private long timeLeftbackup = 600000;
+    private long hiddenTimeLeft = 600000;
+    private long millisShown = timeLeft;
     private boolean isRunning;
     private int[] gifSelector = {R.drawable.relaxing1, R.drawable.relaxing2, R.drawable.relaxing3, R.drawable.relaxing4, R.drawable.relaxing5};
+    private int timeInterval = 1000;
     private final String TAG = "Timout Activity";
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setBackground((getDrawable(R.drawable.toolbar_bg)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Timeout Screen");
         manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        fadeIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
-        fadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+        fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+        fadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
         //setup toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +87,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                 manager.cancelAll();
                 try {
                     pauseTimerCountdown();
+                } catch (Exception e) {
                 }
-                catch (Exception e){}
                 finish();
             }
         });
@@ -95,24 +104,152 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.drop_down_timer, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(isRunning) {
+            switch (item.getItemId()) {
+                case R.id.speed25:
+                    hiddenTimeLeft = timeLeft * 4;
+                    timeInterval = 1000 * 4;
+                    pauseForSpeedChange();
+                    startTimerAfterSpeedChange();
+                    speedText.setText(R.string.speed25);
+                    break;
+                case R.id.speed50:
+                    hiddenTimeLeft = timeLeft * 2;
+                    timeInterval = 1000 * 2;
+                    pauseForSpeedChange();
+                    startTimerAfterSpeedChange();
+                    speedText.setText(R.string.speed50);
+                    break;
+                case R.id.speed75:
+                    hiddenTimeLeft = timeLeft * 3 / 4;
+                    timeInterval = 1000 * 3 / 4;
+                    pauseForSpeedChange();
+                    startTimerAfterSpeedChange();
+                    speedText.setText(R.string.speed75);
+                    break;
+                case R.id.speed100:
+                    hiddenTimeLeft = timeLeft;
+                    timeInterval = 1000;
+                    pauseForSpeedChange();
+                    startTimerAfterSpeedChange();
+                    speedText.setText(R.string.speed100);
+                    break;
+                case R.id.speed200:
+                    hiddenTimeLeft = timeLeft / 2;
+                    timeInterval = 1000 / 4;
+                    pauseForSpeedChange();
+                    startTimerAfterSpeedChange();
+                    speedText.setText(R.string.speed200);
+                    break;
+                case R.id.speed300:
+                    hiddenTimeLeft = timeLeft / 3;
+                    timeInterval = 1000 / 3;
+                    pauseForSpeedChange();
+                    startTimerAfterSpeedChange();
+                    speedText.setText(R.string.speed300);
+                    break;
+                case R.id.speed400:
+                    hiddenTimeLeft = timeLeft / 4;
+                    timeInterval = 1000 / 4;
+                    pauseForSpeedChange();
+                    startTimerAfterSpeedChange();
+                    speedText.setText(R.string.speed400);
+                    break;
+            }
+        }
+        else
+            Toast.makeText(this, "Start the timer first.", Toast.LENGTH_SHORT).show();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void pauseForSpeedChange() {
+        manager.cancel(0);
+        timer.cancel();
+    }
+
+    public void startTimerAfterSpeedChange() {
+        speedText.setVisibility(View.VISIBLE);
+        timer = new CountDownTimer(hiddenTimeLeft, timeInterval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                millisShown = millisShown - 1000;
+                timeLeft = millisShown;
+                hiddenTimeLeft = millisUntilFinished;
+                setTimerText();
+                updateProgressBar();
+                updateNotification();
+            }
+
+            @Override
+            public void onFinish() {
+                timeLeft = 0;
+                playAlarmSound();
+                CDText.setText("0:00");
+                progress.setProgress(100);
+                speedText.setVisibility(View.GONE);
+                updateNotification();
+            }
+        }.start();
+        isRunning = true;
+        CDButton.setText("STOP");
+    }
+
+    public void startTimerCountdown() {
+        speedText.setVisibility(View.VISIBLE);
+        hideAllButtons();
+        sendNotification();
+        timer = new CountDownTimer(timeLeft, timeInterval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                millisShown = millisShown - 1000;
+                timeLeft = millisShown;
+                setTimerText();
+                updateProgressBar();
+                updateNotification();
+            }
+
+            @Override
+            public void onFinish() {
+                timeLeft = 0;
+                playAlarmSound();
+                CDText.setText("0:00");
+                progress.setProgress(100);
+                updateNotification();
+                speedText.setVisibility(View.GONE);
+            }
+        }.start();
+        isRunning = true;
+        CDButton.setText("STOP");
+    }
+
     public void toggleTimeout() {
         if (isRunning) {
             pauseTimerCountdown();
-        }
-        else {
+        } else {
             startTimerCountdown();
         }
     }
 
-    public void updateProgressBar(){
-        double progressComplete = 100*((float)timeLeftbackup-(float)timeLeft)/(float)timeLeftbackup;
-        progress.setProgress((int)progressComplete);
-        Log.d(TAG, "The progressbar percentage is: " +progressComplete+ "%");
+    public void updateProgressBar() {
+        double progressComplete = 100 * ((float) timeLeftbackup - (float) timeLeft) / (float) timeLeftbackup;
+        progress.setProgress((int) progressComplete);
+        Log.d(TAG, "The progressbar percentage is: " + progressComplete + "%");
     }
 
-    public void sendNotification(){
+    public void sendNotification() {
         String textTitle = "Timeout Timer Running";
-        String textContent = "Time left: " + (int)timeLeft/60000 +"minutes and " + (int)(timeLeft % 60000) / 1000 + "seconds." ;
+        String textContent = "Time left: " + (int) timeLeft / 60000 + "minutes and " + (int) (timeLeft % 60000) / 1000 + "seconds.";
         Intent pauseTimer = new Intent(this, Timeout.class);
 
         builder = new NotificationCompat.Builder(this)
@@ -129,17 +266,17 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         manager.notify(0, builder.build());
     }
 
-    public void updateNotification(){
-        String textContent = "Time left: " + (int)timeLeft/60000 +" minutes and " + (int)(timeLeft % 60000) / 1000 + " seconds." ;
+    public void updateNotification() {
+        String textContent = "Time left: " + (int) timeLeft / 60000 + " minutes and " + (int) (timeLeft % 60000) / 1000 + " seconds.";
         builder.setContentText(textContent);
         manager.notify(0, builder.build());
     }
 
-    public void updateNotificationFinish(){
+    public void updateNotificationFinish() {
         IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
         registerReceiver(finishActivityReceiver, filter);
         Intent intent = new Intent("android.intent.CLOSE_ACTIVITY");
-        PendingIntent pIntent = PendingIntent.getBroadcast(this, 0 , intent, 0);
+        PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         manager.cancelAll();
         builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.timer_notification)
@@ -152,7 +289,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         manager.notify(0, builder.build());
     }
 
-    public void playAlarmSound(){
+    public void playAlarmSound() {
         updateNotificationFinish();
         alarmSound = MediaPlayer.create(this, R.raw.timer_alarm);
         alarmSound.start();
@@ -171,34 +308,13 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    public void startTimerCountdown() {
-        hideAllButtons();
-        sendNotification();
-        timer = new CountDownTimer(timeLeft, 1000) {
-            @Override public void onTick(long millisUntilFinished) {
-                timeLeft = millisUntilFinished;
-                setTimerText();
-                updateProgressBar();
-                updateNotification();
-            }
-            @Override public void onFinish() {
-                timeLeft=0;
-                playAlarmSound();
-                CDText.setText("0:00");
-                progress.setProgress(100);
-                updateNotification();
-            }
-        }.start();
-        isRunning = true;
-        CDButton.setText("STOP");
-    }
-
     public void pauseTimerCountdown() {
         showAllButtons();
         manager.cancel(0);
         timer.cancel();
         CDButton.setText("Resume");
         isRunning = false;
+        speedText.setVisibility(View.GONE);
     }
 
     public void setTimerText() {
@@ -220,14 +336,17 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         showAllButtons();
         try {
             timer.cancel();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "Timer's not running!", Toast.LENGTH_SHORT).show();
         }
+        hiddenTimeLeft = timeLeft;
+        timeInterval = 1000;
+        speedText.setText("Present Speed: 100%");
         CDButton.setText("Start");
         timeLeft = timeLeftbackup;
         setTimerText();
         isRunning = false;
+        speedText.setVisibility(View.GONE);
     }
 
     private void setCustomButtonTimer() {
@@ -235,13 +354,12 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
             String customTimerString = String.valueOf(customTimerText.getText());
             Log.d(TAG, "The timer now has " + customTimerString + " mins left. ");
             timeLeft = Integer.parseInt(customTimerString) * 60000;
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Toast.makeText(this, "It's empty!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void initializeTimerScreen(){
+    private void initializeTimerScreen() {
         progress = (ProgressBar) findViewById(R.id.timerProgress);
         calmingBGVideo = (GifImageView) findViewById(R.id.calmBackground);
         CDTimerA = findViewById(R.id.min1Button);
@@ -249,6 +367,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         CDTimerC = findViewById(R.id.min3Button);
         CDTimerD = findViewById(R.id.min5Button);
         CDTimerE = findViewById(R.id.min10Button);
+        speedText = findViewById(R.id.presentSpeedText);
         CDTimerCustom = findViewById(R.id.customButton);
         CDTimerReset = findViewById(R.id.resetCountdown);
         customTimerText = findViewById(R.id.customTimerText);
@@ -259,25 +378,27 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         CDTimerE.setOnClickListener(this);
         CDTimerCustom.setOnClickListener(this);
         CDTimerReset.setOnClickListener(this);
+        speedText.setText(R.string.initial_present_speed);
+        speedText.setVisibility(View.GONE);
     }
 
-    private void startCalmingVideo(){
+    private void startCalmingVideo() {
         Random random = new Random();
-        int gifNumber = random.nextInt(4)+0;
+        int gifNumber = random.nextInt(4) + 0;
         calmingBGVideo.setBackgroundResource(gifSelector[gifNumber]);
         calmingBGVideo.setVisibility(View.VISIBLE);
         calmingBGVideo.startAnimation(fadeIn);
     }
 
-    private void stopCalmingVideo(){
+    private void stopCalmingVideo() {
         calmingBGVideo.setVisibility(View.GONE);
         CDText.setTextColor(Color.BLACK);
-        if(isRunning) {
+        if (isRunning) {
             calmingBGVideo.startAnimation(fadeOut);
         }
     }
 
-    private void hideAllButtons(){
+    private void hideAllButtons() {
         CDTimerA.setVisibility(View.GONE);
         CDTimerB.setVisibility(View.GONE);
         CDTimerC.setVisibility(View.GONE);
@@ -288,7 +409,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         startCalmingVideo();
     }
 
-    private void showAllButtons(){
+    private void showAllButtons() {
         CDTimerA.setVisibility(View.VISIBLE);
         CDTimerB.setVisibility(View.VISIBLE);
         CDTimerC.setVisibility(View.VISIBLE);
@@ -308,7 +429,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
         }
     };
 
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
         CDButton.setText("Start");
         switch (v.getId()) {
             case R.id.min1Button:
@@ -332,6 +454,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
             case R.id.resetCountdown:
                 resetTimer();
         }
+        millisShown = timeLeft;
         timeLeftbackup = timeLeft;
         setTimerText();
     }

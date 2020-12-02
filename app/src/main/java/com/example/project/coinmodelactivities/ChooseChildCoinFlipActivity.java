@@ -34,14 +34,14 @@ import java.util.List;
 /**
  * Allows the user to choose which child that will get the coinflip.
  * Prompts child with choice.
- *
+ * <p>
  * Passes the index of the child and the choice of heads or tails.
  */
 public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private static final String UP_TAG = "UP";
     private static final String CHILD_MANAGER_TAG = "ChildManager";
-    private static final String QUEUE_TAG ="Queue";
+    private static final String QUEUE_TAG = "Queue";
     private static final String EXTRA_INDEX = "CoinFlip - ChildIndex";
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String QUEUE_PREFS_NAME = "QueuePrefs";
@@ -49,19 +49,19 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
     private CoinFlipQueue coinFlipQueue;
     private int childIndex;
 
-    public static Intent makeLaunchIntent(Context context, int index){
+    public static Intent makeLaunchIntent(Context context, int index) {
         Intent intent = new Intent(context, ChooseChildCoinFlipActivity.class);
         intent.putExtra(EXTRA_INDEX, index);
         return intent;
     }
 
     // -1 Index means top of the list, -2 means no child.
-    private void extractDataFromIntent(){
+    private void extractDataFromIntent() {
         Intent intent = getIntent();
         childIndex = intent.getIntExtra(EXTRA_INDEX, -1);
 
-        if(childIndex == -1 &&
-                childManager.getLength() != 0){
+        if (childIndex == -1 &&
+                childManager.getLength() != 0) {
             childIndex = childManager.findChildIndexById(coinFlipQueue.get(0));
         }
     }
@@ -86,33 +86,31 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
         }
 
-        if(childIndex == -2){
+        if (childIndex == -2) {
             launchCoinFlipActivity(false, -1);
         }
 
-        if(childManager.getLength() > 0 && childIndex != -2) {
+        if (childManager.getLength() > 0 && childIndex != -2) {
             populateFields();
         }
 
         Log.println(Log.INFO, CHILD_MANAGER_TAG, childManager.getLength() + "");
     }
 
-    private void setupQueue(){
+    private void setupQueue() {
         List<Integer> childIdList = getListOfChildrenId();
         coinFlipQueue.setQueue(getCoinQueue(ChooseChildCoinFlipActivity.this));
         coinFlipQueue.removeMissingIds(childIdList);
         coinFlipQueue.addMissingNewIds(childIdList);
     }
 
-    private List<Integer> getListOfChildrenId(){
+    private List<Integer> getListOfChildrenId() {
         List<Integer> childIdList = new ArrayList<>();
-        for(Child child : childManager.getChildList()){
+        for (Child child : childManager.getChildList()) {
             childIdList.add(child.getId());
         }
         return childIdList;
@@ -126,7 +124,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         setOnClickChangeChild();
     }
 
-    private void setOnClickChangeChild(){
+    private void setOnClickChangeChild() {
         Button changeChild = (Button) findViewById(R.id.coin_flip_choose_change_child);
         changeChild.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,18 +134,18 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         });
     }
 
-    private void setOracleText(){
+    private void setOracleText() {
         TextView oracleText = (TextView) findViewById(R.id.coin_flip_choose_oracle);
         String resourceString = getString(R.string.coin_flip_choose_oracle);
         oracleText.setText(String.format(resourceString, childManager.getChildName(childIndex)));
     }
 
-    private void setChildNameTag(){
+    private void setChildNameTag() {
         TextView name = (TextView) findViewById(R.id.coin_flip_choose_child_name);
         name.setText(childManager.getChildName(childIndex));
     }
 
-    private void setAvatar(){
+    private void setAvatar() {
         ImageView childAvatar = (ImageView) findViewById(R.id.coin_flip_choose_avatar);
         Uri avatarUri = Uri.parse(childManager.getChildAvatarUriPath(childIndex));
         try {
@@ -157,7 +155,7 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         }
     }
 
-    private void setOnClickHeadsTails(){
+    private void setOnClickHeadsTails() {
         ImageButton heads_button = (ImageButton) findViewById(R.id.coin_flip_choose_heads_image);
         ImageButton tails_button = (ImageButton) findViewById(R.id.coin_flip_choose_tails_image);
         Button heads_text = (Button) findViewById(R.id.coin_flip_choose_heads_text_button);
@@ -183,13 +181,13 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         tails_text.setOnClickListener(tails_listener);
     }
 
-    private void launchCoinFlipActivity(boolean choice, int index){
+    private void launchCoinFlipActivity(boolean choice, int index) {
         Intent intent = CoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this, index, choice);
         startActivity(intent);
         finish();
     }
 
-    private void launchChangeChildActivity(){
+    private void launchChangeChildActivity() {
         Intent intent = ChangeChildCoinFlipActivity.makeLaunchIntent(ChooseChildCoinFlipActivity.this);
         startActivity(intent);
         finish();
@@ -197,14 +195,14 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
 
     private void checkIfAnyChildrenInManager() {
         Log.println(Log.INFO, CHILD_MANAGER_TAG, "Number of Children: " + childManager.getLength());
-        if(childManager.getLength() == 0){
+        if (childManager.getLength() == 0) {
             Log.println(Log.INFO, CHILD_MANAGER_TAG, "No Children, moving onto coin flip");
             launchCoinFlipActivity(false, -1);
         }
     }
 
-    private void loadChildData(){
-        if(childManager.getLength() == 0){
+    private void loadChildData() {
+        if (childManager.getLength() == 0) {
             List<Child> savedChildList = EditChildActivity.getSavedChildList(ChooseChildCoinFlipActivity.this);
             if (savedChildList != null) {
                 childManager.setChildList(savedChildList);
@@ -228,7 +226,8 @@ public class ChooseChildCoinFlipActivity extends AppCompatActivity {
         SharedPreferences prefs = context.getSharedPreferences(APP_PREFS_NAME, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = prefs.getString(QUEUE_PREFS_NAME, null);
-        Type type = new TypeToken<ArrayList<Integer>>() {}.getType();
+        Type type = new TypeToken<ArrayList<Integer>>() {
+        }.getType();
         List<Integer> queue = gson.fromJson(json, type);
         Log.println(Log.INFO, QUEUE_TAG, "Loaded Child Queue: " + queue);
         return queue;

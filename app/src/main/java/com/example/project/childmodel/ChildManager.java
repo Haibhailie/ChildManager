@@ -1,7 +1,7 @@
 /**
-    * Class with singleton support
-    * return an instance which have a list (childList) of all added children in the program
-    * can manipulate added child from the instance
+ * Class with singleton support
+ * return an instance which have a list (childList) of all added children in the program
+ * can manipulate added child from the instance
  */
 
 package com.example.project.childmodel;
@@ -14,7 +14,9 @@ import java.util.List;
 public class ChildManager {
     private static ChildManager instance;
     private List<Child> childList = new ArrayList<>();
-    private ChildManager() {}
+
+    private ChildManager() {
+    }
 
     public static ChildManager getInstance() {
         if (instance == null) {
@@ -62,9 +64,9 @@ public class ChildManager {
     public int getChildId(int index) {
         int id;
 
-        try{
+        try {
             id = childList.get(index).getId();
-        } catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             Log.println(Log.INFO, "ChildManager", "No children in Manager.");
             id = -1;
         }
@@ -88,18 +90,18 @@ public class ChildManager {
         childList.get(index).setAvatarUriPath(path);
     }
 
-    public String getChildAvatarUriPath (int index) {
+    public String getChildAvatarUriPath(int index) {
         return childList.get(index).getAvatarUriPath();
     }
 
-    public int findChildIndexById(int id){
+    public int findChildIndexById(int id) {
 
-        for(int i = 0; i < this.getLength(); i++){
+        for (int i = 0; i < this.getLength(); i++) {
             try {
                 if (this.getChildId(i) == id) {
                     return i;
                 }
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 Log.println(Log.ERROR, "CHILD", "Missing Child " + id);
             }
         }

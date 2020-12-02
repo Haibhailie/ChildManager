@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/calmBackground"
         android:layout_width="match_parent"
@@ -73,13 +74,14 @@
         android:layout_width="124dp"
         android:layout_height="45dp"
         android:layout_marginStart="223dp"
-        android:layout_marginTop="492dp"
+        android:layout_marginTop="465dp"
         android:layout_marginEnd="46dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="92dp"
         android:background="@drawable/main_button"
         android:text="@string/reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,13 +90,14 @@
         android:layout_width="124dp"
         android:layout_height="45dp"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="492dp"
+        android:layout_marginTop="465dp"
         android:layout_marginEnd="224dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="92dp"
         android:background="@drawable/main_button"
         android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -220,6 +223,23 @@
         app:layout_constraintEnd_toStartOf="@+id/customButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/presentSpeedText"
+        android:layout_width="236dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="92dp"
+        android:gravity="center"
+        android:text="@string/initial_present_speed"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startCountdown" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
