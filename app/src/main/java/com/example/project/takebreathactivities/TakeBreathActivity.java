@@ -79,16 +79,9 @@ public class TakeBreathActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    // no more animation when all breaths are done
-                    if (breathesLeft != 0) {
-                        inhaleAnimation(v);
-//                        v.startAnimation(theInhaleAnimation);
-                    }
                     buttonDown = true;
                     currentState.handleClickOn();
                 } else if (event.getAction() == MotionEvent.ACTION_UP){
-                    exhaleAnimation(v);
-//                    v.startAnimation(theExhaleAnimation);
                     buttonDown = false;
                     currentState.handleClickOff();
                 }
@@ -107,15 +100,34 @@ public class TakeBreathActivity extends AppCompatActivity {
         breatheButton.clearAnimation();
     }
 
-    private void inhaleAnimation(View v){
-        v.animate().scaleXBy(1.25f).setDuration(THREE_SECONDS).start();
-        v.animate().scaleYBy(1.25f).setDuration(THREE_SECONDS).start();
+    private void inhaleAnimation(){
+        Button breatheButton = (Button) findViewById(R.id.take_breath_breath_button);
+
+        breatheButton.animate().scaleXBy(1.25f).setDuration(THREE_SECONDS).start();
+        breatheButton.animate().scaleYBy(1.25f).setDuration(THREE_SECONDS).start();
     }
 
-    private void exhaleAnimation(View v){
-        v.animate().cancel();
-        v.animate().scaleX(1f).setDuration(THREE_SECONDS).start();
-        v.animate().scaleY(1f).setDuration(THREE_SECONDS).start();
+    private void exhaleAnimation(){
+        Button breatheButton = (Button) findViewById(R.id.take_breath_breath_button);
+
+        breatheButton.animate().scaleX(1f).setDuration(THREE_SECONDS).start();
+        breatheButton.animate().scaleY(1f).setDuration(THREE_SECONDS).start();
+    }
+
+    private void stopInhaleAnimation(){
+        Button breatheButton = (Button) findViewById(R.id.take_breath_breath_button);
+
+        breatheButton.animate().cancel();
+        breatheButton.setScaleX(1f);
+        breatheButton.setScaleY(1f);
+    }
+
+    private void stopExhaleAnimation(){
+        Button breatheButton = (Button) findViewById(R.id.take_breath_breath_button);
+
+        breatheButton.animate().cancel();
+        breatheButton.setScaleX(2.25f);
+        breatheButton.setScaleY(2.25f);
     }
 
     private void setUpBreatheChangeButtons(){
@@ -248,6 +260,7 @@ public class TakeBreathActivity extends AppCompatActivity {
             if(buttonDown) {
                 timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
                 setupInhaleMusic();
+                inhaleAnimation();
             }
             Log.println(Log.INFO, "STATE", "Inhale Enter");
         }
@@ -262,7 +275,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleClickOff() {
             timerHandler.removeCallbacks(timerRunnable);
             theInhaleMusic.stop();
-            setState(inhaleState);
+            stopInhaleAnimation();
 
             Log.println(Log.INFO, "STATE", "Inhale Click Off");
         }
@@ -271,6 +284,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleClickOn() {
             timerHandler.postDelayed(timerRunnable, THREE_SECONDS);
             setupInhaleMusic();
+            inhaleAnimation();
 
             Log.println(Log.INFO, "STATE", "Inhale Click On");
         }
@@ -290,6 +304,7 @@ public class TakeBreathActivity extends AppCompatActivity {
             setButtonColor("green");
             timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
             setupExhaleMusic();
+            exhaleAnimation();
             Log.println(Log.INFO, "STATE", "Exhale Enter");
         }
 
@@ -304,6 +319,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleClickOff() {
             timerHandler.postDelayed(inhaleStateTimer, THREE_SECONDS);
             setupExhaleMusic();
+            exhaleAnimation();
 
             Log.println(Log.INFO, "STATE", "Exhale Click Off");
         }
@@ -312,6 +328,7 @@ public class TakeBreathActivity extends AppCompatActivity {
         void handleClickOn() {
             timerHandler.removeCallbacks(inhaleStateTimer);
             theExhaleMusic.stop();
+            stopExhaleAnimation();
 
             Log.println(Log.INFO, "STATE", "Exhale Click On");
         }
