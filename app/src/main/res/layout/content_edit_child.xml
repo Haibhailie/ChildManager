@@ -174,7 +174,7 @@
         android:id="@+id/btn_custom_avatar"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Custom Avatar"
+        android:text="@string/str_custom_avatar"
         android:background="@drawable/main_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_child_age"

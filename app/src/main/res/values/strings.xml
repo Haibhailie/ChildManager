@@ -106,4 +106,5 @@
     <string name="menu_200">200%</string>
     <string name="menu_300">300%</string>
     <string name="menu_400">400%</string>
+    <string name="str_custom_avatar">Custom Avatar</string>
 </resources>
