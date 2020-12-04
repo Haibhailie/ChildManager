@@ -81,6 +81,16 @@
     <string name="assigned_to_who">Assigned to:</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
     <string name="title_activity_popup">PopupActivity</string>
+
+    <string name="title_activity_take_breath">Take A Breathe</string>
+    <string name="begin">Begin</string>
+    <string name="breath">Breath</string>
+    <string name="breath_in">In</string>
+    <string name="breath_out">Out</string>
+    <string name="breath_help_breath_in">Hold the Button and Breath in</string>
+    <string name="breath_good_job">Good Job</string>
+    <string name="breath_help_breath_out">Release the button and breath out</string>
+
     <string name="initial_present_speed">Present Speed: 100%</string>
     <string name="speed25">Present speed: 25%</string>
     <string name="speed50">Present speed: 50%</string>
