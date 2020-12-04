@@ -59,7 +59,8 @@ public class EditChildActivity extends AppCompatActivity {
     private List<Integer> avatarImageViewArray;
     private List<Integer> avatarResIDArray;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_child);
         childManager = ChildManager.getInstance();
@@ -89,7 +90,8 @@ public class EditChildActivity extends AppCompatActivity {
         }
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
@@ -97,7 +99,8 @@ public class EditChildActivity extends AppCompatActivity {
     /**
      * Set up menu bar
      */
-    @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
                 String name = nameText.getText().toString();
@@ -170,7 +173,8 @@ public class EditChildActivity extends AppCompatActivity {
      * Callback function of CropImage.startPickImageActivity
      */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
             Uri uri = CropImage.getPickImageResultUri(this, data);

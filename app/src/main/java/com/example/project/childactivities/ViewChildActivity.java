@@ -44,7 +44,8 @@ public class ViewChildActivity extends AppCompatActivity {
     private static final String APP_PREFS_NAME = "AppPrefs";
     private static final String HINT_PREFS_NAME = "HintPref";
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_child);
         childManager = ChildManager.getInstance();
@@ -76,7 +77,8 @@ public class ViewChildActivity extends AppCompatActivity {
         setupHintHideButton();
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         populateListView();
         showInstruction();
@@ -160,7 +162,8 @@ public class ViewChildActivity extends AppCompatActivity {
         });
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_kids_list, menu);
         return true;
@@ -171,7 +174,8 @@ public class ViewChildActivity extends AppCompatActivity {
             super(ViewChildActivity.this, R.layout.child_list, childManager.getChildList());
         }
 
-        @Override public View getView(int position, View convertView, ViewGroup parent) {
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
             View itemView = convertView;
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.child_list, parent, false);

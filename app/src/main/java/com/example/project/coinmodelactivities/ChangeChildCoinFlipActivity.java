@@ -33,9 +33,9 @@ import java.util.List;
 /**
  * Changes which child is selected to flip the coin.
  * Returns to MainActivitiy
- *
+ * <p>
  * Returns to ChooseChild when a listItem is selected. -2 = No child.
- * */
+ */
 
 public class ChangeChildCoinFlipActivity extends AppCompatActivity {
 
@@ -51,7 +51,8 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         return intent;
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_child_coin_flip);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -63,9 +64,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Log.println(Log.ERROR, UP_TAG, "Up bar Error:" + e.getMessage());
         }
 
@@ -79,7 +78,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 // Finish so that it doesn't bug when pressing back after updating.
                 Intent intent = ChooseChildCoinFlipActivity.makeLaunchIntent(ChangeChildCoinFlipActivity.this, -1);
@@ -93,28 +92,29 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         return true;
     }
 
-    private void getListOfChildrenInOrder(){
-        for(int id : childQueue.getQueue()){
+    private void getListOfChildrenInOrder() {
+        for (int id : childQueue.getQueue()) {
             childrenInOrder.add(childManager.getChild(childManager.findChildIndexById(id)));
         }
-        childrenInOrder.add(new Child("Anonymous Flip", 0, "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.drawable.default_avator, 0,-2));
+        childrenInOrder.add(new Child("Anonymous Flip", 0, "android.resource://" + BuildConfig.APPLICATION_ID + "/" + R.drawable.default_avator, 0, -2));
     }
 
-    private void populateListView(){
+    private void populateListView() {
         ListAdapter adapter = new MyListAdapter();
         ListView list = (ListView) findViewById(R.id.coin_flip_change_child_child_list);
         list.setAdapter(adapter);
     }
 
     private class MyListAdapter extends ArrayAdapter<Child> {
-        public MyListAdapter(){
+        public MyListAdapter() {
             super(ChangeChildCoinFlipActivity.this, R.layout.child_list, childrenInOrder);
         }
 
-        @Override public View getView(int position, View convertView, ViewGroup parent) {
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
             // make sure we have a view to work with
             View itemView = convertView;
-            if(itemView == null){
+            if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.child_list, parent, false);
             }
 
@@ -124,9 +124,7 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
             // Avatar photo may be deleted, if so we use default avatar
             try {
                 imageView.setImageURI(avatarUri);
-            }
-
-            catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 imageView.setImageURI(Child.DEFAULT_URI);
             }
 
@@ -138,13 +136,13 @@ public class ChangeChildCoinFlipActivity extends AppCompatActivity {
         }
     }
 
-    private void registerListItemClickCallback(){
+    private void registerListItemClickCallback() {
         ListView list = (ListView) findViewById(R.id.coin_flip_change_child_child_list);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int index;
-                if(childrenInOrder.get(position).getId() != -2) {
+                if (childrenInOrder.get(position).getId() != -2) {
                     index = childManager.findChildIndexById(childrenInOrder.get(position).getId());
                 } else {
                     index = -2;
