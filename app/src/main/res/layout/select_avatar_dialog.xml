@@ -12,7 +12,7 @@
         android:id="@+id/btn_gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="From Gallery"
+        android:text="@string/from_gallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="539dp" />
@@ -21,7 +21,7 @@
         android:id="@+id/btn_takephoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take Photo"
+        android:text="@string/take_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="490dp" />

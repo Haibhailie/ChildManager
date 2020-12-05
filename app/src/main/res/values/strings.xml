@@ -108,4 +108,15 @@
     <string name="menu_400">400%</string>
     <string name="str_custom_avatar">Custom Avatar</string>
     <string name="number_of_breathes">Number of Breathes:</string>
+    <string name="who_is_the_task_assigned_to">Who is the task assigned to?</string>
+    <string name="task_name">Task Name</string>
+    <string name="from_gallery">From Gallery</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="no_children_in_database">No children in database</string>
+    <string name="separate_trash_recycle_and_compost_and_throw_it_out">Separate trash, recycle and compost, and throw it out!</string>
+    <string name="confirm">Confirm</string>
+    <string name="take_out_the_trash">Take out the trash!</string>
+    <string name="completed">Completed</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
 </resources>
