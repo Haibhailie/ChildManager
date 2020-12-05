@@ -22,12 +22,11 @@
         android:id="@+id/take_breath_help_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/take_breath_breath_button" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -42,12 +41,12 @@
         app:layout_constraintTop_toBottomOf="@+id/take_breath_breath_button"
         app:layout_constraintVertical_bias="0.75">
 
-        <Button
+        <ImageButton
             android:id="@+id/take_breath_lower_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50sp"
             android:layout_weight="1"
-            android:text="DOWN" />
+            app:srcCompat="@android:drawable/arrow_down_float" />
 
         <TextView
             android:id="@+id/take_breath_number_of_breathes"
@@ -56,12 +55,23 @@
             android:layout_weight="1"
             android:gravity="center" />
 
-        <Button
+        <ImageButton
             android:id="@+id/take_breath_raise_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50sp"
             android:layout_weight="1"
-            android:text="UP" />
+            app:srcCompat="@android:drawable/arrow_up_float" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/take_breath_number_of_breathes_oracle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/number_of_breathes"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/take_breath_breath_button"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,7 @@
                 android:id="@+id/coin_flip_choose_heads_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/heads_coin_desc"
+                android:contentDescription="@string/coin_flip_heads"
                 app:srcCompat="@drawable/c_coin_heads" />
 
             <Button
@@ -105,7 +105,7 @@
                 android:id="@+id/coin_flip_choose_tails_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/tails_coin_desc"
+                android:contentDescription="@string/coin_flip_tails"
                 app:srcCompat="@drawable/c_coin_tails" />
 
             <Button

@@ -1,6 +1,6 @@
 Scrum Roles:
 
-	Scrum Master: Shashank Thanalapati
-	Project Owner: Zirui Huang
-	Repo Manager: Yichuan Zheng
-	Team Member: Kent Nex
+	Scrum Master: Yichuan Zheng
+	Project Owner: Kent Nex
+	Repo Manager: Zirui Huang
+	Team Member: Shashank Thanalapati

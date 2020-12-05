@@ -21,6 +21,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.project.R;
@@ -130,9 +131,14 @@ public class TakeBreathActivity extends AppCompatActivity {
         breatheButton.setScaleY(2.25f);
     }
 
+    private void removeOracleText(){
+        TextView oracle = (TextView) findViewById(R.id.take_breath_number_of_breathes_oracle);
+        oracle.setText("");
+    }
+
     private void setUpBreatheChangeButtons(){
-        Button breatheDown = (Button) findViewById(R.id.take_breath_lower_button);
-        Button breatheUp = (Button) findViewById(R.id.take_breath_raise_button);
+        ImageButton breatheDown = (ImageButton) findViewById(R.id.take_breath_lower_button);
+        ImageButton breatheUp = (ImageButton) findViewById(R.id.take_breath_raise_button);
 
         breatheDown.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -163,8 +169,8 @@ public class TakeBreathActivity extends AppCompatActivity {
     }
 
     private void setVisibilityOfBreatheChangeButtons(int visibility){
-        Button breatheDown = (Button) findViewById(R.id.take_breath_lower_button);
-        Button breatheUp = (Button) findViewById(R.id.take_breath_raise_button);
+        ImageButton breatheDown = (ImageButton) findViewById(R.id.take_breath_lower_button);
+        ImageButton breatheUp = (ImageButton) findViewById(R.id.take_breath_raise_button);
 
         breatheDown.setVisibility(visibility);
         breatheUp.setVisibility(visibility);
@@ -238,6 +244,10 @@ public class TakeBreathActivity extends AppCompatActivity {
             setButtonText(getString(R.string.begin));
         }
 
+        void handleExit(){
+            removeOracleText();
+        }
+
         void handleClickOn(){
             setState(inhaleState);
             setVisibilityOfBreatheChangeButtons(View.GONE);
@@ -247,7 +257,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     // Deals with inhaling.
     // After 3 seconds held the state will move to waitingExhaleState
     // If the button is let go, the state resets
-    // TODO: Add animations and music
     private class InhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> setState(waitingExhaleState);
@@ -294,7 +303,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     // Deals with exhaling.
     // After 3 seconds of not being held the state will move to waitingInhaleState
     // If the button is pressed, the state resets
-    // TODO: Add animations and music
     private class ExhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable inhaleStateTimer = () -> setState(waitingInhaleState);
@@ -338,7 +346,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     // Deals with the time where the button is held too long.
     // After 7 seconds of being held the animations and music will stop
     // Once button is released the state moves to exhaleState
-    // TODO: stop animations and music
     private class WaitingExhaleState extends State {
         Handler timerHandler = new Handler();
         Runnable timerRunnable = () -> stopAnimationMusic();
@@ -379,7 +386,6 @@ public class TakeBreathActivity extends AppCompatActivity {
     // Deals with the time where the button is not pressed for a while.
     // After 7 seconds of not being pressed the animations and music will stop
     // Once the button is pressed the state moves to inhaleState
-    // TODO: stop animations and music
     private class WaitingInhaleState extends State {
 
         Handler timerHandler = new Handler();

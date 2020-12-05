@@ -1,5 +1,5 @@
 This application has been developed and tested on API24.
-On the Pixel 2, API24 AVD present on Android Studio.
+On the Pixel 2, API28 AVD present on Android Studio.
 
 After pulling, there may be an editor error inside EditChildActivity related to the statement
 "import com.theartofdev.edmodo.cropper.CropImage;"
