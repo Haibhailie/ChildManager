@@ -27,8 +27,6 @@
     <string name="win_lose_content">Win Lose Icon</string>
     <string name="avatar_content">Avatar</string>
     <string name="coin_content">Coin</string>
-    <string name="tails_coin_desc">Tails</string>
-    <string name="heads_coin_desc">Heads</string>
     <string name="title_activity_change_child_coin_flip">Who gets to flip a coin instead?</string>
     <string name="coin_flip_choose_pick">Pick</string>
     <string name="coin_flip_choose_oracle">%s gets to choose!</string>
