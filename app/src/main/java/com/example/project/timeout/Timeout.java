@@ -131,8 +131,8 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                     speedText.setText(R.string.speed50);
                     break;
                 case R.id.speed75:
-                    hiddenTimeLeft = timeLeft * 3 / 4;
-                    timeInterval = 1000 * 3 / 4;
+                    hiddenTimeLeft = timeLeft * 4/3;
+                    timeInterval = 1000 * 4/3;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
                     speedText.setText(R.string.speed75);
@@ -146,7 +146,7 @@ public class Timeout extends AppCompatActivity implements View.OnClickListener {
                     break;
                 case R.id.speed200:
                     hiddenTimeLeft = timeLeft / 2;
-                    timeInterval = 1000 / 4;
+                    timeInterval = 1000 / 2;
                     pauseForSpeedChange();
                     startTimerAfterSpeedChange();
                     speedText.setText(R.string.speed200);
