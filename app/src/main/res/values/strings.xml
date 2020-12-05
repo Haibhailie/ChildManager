@@ -107,4 +107,5 @@
     <string name="menu_300">300%</string>
     <string name="menu_400">400%</string>
     <string name="str_custom_avatar">Custom Avatar</string>
+    <string name="number_of_breathes">Number of Breathes:</string>
 </resources>
